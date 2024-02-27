@@ -1,4 +1,4 @@
-<div class="modal fade" id="categoryModal" tabindex="-1" aria-labelledby="categoryModalLabel" aria-hidden="true">
+<div class="modal fade" id="addCategoryModal" tabindex="-1" aria-labelledby="categoryModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
     <div class="modal-content rounded-4 border-0">
       <div class="modal-header">
@@ -9,8 +9,9 @@
       <div class="modal-body">
         <form action="" method="POST" enctype="multipart/form-data">
           <div class="mb-3">
-            <label for="categoryInputName" class="form-label fw-bold fs-5 text-black">Nome da categoria:</label>
-            <input type="text" class="form-control rounded-pill shadow" name="name" id="categoryInputName"
+            <label for="categoryInputName" class="form-label"><small class="fw-bold text-body-emphasis">Nome da
+                categoria:</small></label>
+            <input type="text" class="form-control shadow" name="name" id="categoryInputName"
               placeholder="Digite o nome da categoria">
           </div>
           <div class="d-grid gap-2 col-6 mx-auto mb-3">
@@ -29,9 +30,11 @@
             <tbody class="overflow-y-auto">
               @foreach ($list as $category)
                 <tr class="border-bottom">
-                  <td class="text-center p-2 fs-5"><input class="form-check-input" type="checkbox" value="{{ $category->id }}"></td>
+                  <td class="text-center p-2 fs-5"><input class="form-check-input" type="checkbox"
+                      value="{{ $category->id }}"></td>
                   <td class="py-2">{{ $category->name }}</td>
-                  <td class="p-2 text-center"><button class="btn btn-danger btn-sm rounded-circle align-middle"><i class="bi bi-x-lg"></i></button></td>
+                  <td class="p-2 text-center"><button class="btn btn-danger btn-sm rounded-circle align-middle"><i
+                        class="bi bi-x-lg"></i></button></td>
                 </tr>
               @endforeach
             </tbody>

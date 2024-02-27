@@ -35,10 +35,11 @@
       </form>
 
       <div class="text-center">
-        <button type="button" class="btn btn-danger rounded-pill me-lg-2"><i class="bi bi-plus-lg me-1"></i>Novo
+        <button type="button" class="btn btn-danger rounded-pill me-lg-2" data-bs-toggle="modal"
+        data-bs-target="#addProductModal"><i class="bi bi-plus-lg me-1"></i>Novo
           produto</button>
         <button type="button" class="btn btn-danger rounded-pill" data-bs-toggle="modal"
-          data-bs-target="#categoryModal"><i class="bi bi-plus-lg me-1"></i>Nova
+          data-bs-target="#addCategoryModal"><i class="bi bi-plus-lg me-1"></i>Nova
           categoria</button>
       </div>
     </div>
@@ -70,7 +71,9 @@
     </tbody>
   </table>
 
-  <x-edit_category :list="$categories" />
+  <x-add_category :list="$categories" />
+
+  <x-add_product />
 
   {{ $products->links() }}
 
