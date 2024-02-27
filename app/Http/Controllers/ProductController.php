@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Category;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use Illuminate\Http\Request;
@@ -12,14 +13,22 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    public function __construct(
+        public Category $category
+    ) {}
+
     public function index(Request $request)
     {
+        $searchProducts = $request->input('searchProducts');
 
-        $search = $request->input('search');
-        $products = Product::where('name','like','%'. $search .'%')->
-        orWhere('id','like','%'. $search .'%')
-        ->paginate(5);
-        return view('components.products', compact('products'));
+        $products = Product::where('name','like','%'. $searchProducts .'%')
+            ->orWhere('id','like','%'. $searchProducts .'%')
+            ->paginate(5);
+
+        $categories = Category::all();
+
+        return view('components.products', compact('products', 'categories'));
     }
 
     public function search(Request $request) {

@@ -12,11 +12,24 @@
         <span class="fs-4 fw-bold">Produtos</span>
       </a>
 
-      <form class="col-12 col-lg-auto col-xl-6 mb-3 mb-lg-0 me-lg-3" role="search" action="{{ route('components.products') }}" method="GET" enctype="multipart/form-data">
+      <form class="col-12 col-lg-auto col-xl-6 mb-3 mb-lg-0 me-lg-3" role="search"
+        action="{{ route('components.products') }}" method="GET" enctype="multipart/form-data">
         @csrf
         <div class="input-group">
-          <input type="search" name="search" class="form-control rounded-start-pill shadow" placeholder="Digite o nome ou ID do produto"
-            aria-label="Search">
+          <div class="dropdown">
+            <button class="btn btn-danger dropdown-toggle rounded-start-pill" type="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              Categorias
+            </button>
+            <ul class="dropdown-menu shadow border-0">
+              @foreach ($categories as $category)
+                <li><a class="dropdown-item"
+                    href="">{{ $category->name }}</a></li>
+              @endforeach
+            </ul>
+          </div>
+          <input type="search" name="searchProducts" class="form-control shadow"
+            placeholder="Digite o nome ou ID do produto" aria-label="Search">
           <button type="submit" class="btn btn-danger rounded-end-pill"><i class="bi bi-search"></i></button>
         </div>
       </form>
@@ -24,7 +37,8 @@
       <div class="text-center">
         <button type="button" class="btn btn-danger rounded-pill me-lg-2"><i class="bi bi-plus-lg me-1"></i>Novo
           produto</button>
-        <button type="button" class="btn btn-danger rounded-pill"><i class="bi bi-plus-lg me-1"></i>Nova
+        <button type="button" class="btn btn-danger rounded-pill" data-bs-toggle="modal"
+          data-bs-target="#categoryModal"><i class="bi bi-plus-lg me-1"></i>Nova
           categoria</button>
       </div>
     </div>
@@ -49,11 +63,14 @@
           <td class="p-2">{{ $product->name }}</td>
           <td class="p-2">{{ $product->quantity }}</td>
           <td class="p-2">R$ {{ number_format($product->price, 2, ',', '.') }}</td>
-          <td class="p-2"><button class="btn btn-danger btn-sm rounded-circle align-middle"><i class="bi bi-pencil"></i></button></td>
+          <td class="p-2"><button class="btn btn-danger btn-sm rounded-circle align-middle"><i
+                class="bi bi-pencil"></i></button></td>
         </tr>
       @endforeach
     </tbody>
   </table>
+
+  <x-edit_category :list="$categories" />
 
   {{ $products->links() }}
 
