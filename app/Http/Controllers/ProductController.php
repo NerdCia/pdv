@@ -16,14 +16,15 @@ class ProductController extends Controller
 
     public function __construct(
         public Category $category
-    ) {}
+    ) {
+    }
 
     public function index(Request $request)
     {
         $searchProducts = $request->input('searchProducts');
 
-        $products = Product::where('name','like','%'. $searchProducts .'%')
-            ->orWhere('id','like','%'. $searchProducts .'%')
+        $products = Product::where('name', 'like', '%' . $searchProducts . '%')
+            ->orWhere('id', 'like', '%' . $searchProducts . '%')
             ->paginate(5);
 
         $categories = Category::all();
@@ -31,8 +32,9 @@ class ProductController extends Controller
         return view('components.products', compact('products', 'categories'));
     }
 
-    public function search(Request $request) {
-        
+    public function search(Request $request)
+    {
+
     }
 
     /**

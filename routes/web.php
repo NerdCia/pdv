@@ -19,3 +19,4 @@ use App\Http\Controllers\DashboardController;
 Route::get('/', [DashboardController::class, 'index'])->name('components.dashboard');
 Route::get('/products', [ProductController::class, 'index'])->name('components.products');
 Route::get('/sales', [SaleController::class, 'index'])->name('components.sales');
+Route::get('/add_sale', [SaleController::class, 'create'])->name('components.add_sale');

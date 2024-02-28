@@ -3,7 +3,7 @@
     <div class="modal-content rounded-4 border-0">
       <div class="modal-header">
         <h1 class="modal-title fs-4 fw-bold text-body-emphasis" id="productModalLabel"><i
-            class="bi bi-bookmarks fs-2 me-2"></i>Criar novo produto</h1>
+            class="bi bi-bag fs-2 me-2"></i>Criar novo produto</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">

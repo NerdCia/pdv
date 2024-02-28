@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use App\Models\Sale;
+use Illuminate\Http\Request;
 use App\Http\Requests\StoreSaleRequest;
 use App\Http\Requests\UpdateSaleRequest;
 
@@ -14,16 +16,22 @@ class SaleController extends Controller
     public function index()
     {
         $sales = Sale::paginate(10);
-
         return view('components.sales', compact('sales'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $searchProducts = $request->input('searchProducts');
+
+        $products = Product::where('name', 'like', '%' . $searchProducts . '%')
+            ->orWhere('id', 'like', '%' . $searchProducts . '%')
+            ->cursorPaginate(5);
+
+        $sales = Sale::paginate(10);
+        return view('components.add_sale', compact('sales', 'products'));
     }
 
     /**

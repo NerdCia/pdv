@@ -28,8 +28,8 @@
               </tr>
             </thead>
             <tbody class="overflow-y-auto">
-              @foreach ($list as $category)
-                <tr class="border-bottom">
+              @foreach ($list as $key => $category)
+                <tr class="{{ $key == count($list) - 1 ? '' : 'border-bottom' }}">
                   <td class="text-center p-2 fs-5"><input class="form-check-input" type="checkbox"
                       value="{{ $category->id }}"></td>
                   <td class="py-2">{{ $category->name }}</td>

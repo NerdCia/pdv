@@ -75,6 +75,7 @@ input.form-check-input:checked {
   border-color: #ed3237;
 }
 
-button.btn-close {
+button.btn-close,
+a.btn-close {
   box-shadow: none !important;
 }

@@ -57,8 +57,8 @@
       </tr>
     </thead>
     <tbody>
-      @foreach ($products as $product)
-        <tr class="border-bottom">
+      @foreach ($products as $key => $product)
+        <tr class="{{ $key == count($products) - 1 ? '' : 'border-bottom' }}">
           <td class="text-end p-2 fs-5"><input class="form-check-input" type="checkbox" value="{{ $product->id }}"></td>
           <td class="text-center p-2"><img src="{{ $product->image }}" alt="{{ $product->name }}" width="64"></td>
           <td class="p-2">{{ $product->name }}</td>
