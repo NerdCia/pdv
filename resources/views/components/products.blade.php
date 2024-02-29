@@ -23,8 +23,7 @@
             </button>
             <ul class="dropdown-menu shadow border-0">
               @foreach ($categories as $category)
-                <li><a class="dropdown-item"
-                    href="">{{ $category->name }}</a></li>
+                <li><a class="dropdown-item" href="">{{ $category->name }}</a></li>
               @endforeach
             </ul>
           </div>
@@ -36,7 +35,7 @@
 
       <div class="text-center">
         <button type="button" class="btn btn-danger rounded-pill me-lg-2" data-bs-toggle="modal"
-        data-bs-target="#addProductModal"><i class="bi bi-plus-lg me-1"></i>Novo
+          data-bs-target="#addProductModal"><i class="bi bi-plus-lg me-1"></i>Novo
           produto</button>
         <button type="button" class="btn btn-danger rounded-pill" data-bs-toggle="modal"
           data-bs-target="#addCategoryModal"><i class="bi bi-plus-lg me-1"></i>Nova
@@ -57,8 +56,8 @@
       </tr>
     </thead>
     <tbody>
-      @foreach ($products as $key => $product)
-        <tr class="{{ $key == count($products) - 1 ? '' : 'border-bottom' }}">
+      @forelse ($products as $key => $product)
+        <tr class="{{ $key == count($products) - 1 && count($products) == 0 ? '' : 'border-bottom' }}">
           <td class="text-end p-2 fs-5"><input class="form-check-input" type="checkbox" value="{{ $product->id }}"></td>
           <td class="text-center p-2"><img src="{{ $product->image }}" alt="{{ $product->name }}" width="64"></td>
           <td class="p-2">{{ $product->name }}</td>
@@ -67,7 +66,9 @@
           <td class="p-2"><button class="btn btn-danger btn-sm rounded-circle align-middle"><i
                 class="bi bi-pencil"></i></button></td>
         </tr>
-      @endforeach
+      @empty
+        <tr><td colspan="6" class="text-center py-3 fw-bold">Nenhum produto encontrado</td></tr>
+      @endforelse
     </tbody>
   </table>
 

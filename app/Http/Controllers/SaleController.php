@@ -26,9 +26,13 @@ class SaleController extends Controller
     {
         $searchProducts = $request->input('searchProducts');
 
-        $products = Product::where('name', 'like', '%' . $searchProducts . '%')
-            ->orWhere('id', 'like', '%' . $searchProducts . '%')
-            ->cursorPaginate(5);
+        if ($searchProducts) {
+            $products = Product::where('name', 'like', '%' . $searchProducts . '%')
+                ->orWhere('id', 'like', '%' . $searchProducts . '%')
+                ->paginate(5);
+        } else {
+            $products = Product::cursorPaginate(5);
+        }
 
         $sales = Sale::paginate(10);
         return view('components.add_sale', compact('sales', 'products'));
