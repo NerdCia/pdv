@@ -79,3 +79,7 @@ button.btn-close,
 a.btn-close {
   box-shadow: none !important;
 }
+
+.alert-success {
+  background-color: #ed3237 !important;
+}

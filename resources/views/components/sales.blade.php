@@ -12,7 +12,7 @@
         <span class="fs-4 fw-bold">Vendas</span>
       </a>
       <div class="text-center">
-        <a href="{{ route('components.add_sale') }}" class="btn btn-danger rounded-pill me-lg-2"><i class="bi bi-plus-lg me-1"></i>Nova
+        <a href="{{ route('components.create_sale') }}" class="btn btn-danger rounded-pill me-lg-2"><i class="bi bi-plus-lg me-1"></i>Nova
           Venda</a>
       </div>
     </div>

@@ -19,4 +19,7 @@ use App\Http\Controllers\DashboardController;
 Route::get('/', [DashboardController::class, 'index'])->name('components.dashboard');
 Route::get('/products', [ProductController::class, 'index'])->name('components.products');
 Route::get('/sales', [SaleController::class, 'index'])->name('components.sales');
-Route::get('/add_sale', [SaleController::class, 'create'])->name('components.add_sale');
+Route::get('/create_sale', [SaleController::class, 'show'])->name('components.create_sale');
+Route::post('/update_sale', [SaleController::class, 'add'])->name('components.update_sale');
+Route::post('/sale_update_product', [SaleController::class, 'saleUpdateProduct'])->name('sale.update.product');
+Route::post('/sale_remove_product', [SaleController::class, 'saleRemoveProduct'])->name('sale.remove.product');

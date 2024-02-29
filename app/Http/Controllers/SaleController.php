@@ -15,6 +15,7 @@ class SaleController extends Controller
      */
     public function index()
     {
+        \Cart::clear();
         $sales = Sale::paginate(10);
         return view('components.sales', compact('sales'));
     }
@@ -24,6 +25,24 @@ class SaleController extends Controller
      */
     public function create(Request $request)
     {
+
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(StoreSaleRequest $request)
+    {
+
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(Request $request)
+    {
+        $items = \Cart::getContent();
+
         $searchProducts = $request->input('searchProducts');
 
         if ($searchProducts) {
@@ -35,23 +54,39 @@ class SaleController extends Controller
         }
 
         $sales = Sale::paginate(10);
-        return view('components.add_sale', compact('sales', 'products'));
+        return view('components.create_sale', compact('sales', 'products', 'items'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreSaleRequest $request)
+    public function add(Request $request)
     {
-        //
+        \Cart::add([
+            'id' => $request->id,
+            'name' => $request->name,
+            'price' => $request->price,
+            'quantity' => $request->quantity,
+            'attributes' => array(
+                'image' => $request->image
+            )
+        ]);
+        return redirect()->route('components.create_sale')->with('success','Produto adicionado com sucesso.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Sale $sale)
+    public function saleUpdateProduct(Request $request)
     {
-        //
+        \Cart::update($request->id, [
+            'quantity' => [
+                'relative' => false,
+                'value' => abs($request->quantity)
+            ]
+        ]);
+
+        return redirect()->route('components.create_sale');
+    }
+
+    public function saleRemoveProduct(Request $request)
+    {
+        \Cart::remove($request->id);
+        return redirect()->route('components.create_sale')->with('warning','Produto removido com sucesso.');
     }
 
     /**
@@ -65,9 +100,9 @@ class SaleController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateSaleRequest $request, Sale $sale)
+    public function update(Request $request)
     {
-        //
+
     }
 
     /**
