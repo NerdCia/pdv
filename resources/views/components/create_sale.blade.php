@@ -40,14 +40,14 @@
                 <div class="dropdown">
                   <div class="input-group">
                     <form class="input-group" role="search" action="{{ route('components.create_sale') }}" method="GET"
-                      enctype="multipart/form-data" data-bs-toggle="dropdown" aria-expanded="false">
+                      enctype="multipart/form-data">
                       @csrf
                       <input type="search" name="searchProducts" class="form-control shadow rounded-start-pill"
-                        placeholder="Digite o nome ou ID do produto" aria-label="Search">
+                        placeholder="Digite o nome ou ID do produto" aria-label="Search" data-bs-toggle="collapse" data-bs-target="#collapseProducts" aria-expanded="false" aria-controls="collapseProducts">
                       <button type="submit" class="btn btn-danger rounded-end-pill"><i class="bi bi-search"></i></button>
                     </form>
-                    <div class="border-0 rounded-4 dropdown-menu dropdown-menu-end px-4 shadow">
-                      <table class="bg-white w-100 align-middle {{ count($products) > 0 ? 'mb-3' : '' }}">
+                    <div class="border-0 bg-white rounded-4 collapse px-4 mt-2 shadow position-absolute end-0 top-100" id="collapseProducts">
+                      <table class="bg-white w-100 align-middle my-2">
                         <tbody>
                           @forelse ($products as $key => $product)
                             <form action="{{ route('components.update_sale') }}" method="POST"

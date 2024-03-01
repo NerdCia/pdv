@@ -5,14 +5,14 @@
 @section('content')
 
   <nav class="my-3 py-2 px-4 bg-white rounded-pill shadow">
-    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-xl-start">
       <a href="{{ route('components.products') }}"
-        class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-body-emphasis text-decoration-none">
+        class="d-flex align-items-center mb-3 mb-xl-0 me-xl-auto text-body-emphasis text-decoration-none">
         <i class="bi bi-bag d-block fs-2 me-2"></i>
         <span class="fs-4 fw-bold">Produtos</span>
       </a>
 
-      <form class="col-12 col-lg-auto col-xl-6 mb-3 mb-lg-0 me-lg-3" role="search"
+      <form class="col-12 col-xl-5 mb-3 mb-xl-0 me-xl-3" role="search"
         action="{{ route('components.products') }}" method="GET" enctype="multipart/form-data">
         @csrf
         <div class="input-group">
