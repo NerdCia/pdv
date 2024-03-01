@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -22,10 +23,14 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $searchProducts = $request->input('searchProducts');
+        $searchProductsCategory = $request->input('searchProductsCategory');
 
-        $products = Product::where('name', 'like', '%' . $searchProducts . '%')
+        $products = DB::table('products')->where('id_category', 'like', '%'. $searchProductsCategory .'%')->paginate(5);
+
+        $products = DB::table('products')->where('name', 'like', '%' . $searchProducts . '%')
             ->orWhere('id', 'like', '%' . $searchProducts . '%')
             ->paginate(5);
+
 
         $categories = Category::all();
 

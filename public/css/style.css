@@ -33,11 +33,15 @@ body {
 }
 
 .btn-danger {
-  background-color: #ed3237;
+  background-color: #ed3237 !important;
 }
 
-#sidebar .bg-danger {
+.bg-danger {
   background-color: #ed3237 !important;
+}
+
+.text-danger {
+  color: #ed3237 !important;
 }
 
 #sidebar .nav-link {

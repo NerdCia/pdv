@@ -25,7 +25,7 @@ class SaleController extends Controller
      */
     public function create(Request $request)
     {
-
+        
     }
 
     /**
@@ -43,6 +43,12 @@ class SaleController extends Controller
     {
         $items = \Cart::getContent();
 
+        $total = 0;
+        foreach ($items as $item) {
+            $subtotal = $item->price * $item->quantity;
+            $total += $subtotal;
+        }
+
         $searchProducts = $request->input('searchProducts');
 
         if ($searchProducts) {
@@ -54,7 +60,7 @@ class SaleController extends Controller
         }
 
         $sales = Sale::paginate(10);
-        return view('components.create_sale', compact('sales', 'products', 'items'));
+        return view('components.create_sale', compact('sales', 'products', 'items', 'total'));
     }
 
     public function add(Request $request)
@@ -63,7 +69,7 @@ class SaleController extends Controller
             'id' => $request->id,
             'name' => $request->name,
             'price' => $request->price,
-            'quantity' => $request->quantity,
+            'quantity' => abs($request->quantity),
             'attributes' => array(
                 'image' => $request->image
             )

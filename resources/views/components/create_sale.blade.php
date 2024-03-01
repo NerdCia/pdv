@@ -35,7 +35,7 @@
         </div>
         <div class="modal-body">
           <div class="row">
-            <div class="col-8">
+            <div class="col-lg-8">
               <nav class="col-12 mb-3 mb-lg-0 me-lg-3">
                 <div class="dropdown">
                   <div class="input-group">
@@ -43,10 +43,12 @@
                       enctype="multipart/form-data">
                       @csrf
                       <input type="search" name="searchProducts" class="form-control shadow rounded-start-pill"
-                        placeholder="Digite o nome ou ID do produto" aria-label="Search" data-bs-toggle="collapse" data-bs-target="#collapseProducts" aria-expanded="false" aria-controls="collapseProducts">
+                        placeholder="Digite o nome ou ID do produto" aria-label="Search" data-bs-toggle="collapse"
+                        data-bs-target="#collapseProducts" aria-expanded="false" aria-controls="collapseProducts">
                       <button type="submit" class="btn btn-danger rounded-end-pill"><i class="bi bi-search"></i></button>
                     </form>
-                    <div class="border-0 bg-white rounded-4 collapse px-4 mt-2 shadow position-absolute end-0 top-100" id="collapseProducts">
+                    <div class="border-0 bg-white rounded-4 collapse px-4 mt-2 shadow position-absolute end-0 top-100"
+                      id="collapseProducts">
                       <table class="bg-white w-100 align-middle my-2">
                         <tbody>
                           @forelse ($products as $key => $product)
@@ -97,15 +99,16 @@
                 <tbody>
                   @forelse ($items as $key => $item)
                     <tr class="{{ $key == count($items) - 1 && count($items) == 0 ? '' : 'border-bottom' }}">
-                      <td class="text-center py-2"><img src="{{ $item->attributes->image }}" alt="{{ $item->name }}"
-                          width="64"></td>
+                      <td class="text-center py-2"><img src="{{ $item->attributes->image }}"
+                          alt="{{ $item->name }}" width="64"></td>
                       <td class="py-2">{{ $item->name }}</td>
                       <td class="py-2">R$ {{ number_format($item->price * $item->quantity, 2, ',', '.') }}</td>
                       <form action="{{ route('sale.update.product') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" name="id" value="{{ $item->id }}">
                         <td class="py-2 col-1"><input class="form-control form-control-sm" type="number"
-                            name="quantity" value="{{ $item->quantity }}"></td>
+                            name="quantity" value="{{ $item->quantity }}" min="1"
+                            max="{{ $products->where('id', 'like', $item->id)->value('quantity') }}"></td>
                         <td class="text-center py-2">
                           <button class="btn btn-danger btn-sm rounded-circle align-middle"><i
                               class="bi bi-arrow-clockwise"></i></button>
@@ -129,7 +132,52 @@
               </table>
             </div>
             <div class="col mx-4">
-              
+              <div class="order-md-last">
+                <h4 class="d-flex justify-content-between align-items-center mb-3">
+                  <span class="text-danger fw-bold">Produtos</span>
+                  <span class="badge bg-danger rounded-pill">{{ count($items) }}</span>
+                </h4>
+                <ul class="list-group mb-3">
+                  @isset($discount)
+                    <li class="list-group-item align-items-center d-flex justify-content-between bg-body-tertiary">
+                      <div class="text-success">
+                        <h6 class="my-0">Descontos</h6>
+                      </div>
+                      <span class="text-success">−$5</span>
+                    </li>
+                  @endisset
+                  @isset($promoCode)
+                    <li class="list-group-item d-flex justify-content-between bg-body-tertiary">
+                      <div class="text-success">
+                        <h6 class="my-0">Código promocional</h6>
+                        <small>NERDCIAOFERTAS</small>
+                      </div>
+                      <span class="text-success">−$5</span>
+                    </li>
+                  @endisset
+                  <li class="list-group-item align-items-center d-flex justify-content-between">
+                    <strong class="fs-4">Total</strong>
+                    <strong class="fs-5">
+                      @if (count($items) > 0)
+                        R$ {{ number_format($total, 2, ',', '.') }}
+                      @else
+                        R$ 0,00
+                      @endif
+                    </strong>
+                  </li>
+                </ul>
+                <form class="card p-2">
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Código promocional">
+                    <button type="submit" class="btn btn-danger">Resgatar</button>
+                  </div>
+                </form>
+              </div>
+              <form class="d-flex justify-content-center mt-3" action="" method="POST"
+                enctype="multipart/form-data">
+
+                <button type="submit" class="btn btn-danger btn-lg">Finalizar compra</button>
+              </form>
             </div>
           </div>
         </div>

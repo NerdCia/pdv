@@ -19,11 +19,17 @@
           <div class="dropdown">
             <button class="btn btn-danger dropdown-toggle rounded-start-pill" type="button" data-bs-toggle="dropdown"
               aria-expanded="false">
-              Categorias
+              @if (isset($categoria))
+                  {{ $categoria }}
+              @else
+                  Categorias
+              @endif
             </button>
             <ul class="dropdown-menu shadow border-0">
               @foreach ($categories as $category)
-                <li><a class="dropdown-item" href="">{{ $category->name }}</a></li>
+                <li>
+                  <button class="dropdown-item" type="submit" name="searchProductsCategory" value="{{ $category->id}}">{{ $category->name }}</button>
+                </li>
               @endforeach
             </ul>
           </div>
