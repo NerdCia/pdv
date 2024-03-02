@@ -23,6 +23,7 @@
       <tr class="border-bottom">
         <th scope="col"></th>
         <th class="fw-bold py-3" scope="col">Usuário</th>
+        <th class="fw-bold py-3" scope="col">Método de pagamento</th>
         <th class="fw-bold py-3" scope="col">Data</th>
         <th class="fw-bold py-3" scope="col"></th>
       </tr>
@@ -33,7 +34,8 @@
           <td class="text-center py-2 fs-5"><input class="form-check-input" type="checkbox" value="{{ $sale->id }}">
           </td>
           <td class="py-2">{{ $sale->user->name }}</td>
-          <td class="py-2">{{ $sale->created_at }}</td>
+          <td class="py-2">{{ $sale->payment_method }}</td>
+          <td class="py-2">{{ date_format($sale->created_at, 'd/m/Y H:i:s') }}</td>
           <td><button class="btn btn-danger btn-sm rounded-circle align-middle"><i class="bi bi-pencil"></i></button></td>
         </tr>
       @endforeach

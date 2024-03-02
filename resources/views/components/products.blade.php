@@ -12,29 +12,38 @@
         <span class="fs-4 fw-bold">Produtos</span>
       </a>
 
-      <form class="col-12 col-xl-5 mb-3 mb-xl-0 me-xl-3" role="search"
-        action="{{ route('components.products') }}" method="GET" enctype="multipart/form-data">
+      <form class="col-12 col-xl-5 mb-3 mb-xl-0 me-xl-3" role="search" action="{{ route('components.products', $categorySelected) }}"
+        method="GET" enctype="multipart/form-data">
         @csrf
         <div class="input-group">
           <div class="dropdown">
             <button class="btn btn-danger dropdown-toggle rounded-start-pill" type="button" data-bs-toggle="dropdown"
               aria-expanded="false">
-              @if (isset($categoria))
-                  {{ $categoria }}
+              @if (!empty($categorySelected))
+                {{ $categorySelected }}
               @else
-                  Categorias
+                Categorias
               @endif
             </button>
             <ul class="dropdown-menu shadow border-0">
+              <li>
+                <a class="dropdown-item {{ empty($categorySelected) ? 'disabled' : '' }}"
+                  href="{{ route('components.products') }}">Todas as
+                  categorias</a>
+              </li>
               @foreach ($categories as $category)
-                <li>
-                  <button class="dropdown-item" type="submit" name="searchProductsCategory" value="{{ $category->id}}">{{ $category->name }}</button>
-                </li>
+                @if ($category->name != $categorySelected)
+                  <li>
+                    <a class="dropdown-item"
+                      href="{{ route('components.products', $category->name) }}">{{ $category->name }}</a>
+                  </li>
+                @endif
               @endforeach
             </ul>
           </div>
           <input type="search" name="searchProducts" class="form-control shadow"
-            placeholder="Digite o nome ou ID do produto" aria-label="Search">
+            placeholder="Digite o nome ou ID do produto" aria-label="Search"
+            value="{{ $nameProductSearch ? $nameProductSearch : '' }}">
           <button type="submit" class="btn btn-danger rounded-end-pill"><i class="bi bi-search"></i></button>
         </div>
       </form>
@@ -73,7 +82,9 @@
                 class="bi bi-pencil"></i></button></td>
         </tr>
       @empty
-        <tr><td colspan="6" class="text-center py-3 fw-bold">Nenhum produto encontrado</td></tr>
+        <tr>
+          <td colspan="6" class="text-center py-3 fw-bold">Nenhum produto encontrado</td>
+        </tr>
       @endforelse
     </tbody>
   </table>

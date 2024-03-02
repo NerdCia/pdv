@@ -16,7 +16,9 @@ class SaleController extends Controller
     public function index()
     {
         \Cart::clear();
-        $sales = Sale::paginate(10);
+        $sales = Sale::paginate(
+            $perPage = 10, $columns = ['*'], $pageName = 'sales'
+        );
         return view('components.sales', compact('sales'));
     }
 
@@ -39,7 +41,7 @@ class SaleController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Request $request)
+    public function show(Request $request, ?string $product = null)
     {
         $items = \Cart::getContent();
 
@@ -54,12 +56,19 @@ class SaleController extends Controller
         if ($searchProducts) {
             $products = Product::where('name', 'like', '%' . $searchProducts . '%')
                 ->orWhere('id', 'like', '%' . $searchProducts . '%')
-                ->paginate(5);
+                ->paginate(
+                    $perPage = 5, $columns = ['*'], $pageName = 'products'
+                )
+                ->withQueryString();
         } else {
-            $products = Product::cursorPaginate(5);
+            $products = Product::paginate(
+                $perPage = 5, $columns = ['*'], $pageName = 'products'
+            );
         }
 
-        $sales = Sale::paginate(10);
+        $sales = Sale::cursorPaginate(
+            $perPage = 10, $columns = ['*'], $pageName = 'sales'
+        );
         return view('components.create_sale', compact('sales', 'products', 'items', 'total'));
     }
 

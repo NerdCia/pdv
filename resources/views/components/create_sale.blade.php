@@ -47,7 +47,7 @@
                         data-bs-target="#collapseProducts" aria-expanded="false" aria-controls="collapseProducts">
                       <button type="submit" class="btn btn-danger rounded-end-pill"><i class="bi bi-search"></i></button>
                     </form>
-                    <div class="border-0 bg-white rounded-4 collapse px-4 mt-2 shadow position-absolute end-0 top-100"
+                    <div class="border-0 bg-white rounded-4 collapse px-4 mt-2 shadow position-absolute end-0 top-100 z-3"
                       id="collapseProducts">
                       <table class="bg-white w-100 align-middle my-2">
                         <tbody>
@@ -131,13 +131,13 @@
                 </tbody>
               </table>
             </div>
-            <div class="col mx-4">
+            <div class="col shadow mx-2 p-4 rounded-4">
               <div class="order-md-last">
                 <h4 class="d-flex justify-content-between align-items-center mb-3">
                   <span class="text-danger fw-bold">Produtos</span>
                   <span class="badge bg-danger rounded-pill">{{ count($items) }}</span>
                 </h4>
-                <ul class="list-group mb-3">
+                <ul class="list-group mb-3 border-0">
                   @isset($discount)
                     <li class="list-group-item align-items-center d-flex justify-content-between bg-body-tertiary">
                       <div class="text-success">
@@ -166,7 +166,7 @@
                     </strong>
                   </li>
                 </ul>
-                <form class="card p-2">
+                <form class="p-2">
                   <div class="input-group">
                     <input type="text" class="form-control" placeholder="Código promocional">
                     <button type="submit" class="btn btn-danger">Resgatar</button>

@@ -20,21 +20,48 @@ class ProductController extends Controller
     ) {
     }
 
-    public function index(Request $request)
+    public function index(Request $request, ?string $category = null)
     {
         $searchProducts = $request->input('searchProducts');
-        $searchProductsCategory = $request->input('searchProductsCategory');
 
-        $products = DB::table('products')->where('id_category', 'like', '%'. $searchProductsCategory .'%')->paginate(5);
+        $categorySelected = $category;
+        $nameProductSearch = $searchProducts;
 
-        $products = DB::table('products')->where('name', 'like', '%' . $searchProducts . '%')
-            ->orWhere('id', 'like', '%' . $searchProducts . '%')
-            ->paginate(5);
+        $id_category = Category::where('name', $category)->value('id');
 
+        if ($id_category && $searchProducts) {
+            $products = DB::table('products')
+                ->where('id_category', $id_category)
+                ->where('name', 'like', '%' . $searchProducts . '%')
+                ->orWhere('id', 'like', '%' . $searchProducts . '%')
+                ->paginate(
+                    $perPage = 5, $columns = ['*'], $pageName = 'products'
+                )->withQueryString();
+        } elseif ($id_category) {
+            $products = DB::table('products')
+                ->where('id_category', $id_category)
+                ->paginate(
+                    $perPage = 5, $columns = ['*'], $pageName = 'products'
+                );
+        } elseif ($searchProducts) {
+            $products = DB::table('products')
+                ->where('name', 'like', '%' . $searchProducts . '%')
+                ->orWhere('id', 'like', '%' . $searchProducts . '%')
+                ->paginate(
+                    $perPage = 5, $columns = ['*'], $pageName = 'products'
+                )
+                ->withQueryString();
+        } else {
+            $products = DB::table('products')->paginate(
+                $perPage = 5, $columns = ['*'], $pageName = 'products'
+            );
+        }
 
-        $categories = Category::all();
+        $categories = Category::paginate(
+            $perPage = 10, $columns = ['*'], $pageName = 'categories'
+        );
 
-        return view('components.products', compact('products', 'categories'));
+        return view('components.products', compact('products', 'categories', 'categorySelected', 'nameProductSearch'));
     }
 
     public function search(Request $request)
