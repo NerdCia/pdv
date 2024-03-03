@@ -52,7 +52,7 @@
                       <table class="bg-white w-100 align-middle my-2">
                         <tbody>
                           @forelse ($products as $key => $product)
-                            <form action="{{ route('components.update_sale') }}" method="POST"
+                            <form action="{{ route('sale.add.product') }}" method="POST"
                               enctype="multipart/form-data">
                               @csrf
                               <tr class="{{ $key == count($products) - 1 ? '' : ' border-bottom' }}">
@@ -168,15 +168,15 @@
                 </ul>
                 <form class="p-2">
                   <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Código promocional">
-                    <button type="submit" class="btn btn-danger">Resgatar</button>
+                    <input type="text" class="form-control rounded-start-pill" placeholder="Código promocional">
+                    <button type="submit" class="btn btn-danger rounded-end-pill">Resgatar</button>
                   </div>
                 </form>
               </div>
               <form class="d-flex justify-content-center mt-3" action="" method="POST"
                 enctype="multipart/form-data">
 
-                <button type="submit" class="btn btn-danger btn-lg">Finalizar compra</button>
+                <button type="submit" class="btn btn-danger btn-lg rounded-pill">Finalizar compra</button>
               </form>
             </div>
           </div>

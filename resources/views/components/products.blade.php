@@ -12,8 +12,8 @@
         <span class="fs-4 fw-bold">Produtos</span>
       </a>
 
-      <form class="col-12 col-xl-5 mb-3 mb-xl-0 me-xl-3" role="search" action="{{ route('components.products', $categorySelected) }}"
-        method="GET" enctype="multipart/form-data">
+      <form class="col-12 col-xl-5 mb-3 mb-xl-0 me-xl-3" role="search"
+        action="{{ route('components.products', $categorySelected) }}" method="GET" enctype="multipart/form-data">
         @csrf
         <div class="input-group">
           <div class="dropdown">
@@ -49,12 +49,10 @@
       </form>
 
       <div class="text-center">
-        <button type="button" class="btn btn-danger rounded-pill me-lg-2" data-bs-toggle="modal"
-          data-bs-target="#addProductModal"><i class="bi bi-plus-lg me-1"></i>Novo
-          produto</button>
-        <button type="button" class="btn btn-danger rounded-pill" data-bs-toggle="modal"
-          data-bs-target="#addCategoryModal"><i class="bi bi-plus-lg me-1"></i>Nova
-          categoria</button>
+        <a type="button" class="btn btn-danger rounded-pill me-lg-2" href="{{ route('components.create_product') }}"><i class="bi bi-plus-lg me-1"></i>Novo
+          produto</a>
+        <a type="button" class="btn btn-danger rounded-pill" href="{{ route('components.create_category') }}"><i class="bi bi-plus-lg me-1"></i>Nova
+          categoria</a>
       </div>
     </div>
   </nav>
@@ -78,8 +76,10 @@
           <td class="p-2">{{ $product->name }}</td>
           <td class="p-2">{{ $product->quantity }}</td>
           <td class="p-2">R$ {{ number_format($product->price, 2, ',', '.') }}</td>
-          <td class="p-2"><button class="btn btn-danger btn-sm rounded-circle align-middle"><i
-                class="bi bi-pencil"></i></button></td>
+          <form action="{{ route('components.product', $product->id) }}" method="GET" enctype="multipart/form-data">
+            <td class="p-2"><button class="btn btn-danger btn-sm rounded-circle align-middle"><i
+                  class="bi bi-pencil"></i></button></td>
+          </form>
         </tr>
       @empty
         <tr>
@@ -89,9 +89,7 @@
     </tbody>
   </table>
 
-  <x-add_category :list="$categories" />
-
-  <x-add_product />
+  @yield('modal')
 
   {{ $products->links() }}
 

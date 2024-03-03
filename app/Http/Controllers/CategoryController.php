@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
+use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
@@ -13,7 +14,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        
     }
 
     /**
@@ -21,7 +22,18 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        $categorySelected = '';
+        $nameProductSearch = '';
+
+        $categories = Category::paginate(
+            $perPage = 10, $columns = ['*'], $pageName = 'categories'
+        );
+
+        $products = DB::table('products')->paginate(
+            $perPage = 5, $columns = ['*'], $pageName = 'products'
+        );
+
+        return view('components.create_category', compact('categories', 'products', 'categorySelected', 'nameProductSearch'));
     }
 
     /**

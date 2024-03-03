@@ -64,17 +64,23 @@ class ProductController extends Controller
         return view('components.products', compact('products', 'categories', 'categorySelected', 'nameProductSearch'));
     }
 
-    public function search(Request $request)
-    {
-
-    }
-
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        //
+        $categorySelected = '';
+        $nameProductSearch = '';
+
+        $categories = Category::paginate(
+            $perPage = 10, $columns = ['*'], $pageName = 'categories'
+        );
+
+        $products = DB::table('products')->paginate(
+            $perPage = 5, $columns = ['*'], $pageName = 'products'
+        );
+
+        return view('components.create_product', compact('categories', 'products', 'categorySelected', 'nameProductSearch'));
     }
 
     /**
@@ -96,9 +102,22 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Product $product)
+    public function edit(Product $product, string $id)
     {
-        //
+        $categorySelected = '';
+        $nameProductSearch = '';
+
+        $product = Product::find($id);
+
+        $categories = Category::paginate(
+            $perPage = 10, $columns = ['*'], $pageName = 'categories'
+        );
+
+        $products = DB::table('products')->paginate(
+            $perPage = 5, $columns = ['*'], $pageName = 'products'
+        );
+
+        return view('components.edit_product', compact('product', 'categories', 'products', 'categorySelected', 'nameProductSearch'));
     }
 
     /**

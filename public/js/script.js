@@ -1,5 +1,8 @@
 window.onload = () => {
   $('#addSaleModal').modal('show');
+  $('#editProductModal').modal('show');
+  $('#createCategoryModal').modal('show');
+  $('#createProductModal').modal('show');
 }
 
 $(document).click(function(e) {
