@@ -31,6 +31,7 @@
           </div>
         </form>
 
+        @auth
         <div class="flex-shrink-0 dropdown">
           <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle"
             data-bs-toggle="dropdown" aria-expanded="false">
@@ -42,9 +43,15 @@
             <li>
               <hr class="dropdown-divider">
             </li>
-            <li><a class="dropdown-item" href="#">Sair</a></li>
+            <li><a class="dropdown-item" href="{{ route('form.logout') }}">Sair</a></li>
           </ul>
         </div>
+        @else
+        <div class="flex-shrink-0">
+          <a class="btn btn-danger rounded-pill px-4 me-2" href="{{ route('form.login') }}">Login</a>
+        </div>
+        @endauth
+        
       </div>
     </div>
   </header>

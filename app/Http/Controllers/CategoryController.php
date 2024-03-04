@@ -26,7 +26,7 @@ class CategoryController extends Controller
         $nameProductSearch = '';
 
         $categories = Category::paginate(
-            $perPage = 10, $columns = ['*'], $pageName = 'categories'
+            $perPage = 5, $columns = ['*'], $pageName = 'categories'
         );
 
         $products = DB::table('products')->paginate(

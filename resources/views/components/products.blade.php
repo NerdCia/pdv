@@ -60,19 +60,19 @@
   <table class="bg-white w-100 shadow-lg align-middle rounded-5 mb-3">
     <thead>
       <tr class="border-bottom">
-        <th scope="col"></th>
-        <th scope="col"></th>
-        <th class="fw-bold py-3" scope="col">Nome</th>
-        <th class="fw-bold py-3" scope="col">Quantidade</th>
-        <th class="fw-bold py-3" scope="col">Preço</th>
-        <th class="fw-bold py-3" scope="col"></th>
+        <th class="px-2" scope="col"></th>
+        <th class="d-none d-lg-table-cell px-2" scope="col"></th>
+        <th class="fw-bold py-3 px-2" scope="col">Nome</th>
+        <th class="fw-bold py-3 px-2" scope="col">Quantidade</th>
+        <th class="fw-bold py-3 px-2" scope="col">Preço</th>
+        <th class="fw-bold py-3 px-2" scope="col"></th>
       </tr>
     </thead>
     <tbody>
       @forelse ($products as $key => $product)
         <tr class="{{ $key == count($products) - 1 && count($products) == 0 ? '' : 'border-bottom' }}">
           <td class="text-end p-2 fs-5"><input class="form-check-input" type="checkbox" value="{{ $product->id }}"></td>
-          <td class="text-center p-2"><img src="{{ $product->image }}" alt="{{ $product->name }}" width="64"></td>
+          <td class="text-center p-2 d-none d-lg-table-cell"><img src="{{ $product->image }}" alt="{{ $product->name }}" width="64"></td>
           <td class="p-2">{{ $product->name }}</td>
           <td class="p-2">{{ $product->quantity }}</td>
           <td class="p-2">R$ {{ number_format($product->price, 2, ',', '.') }}</td>

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\CreateSaleController;
@@ -18,25 +19,28 @@ use App\Http\Controllers\DashboardController;
 |
 */
 
-Route::group([
-  'prefix' => '/',
-  'as' => 'components.'
-], function () {
-  Route::get('', [DashboardController::class, 'index'])
-    ->name('dashboard');
-  Route::get('products/{category?}', [ProductController::class, 'index'])
-    ->name('products');
-  Route::get('product/{id}', [ProductController::class, 'edit'])
-    ->name('product');
-  Route::get('create_product', [ProductController::class, 'create'])
-    ->name('create_product');
-  Route::get('create_category', [CategoryController::class, 'create'])
-    ->name('create_category');
-  Route::get('sales', [SaleController::class, 'index'])
-    ->name('sales');
-  Route::get('create_sale', [CreateSaleController::class, 'index'])
-    ->name('create_sale');
+Route::middleware(['auth'])->group(function () {
+  Route::group([
+    'prefix' => '/',
+    'as' => 'components.'
+  ], function () {
+    Route::get('', [DashboardController::class, 'index'])
+      ->name('dashboard');
+    Route::get('products/{category?}', [ProductController::class, 'index'])
+      ->name('products');
+    Route::get('product/{id}', [ProductController::class, 'edit'])
+      ->name('product');
+    Route::get('create_product', [ProductController::class, 'create'])
+      ->name('create_product');
+    Route::get('create_category', [CategoryController::class, 'create'])
+      ->name('create_category');
+    Route::get('sales', [SaleController::class, 'index'])
+      ->name('sales');
+    Route::get('create_sale', [CreateSaleController::class, 'index'])
+      ->name('create_sale');
+  });
 });
+
 
 Route::group([
   'prefix' => '/',
@@ -49,3 +53,7 @@ Route::group([
   Route::post('sale_remove_product', [CreateSaleController::class, 'saleRemoveProduct'])
     ->name('remove.product');
 });
+
+Route::view('/login', 'form.login')->name('form.login');
+Route::post('/auth', [LoginController::class, 'auth'])->name('form.auth');
+Route::get('/logout', [LoginController::class, 'logout'])->name('form.logout');

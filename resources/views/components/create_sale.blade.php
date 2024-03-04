@@ -8,7 +8,7 @@
 
     @if ($message = Session::get('success'))
       <div
-        class="alert bg-white shadow alert-dismissible fade show position-absolute top-0 end-0 mt-4 me-4 z-3 col-4 d-flex align-items-center"
+        class="alert bg-white shadow alert-dismissible fade show position-absolute top-0 end-0 mt-4 me-4 z-3 col-4 d-flex align-items-center col-10 col-md-auto"
         role="alert">
         <i class="bi bi-check-circle me-2 fs-4 text-success"></i>
         {{ $message }}
@@ -18,7 +18,7 @@
 
     @if ($message = Session::get('warning'))
       <div
-        class="alert bg-white shadow alert-dismissible fade show position-absolute top-0 end-0 mt-4 me-4 z-3 col-4 d-flex align-items-center"
+        class="alert bg-white shadow alert-dismissible fade show position-absolute top-0 end-0 mt-4 me-4 z-3 col-4 d-flex align-items-center col-10 col-md-auto"
         role="alert">
         <i class="bi bi-check-circle me-2 fs-4 text-warning"></i>
         {{ $message }}
@@ -87,36 +87,36 @@
               <table class="bg-white w-100 shadow align-middle rounded-4 my-3">
                 <thead>
                   <tr class="border-bottom">
-                    <th scope="col"></th>
-                    <th class="fw-bold py-3" scope="col">Nome</th>
-                    <th class="fw-bold py-3" scope="col">Preço</th>
-                    <th class="fw-bold py-3" scope="col">Quantidade</th>
-                    <th class="fw-bold py-3" scope="col"></th>
-                    <th class="fw-bold py-3" scope="col"></th>
-                    <th class="fw-bold py-3" scope="col"></th>
+                    <th class="d-none d-lg-table-cell" scope="col"></th>
+                    <th class="fw-bold py-3 px-2" scope="col">Nome</th>
+                    <th class="fw-bold py-3 px-2" scope="col">Preço</th>
+                    <th class="fw-bold py-3 px-2" scope="col">Quantidade</th>
+                    <th class="fw-bold py-3 px-2" scope="col"></th>
+                    <th class="fw-bold py-3 px-2" scope="col"></th>
+                    <th class="fw-bold py-3 px-2" scope="col"></th>
                   </tr>
                 </thead>
                 <tbody>
                   @forelse ($items as $key => $item)
                     <tr class="{{ $key == count($items) - 1 && count($items) == 0 ? '' : 'border-bottom' }}">
-                      <td class="text-center py-2"><img src="{{ $item->attributes->image }}"
+                      <td class="text-center p-2 d-none d-lg-table-cell"><img src="{{ $item->attributes->image }}"
                           alt="{{ $item->name }}" width="64"></td>
-                      <td class="py-2">{{ $item->name }}</td>
-                      <td class="py-2">R$ {{ number_format($item->price * $item->quantity, 2, ',', '.') }}</td>
+                      <td class="p-2">{{ $item->name }}</td>
+                      <td class="p-2">R$ {{ number_format($item->price * $item->quantity, 2, ',', '.') }}</td>
                       <form action="{{ route('sale.update.product') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" name="id" value="{{ $item->id }}">
-                        <td class="py-2 col-1"><input class="form-control form-control-sm" type="number"
+                        <td class="p-2 col-1"><input class="form-control form-control-sm" type="number"
                             name="quantity" value="{{ $item->quantity }}" min="1"
                             max="{{ $products->where('id', 'like', $item->id)->value('quantity') }}"></td>
-                        <td class="text-center py-2">
+                        <td class="text-center p-2">
                           <button class="btn btn-danger btn-sm rounded-circle align-middle"><i
                               class="bi bi-arrow-clockwise"></i></button>
                         </td>
                       </form>
                       <form action="{{ route('sale.remove.product') }}" method="POST" enctype="multipart/form-data">
                         @csrf
-                        <td class="text-center py-2">
+                        <td class="text-center p-2">
                           <input type="hidden" name="id" value="{{ $item->id }}">
                           <button class="btn btn-danger btn-sm rounded-circle align-middle"><i
                               class="bi bi-x-lg"></i></button>
