@@ -60,7 +60,7 @@
       <ul class="nav flex-column text-center bg-white mx-auto my-3 col-12 col-lg-10 rounded-5 py-4 shadow"
         id="sidebar">
         <li class="nav-item my-2">
-          <a class="nav-link text-secondary px-0 py-3 rounded-4 text-uppercase" href="#">
+          <a class="nav-link text-secondary px-0 py-3 rounded-4 text-uppercase" href="{{ route('components.dashboard') }}">
             <i class="bi bi-speedometer d-block fs-5"></i>
             <small class="d-none d-lg-block">Painel</small>
           </a>
@@ -94,6 +94,7 @@
   <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="/js/jquery-3.7.1.min.js"></script>
   <script src="/js/script.js"></script>
+  @stack('graphics')
 </body>
 
 </html>

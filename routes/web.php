@@ -5,6 +5,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\CreateSaleController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 
@@ -19,7 +20,7 @@ use App\Http\Controllers\DashboardController;
 |
 */
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'authorization'])->group(function () {
   Route::group([
     'prefix' => '/',
     'as' => 'components.'
@@ -41,6 +42,13 @@ Route::middleware(['auth'])->group(function () {
   });
 });
 
+Route::group([
+  'prefix' => '/',
+  'as' => 'product.'
+], function () {
+  Route::post('update_product', [ProductController::class, 'update'])
+    ->name('update');
+});
 
 Route::group([
   'prefix' => '/',
@@ -54,6 +62,9 @@ Route::group([
     ->name('remove.product');
 });
 
+Route::resource('users', UserController::class);
+
 Route::view('/login', 'form.login')->name('form.login');
 Route::post('/auth', [LoginController::class, 'auth'])->name('form.auth');
 Route::get('/logout', [LoginController::class, 'logout'])->name('form.logout');
+Route::get('/register', [LoginController::class, 'create'])->name('form.register');

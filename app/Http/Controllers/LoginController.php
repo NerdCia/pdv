@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class LoginController extends Controller
 {
@@ -18,7 +19,7 @@ class LoginController extends Controller
             'password.required' => 'A senha é obrigatória',
         ]);
 
-        if (Auth::attempt($credentials)) {
+        if (Auth::attempt($credentials, $request->remember)) {
             $request->session()->regenerate();
 
             return redirect()->intended('');
@@ -35,5 +36,10 @@ class LoginController extends Controller
         $request->session()->regenerateToken();
 
         return redirect(route('form.login'));
+    }
+
+    public function create(Request $request)
+    {
+        return view('form.register');
     }
 }

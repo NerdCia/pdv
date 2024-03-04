@@ -14,7 +14,8 @@
           <a type="button" class="btn-close" href="{{ route('components.products') }}"></a>
         </div>
         <div class="modal-body">
-          <form action="" method="POST" enctype="multipart/form-data">
+          <form action="{{ route('product.update') }}" method="POST" enctype="multipart/form-data">
+            @csrf
             <div class="row mb-3 align-items-center shadow p-2 mx-2 rounded-4">
               <div class="col mb-3 mb-xl-0 text-center">
                 <img src="{{ $product->image }}" class="img-fluid shadow" alt="{{ $product->name }}">
@@ -30,19 +31,19 @@
                     <label for="productInputName" class="form-label"><small class="fw-bold text-body-emphasis">Nome do
                         produto:</small></label>
                     <input type="text" class="form-control shadow" name="name" id="productInputName"
-                      placeholder="Digite o nome do produto" value="{{ $product->name }}">
+                      placeholder="Digite o nome do produto" value="{{ $product->name }}" required>
                   </div>
                   <div class="col-sm">
                     <label for="productInputPrice" class="form-label"><small
                         class="fw-bold text-body-emphasis">Preço:</small></label>
                     <input type="number" class="form-control" placeholder="Preço" aria-label="Preço"
-                      id="productInputPrice" value="{{ $product->price }}">
+                      id="productInputPrice" value="{{ $product->price }}" required>
                   </div>
                   <div class="col-sm">
                     <label for="productInputQuantity" class="form-label"><small
                         class="fw-bold text-body-emphasis">Quantidade:</small></label>
                     <input type="number" class="form-control" placeholder="Quantidade" aria-label="Quantidade"
-                      id="productInputQuantity" value="{{ $product->quantity }}">
+                      id="productInputQuantity" value="{{ $product->quantity }}" required>
                   </div>
                   <div class="mb-3">
                     <label for="productInputDescription" class="form-label"><small
@@ -55,7 +56,7 @@
                 </div>
               </div>
               <div class="d-grid gap-2 col-6 mx-auto mb-3">
-                <button type="button" class="btn btn-danger rounded-pill">Salvar</button>
+                <button type="submit" class="btn btn-danger rounded-pill">Salvar</button>
               </div>
             </div>
           </form>
