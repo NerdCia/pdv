@@ -16,7 +16,7 @@
         action="{{ route('components.products', $categorySelected) }}" method="GET" enctype="multipart/form-data">
         @csrf
         <div class="input-group">
-          <div class="dropdown">
+          <div class="dropdown d-none d-sm-block">
             <button class="btn btn-danger dropdown-toggle rounded-start-pill" type="button" data-bs-toggle="dropdown"
               aria-expanded="false">
               @if (!empty($categorySelected))
@@ -41,7 +41,7 @@
               @endforeach
             </ul>
           </div>
-          <input type="search" name="searchProducts" class="form-control shadow"
+          <input type="search" name="searchProducts" id="searchProducts" class="form-control shadow"
             placeholder="Digite o nome ou ID do produto" aria-label="Search"
             value="{{ $nameProductSearch ? $nameProductSearch : '' }}">
           <button type="submit" class="btn btn-danger rounded-end-pill"><i class="bi bi-search"></i></button>
@@ -49,45 +49,51 @@
       </form>
 
       <div class="text-center">
-        <a type="button" class="btn btn-danger rounded-pill me-lg-2" href="{{ route('components.create_product') }}"><i class="bi bi-plus-lg me-1"></i>Novo
+        <a type="button" class="btn btn-danger rounded-pill me-lg-2 mb-2 mb-sm-0" href="{{ route('components.create_product') }}"><i
+            class="bi bi-plus-lg me-1"></i>Novo
           produto</a>
-        <a type="button" class="btn btn-danger rounded-pill" href="{{ route('components.create_category') }}"><i class="bi bi-plus-lg me-1"></i>Nova
+        <a type="button" class="btn btn-danger rounded-pill mb-2 mb-sm-0" href="{{ route('components.create_category') }}"><i
+            class="bi bi-plus-lg me-1"></i>Nova
           categoria</a>
       </div>
     </div>
   </nav>
 
-  <table class="bg-white w-100 shadow-lg align-middle rounded-5 mb-3">
-    <thead>
-      <tr class="border-bottom">
-        <th class="px-2" scope="col"></th>
-        <th class="d-none d-lg-table-cell px-2" scope="col"></th>
-        <th class="fw-bold py-3 px-2" scope="col">Nome</th>
-        <th class="fw-bold py-3 px-2" scope="col">Quantidade</th>
-        <th class="fw-bold py-3 px-2" scope="col">Preço</th>
-        <th class="fw-bold py-3 px-2" scope="col"></th>
-      </tr>
-    </thead>
-    <tbody>
-      @forelse ($products as $key => $product)
-        <tr class="{{ $key == count($products) - 1 && count($products) == 0 ? '' : 'border-bottom' }}">
-          <td class="text-end p-2 fs-5"><input class="form-check-input" type="checkbox" value="{{ $product->id }}"></td>
-          <td class="text-center p-2 d-none d-lg-table-cell"><img src="{{ $product->image }}" alt="{{ $product->name }}" width="64"></td>
-          <td class="p-2">{{ $product->name }}</td>
-          <td class="p-2">{{ $product->quantity }}</td>
-          <td class="p-2">R$ {{ number_format($product->price, 2, ',', '.') }}</td>
-          <form action="{{ route('components.product', $product->id) }}" method="GET" enctype="multipart/form-data">
-            <td class="p-2"><button class="btn btn-danger btn-sm rounded-circle align-middle"><i
-                  class="bi bi-pencil"></i></button></td>
-          </form>
+  <div class="table-responsive shadow-lg rounded-5 mb-3">
+    <table class="bg-white w-100 align-middle">
+      <thead>
+        <tr class="border-bottom">
+          <th class="px-2" scope="col"></th>
+          <th class="d-none d-lg-table-cell px-2" scope="col"></th>
+          <th class="fw-bold py-3 px-2" scope="col">Nome</th>
+          <th class="fw-bold py-3 px-2" scope="col">Quantidade</th>
+          <th class="fw-bold py-3 px-2" scope="col">Preço</th>
+          <th class="fw-bold py-3 px-2" scope="col"></th>
         </tr>
-      @empty
-        <tr>
-          <td colspan="6" class="text-center py-3 fw-bold">Nenhum produto encontrado</td>
-        </tr>
-      @endforelse
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        @forelse ($products as $key => $product)
+          <tr class="{{ $key == count($products) - 1 && count($products) == 0 ? '' : 'border-bottom' }}">
+            <td class="text-end p-2 fs-5"><input class="form-check-input" type="checkbox" value="{{ $product->id }}">
+            </td>
+            <td class="text-center p-2 d-none d-lg-table-cell"><img src="{{ $product->image }}"
+                alt="{{ $product->name }}" width="64"></td>
+            <td class="p-2">{{ $product->name }}</td>
+            <td class="p-2">{{ $product->quantity }}</td>
+            <td class="p-2">R$ {{ number_format($product->price, 2, ',', '.') }}</td>
+            <form action="{{ route('components.product', $product->id) }}" method="GET" enctype="multipart/form-data">
+              <td class="p-2"><button class="btn btn-danger btn-sm rounded-circle align-middle"><i
+                    class="bi bi-pencil"></i></button></td>
+            </form>
+          </tr>
+        @empty
+          <tr>
+            <td colspan="6" class="text-center py-3 fw-bold">Nenhum produto encontrado</td>
+          </tr>
+        @endforelse
+      </tbody>
+    </table>
+  </div>
 
   @yield('modal')
 

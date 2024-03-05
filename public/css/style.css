@@ -13,8 +13,6 @@
 }
 
 body {
-  min-width: 576px;
-  overflow-x: auto;
   background: no-repeat linear-gradient(var(--primary-color) 50%, var(--ghostwhite-color) 50%);
   background-attachment: fixed;
 }
@@ -92,4 +90,11 @@ a.btn-close {
 
 .alert-success {
   background-color: var(--primary-color) !important;
+}
+
+@media (max-width: 575.98px) {
+  #searchProducts {
+    border-top-left-radius: 50rem;
+    border-bottom-left-radius: 50rem;
+  }
 }

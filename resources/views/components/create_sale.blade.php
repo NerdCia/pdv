@@ -52,8 +52,7 @@
                       <table class="bg-white w-100 align-middle my-2">
                         <tbody>
                           @forelse ($products as $key => $product)
-                            <form action="{{ route('sale.add.product') }}" method="POST"
-                              enctype="multipart/form-data">
+                            <form action="{{ route('sale.add.product') }}" method="POST" enctype="multipart/form-data">
                               @csrf
                               <tr class="{{ $key == count($products) - 1 ? '' : ' border-bottom' }}">
                                 <td class="text-center p-2"><img src="{{ $product->image }}" alt="{{ $product->name }}"
@@ -84,52 +83,56 @@
                   </div>
                 </div>
               </nav>
-              <table class="bg-white w-100 shadow align-middle rounded-4 my-3">
-                <thead>
-                  <tr class="border-bottom">
-                    <th class="d-none d-lg-table-cell" scope="col"></th>
-                    <th class="fw-bold py-3 px-2" scope="col">Nome</th>
-                    <th class="fw-bold py-3 px-2" scope="col">Preço</th>
-                    <th class="fw-bold py-3 px-2" scope="col">Quantidade</th>
-                    <th class="fw-bold py-3 px-2" scope="col"></th>
-                    <th class="fw-bold py-3 px-2" scope="col"></th>
-                    <th class="fw-bold py-3 px-2" scope="col"></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  @forelse ($items as $key => $item)
-                    <tr class="{{ $key == count($items) - 1 && count($items) == 0 ? '' : 'border-bottom' }}">
-                      <td class="text-center p-2 d-none d-lg-table-cell"><img src="{{ $item->attributes->image }}"
-                          alt="{{ $item->name }}" width="64"></td>
-                      <td class="p-2">{{ $item->name }}</td>
-                      <td class="p-2">R$ {{ number_format($item->price * $item->quantity, 2, ',', '.') }}</td>
-                      <form action="{{ route('sale.update.product') }}" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        <input type="hidden" name="id" value="{{ $item->id }}">
-                        <td class="p-2 col-1"><input class="form-control form-control-sm" type="number"
-                            name="quantity" value="{{ $item->quantity }}" min="1"
-                            max="{{ $products->where('id', 'like', $item->id)->value('quantity') }}"></td>
-                        <td class="text-center p-2">
-                          <button class="btn btn-danger btn-sm rounded-circle align-middle"><i
-                              class="bi bi-arrow-clockwise"></i></button>
-                        </td>
-                      </form>
-                      <form action="{{ route('sale.remove.product') }}" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        <td class="text-center p-2">
+              <div class="table-responsive shadow rounded-4 my-3">
+                <table class="bg-white w-100 align-middle">
+                  <thead>
+                    <tr class="border-bottom">
+                      <th class="d-none d-lg-table-cell" scope="col"></th>
+                      <th class="fw-bold py-3 px-2" scope="col">Nome</th>
+                      <th class="fw-bold py-3 px-2" scope="col">Preço</th>
+                      <th class="fw-bold py-3 px-2" scope="col">Quantidade</th>
+                      <th class="fw-bold py-3 px-2" scope="col"></th>
+                      <th class="fw-bold py-3 px-2" scope="col"></th>
+                      <th class="fw-bold py-3 px-2" scope="col"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @forelse ($items as $key => $item)
+                      <tr class="{{ $key == count($items) - 1 && count($items) == 0 ? '' : 'border-bottom' }}">
+                        <td class="text-center p-2 d-none d-lg-table-cell"><img src="{{ $item->attributes->image }}"
+                            alt="{{ $item->name }}" width="64"></td>
+                        <td class="p-2">{{ $item->name }}</td>
+                        <td class="p-2">R$ {{ number_format($item->price * $item->quantity, 2, ',', '.') }}</td>
+                        <form action="{{ route('sale.update.product') }}" method="POST"
+                          enctype="multipart/form-data">
+                          @csrf
                           <input type="hidden" name="id" value="{{ $item->id }}">
-                          <button class="btn btn-danger btn-sm rounded-circle align-middle"><i
-                              class="bi bi-x-lg"></i></button>
-                        </td>
-                      </form>
-                    </tr>
-                  @empty
-                    <tr>
-                      <td colspan="7" class="text-center py-3 fw-bold">Nenhum produto adicionado</td>
-                    </tr>
-                  @endforelse
-                </tbody>
-              </table>
+                          <td class="p-2"><input class="form-control form-control-sm" type="number"
+                              name="quantity" value="{{ $item->quantity }}" min="1"
+                              max="{{ $products->where('id', 'like', $item->id)->value('quantity') }}"></td>
+                          <td class="text-center p-2">
+                            <button class="btn btn-danger btn-sm rounded-circle align-middle"><i
+                                class="bi bi-arrow-clockwise"></i></button>
+                          </td>
+                        </form>
+                        <form action="{{ route('sale.remove.product') }}" method="POST"
+                          enctype="multipart/form-data">
+                          @csrf
+                          <td class="text-center p-2">
+                            <input type="hidden" name="id" value="{{ $item->id }}">
+                            <button class="btn btn-danger btn-sm rounded-circle align-middle"><i
+                                class="bi bi-x-lg"></i></button>
+                          </td>
+                        </form>
+                      </tr>
+                    @empty
+                      <tr>
+                        <td colspan="7" class="text-center py-3 fw-bold">Nenhum produto adicionado</td>
+                      </tr>
+                    @endforelse
+                  </tbody>
+                </table>
+              </div>
             </div>
             <div class="col shadow mx-2 p-4 rounded-4">
               <div class="order-md-last">
