@@ -16,7 +16,7 @@
   <form action="{{ route('users.store') }}" method="POST">
     @csrf
     <div class="text-center">
-      <img src="/img/logo.png" class="img-fluid rounded-circle w-25 shadow" alt="Logo">
+      <img src="{{ asset('img/logo.png') }}" class="img-fluid rounded-circle w-25 shadow" alt="Logo">
       <h3 class="mt-2 text-body-emphasis fw-bold">Cadastre-se</h3>
     </div>
     <div class="mb-3">

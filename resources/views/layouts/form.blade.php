@@ -5,10 +5,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>@yield('title')</title>
-  <link rel="shortcut icon" href="/img/logo.png" type="image/x-icon">
-  <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="/bootstrap-icons/font/bootstrap-icons.min.css">
-  <link rel="stylesheet" type="text/css" href="/css/style.css">
+  <link rel="shortcut icon" href="{{ asset('img/logo.png') }}" type="image/x-icon">
+  <link href="{{ asset('bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+  <link rel="stylesheet" href="{{ asset('bootstrap-icons/font/bootstrap-icons.min.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
 </head>
 
 <body>
@@ -20,9 +20,9 @@
     </div>
   </div>
 
-  <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="/js/jquery-3.7.1.min.js"></script>
-  <script src="/js/script.js"></script>
+  <script src="{{ asset('bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ asset('js/jquery-3.7.1.min.js') }}"></script>
+  <script src="{{ asset('js/script.js') }}"></script>
 </body>
 
 </html>

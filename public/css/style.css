@@ -4,6 +4,8 @@
   --primary-color: #ed3237;
   --primary-color-rgb: 237, 50, 55;
   --ghostwhite-color: #f8f8ff;
+  --color-text-bg-success: #04945d;
+  --bg-color-rgb-text-bg-success: 144, 238, 144;
 }
 
 * {
@@ -90,6 +92,16 @@ a.btn-close {
 
 .alert-success {
   background-color: var(--primary-color) !important;
+}
+
+.text-bg-success {
+  background-color: rgba(var(--bg-color-rgb-text-bg-success), 0.2) !important;
+  color: var(--color-text-bg-success)!important;
+}
+
+.text-bg-danger {
+  background-color: rgba(var(--primary-color-rgb), 0.2) !important;
+  color: var(--primary-color) !important;
 }
 
 @media (max-width: 575.98px) {

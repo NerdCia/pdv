@@ -5,10 +5,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>@yield('title')</title>
-  <link rel="shortcut icon" href="/img/logo.png" type="image/x-icon">
-  <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="/bootstrap-icons/font/bootstrap-icons.min.css">
-  <link rel="stylesheet" type="text/css" href="/css/style.css">
+  <link rel="shortcut icon" href="{{ asset('img/logo.png') }}" type="image/x-icon">
+  <link href="{{ asset('bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+  <link rel="stylesheet" href="{{ asset('bootstrap-icons/font/bootstrap-icons.min.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
 </head>
 
 <body>
@@ -18,7 +18,7 @@
       <div class="d-flex align-items-center">
         <a href="{{ route('components.dashboard') }}"
           class="text-body-emphasis text-decoration-none d-inline-flex align-items-center">
-          <img src="/img/logo.png" class="rounded-circle me-2 shadow" alt="Logo" width="40">
+          <img src="{{ asset('img/logo.png') }}" class="rounded-circle me-2 shadow" alt="Logo" width="40">
           <span class="d-none d-sm-inline fw-bold fs-5">Nerd<span style="color: #ed3237">&amp;</span>Cia</span>
         </a>
       </div>
@@ -36,7 +36,7 @@
           <div class="flex-shrink-0 dropdown">
             <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle"
               data-bs-toggle="dropdown" aria-expanded="false">
-              <img src="/img/logo.png" alt="mdo" width="36" class="rounded-circle shadow">
+              <img src="{{ asset('img/logo.png') }}" alt="mdo" width="36" class="rounded-circle shadow">
             </a>
             <ul class="dropdown-menu text-small" style="">
               <li><a class="dropdown-item" href="#">Configurações</a></li>
@@ -94,9 +94,9 @@
     </div>
   </div>
 
-  <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="/js/jquery-3.7.1.min.js"></script>
-  <script src="/js/script.js"></script>
+  <script src="{{ asset('bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ asset('js/jquery-3.7.1.min.js') }}"></script>
+  <script src="{{ asset('js/script.js') }}"></script>
   @stack('graphics')
 </body>
 
