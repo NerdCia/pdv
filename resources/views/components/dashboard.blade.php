@@ -7,8 +7,8 @@
 
   <div class="my-3">
 
-    <div class="row">
-      <div class="col">
+    <div class="row justify-content-around">
+      <div class="col-auto">
         <div class="card text-center rounded-4 mb-3 shadow border-0">
           <div class="card-body">
             <p class="card-text"><small class="text-body-secondary fw-bold">Quantidade de vendas</small></p>
@@ -16,7 +16,7 @@
           </div>
         </div>
       </div>
-      <div class="col">
+      <div class="col-auto">
         <div class="card text-center rounded-4 mb-3 shadow border-0">
           <div class="card-body">
             <p class="card-text"><small class="text-body-secondary fw-bold">Lucro líquido</small></p>
@@ -25,7 +25,7 @@
           </div>
         </div>
       </div>
-      <div class="col">
+      <div class="col-auto">
         <div class="card text-center rounded-4 mb-3 shadow border-0">
           <div class="card-body">
             <p class="card-text"><small class="text-body-secondary fw-bold">Quantidade produtos cadastrados</small></p>
@@ -33,7 +33,7 @@
           </div>
         </div>
       </div>
-      <div class="col">
+      <div class="col-auto">
         <div class="card text-center rounded-4 mb-3 shadow border-0">
           <div class="card-body">
             <p class="card-text"><small class="text-body-secondary fw-bold">Quantidade de vendas esse mês</small></p>
@@ -42,7 +42,7 @@
           </div>
         </div>
       </div>
-      <div class="col">
+      <div class="col-auto">
         <div class="card text-center rounded-4 mb-3 shadow border-0">
           <div class="card-body">
             <p class="card-text"><small class="text-body-secondary fw-bold">Faturamento bruto</small></p>
@@ -54,16 +54,16 @@
     </div>
     <div class="row">
       <div class="col-12 col-md-8">
-        <canvas class="w-100 bg-white rounded-4 p-4 my-3 shadow-lg" id="myChart"></canvas>
+        <canvas class="w-100 bg-white rounded-4 my-3 shadow-lg" id="myChart"></canvas>
       </div>
       <div class="col">
-        <canvas class="w-100 bg-white rounded-4 p-4 my-3 shadow-lg" id="topProducts"></canvas>
+        <canvas class="w-100 bg-white rounded-4 my-3 shadow-lg" id="topProducts"></canvas>
       </div>
     </div>
 
     <div class="row">
       <div class="col-12 col-lg-8">
-        <canvas class="w-100 bg-white rounded-4 p-4 my-3 shadow-lg" id="NumberSalesPerPaymentMethod"></canvas>
+        <canvas class="w-100 bg-white rounded-4 my-3 shadow-lg" id="NumberSalesPerPaymentMethod"></canvas>
       </div>
       <div class="col">
         <div class="table-responsive bg-white shadow-lg rounded-4 my-3">
@@ -135,9 +135,6 @@
       </div>
     </div>
   </div>
-
-
-
 @endsection
 
 @push('graphics')
@@ -164,7 +161,11 @@
           y: {
             beginAtZero: true
           }
-        }
+        },
+        layout: {
+          padding: 20
+        },
+        animation: false
       }
     });
 
@@ -184,7 +185,11 @@
           y: {
             beginAtZero: true
           }
-        }
+        },
+        layout: {
+          padding: 20
+        },
+        animation: false
       }
     });
 
@@ -205,7 +210,11 @@
           y: {
             beginAtZero: true
           }
-        }
+        },
+        layout: {
+          padding: 20
+        },
+        animation: false
       }
     });
   </script>

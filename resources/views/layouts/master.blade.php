@@ -13,8 +13,8 @@
 
 <body>
   <header>
-    <div class="container bg-white d-grid p-3 gap-2 my-3 align-items-center rounded-pill"
-      style="grid-template-columns: 0fr 2fr;">
+    <div class="container bg-white d-grid p-3 my-3 align-items-center rounded-pill"
+      style="grid-template-columns: 1fr 2fr;">
       <div class="d-flex align-items-center">
         <a href="{{ route('components.dashboard') }}"
           class="text-body-emphasis text-decoration-none d-inline-flex align-items-center">
@@ -57,7 +57,7 @@
     </div>
   </header>
   <div class="row container-fluid m-0 w-100">
-    <div class="col-sm-2">
+    <div class="col-sm-2 mx-auto" style="max-width: 250px">
       <ul
         class="nav justify-content-around flex-sm-column text-center bg-white mx-auto my-3 col-12 col-lg-10 rounded-5 py-sm-4 shadow"
         id="sidebar">
