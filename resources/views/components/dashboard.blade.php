@@ -7,47 +7,57 @@
 
   <div class="my-3">
 
-    <div class="row justify-content-around">
-      <div class="col-auto">
-        <div class="card text-center rounded-4 mb-3 shadow border-0">
-          <div class="card-body">
-            <p class="card-text"><small class="text-body-secondary fw-bold">Quantidade de vendas</small></p>
-            <h3 class="card-title text-body-emphasis">{{ count($sales) }}</h3>
+    <div class="row row-cols-2">
+      <div class="col">
+        <div class="card rounded-4 mb-3 shadow border-0">
+          <div class="row align-items-center">
+            <div class="col">
+              <div class="card-body text-center">
+                <h3 class="card-title text-body-emphasis">R$ 897,45</h3>
+                <p class="card-text"><small class="text-body-tertiary fw-bold">Lucro líquido</small></p>
+              </div>
+            </div>
+            <div class="col m-2">
+              <canvas id="profit"></canvas>
+            </div>
           </div>
         </div>
       </div>
-      <div class="col-auto">
-        <div class="card text-center rounded-4 mb-3 shadow border-0">
-          <div class="card-body">
-            <p class="card-text"><small class="text-body-secondary fw-bold">Lucro líquido</small></p>
-            <h3 class="card-title text-body-emphasis">R$ 897,45</h3>
-            <h5 class="card-text"><span class="badge rounded-pill text-bg-success">+17.3%</span></h5>
+      <div class="col">
+        <div class="card rounded-4 mb-3 shadow border-0">
+          <div class="row align-items-center">
+            <div class="col">
+              <div class="card-body text-center">
+                <h3 class="card-title text-body-emphasis">16</h3>
+                <p class="card-text"><small class="text-body-tertiary fw-bold">Quantidade de vendas</small></p>
+              </div>
+            </div>
+            <div class="col m-2">
+              <canvas id="salesQuantity"></canvas>
+            </div>
           </div>
         </div>
       </div>
-      <div class="col-auto">
+      <div class="col">
+        <div class="card rounded-4 mb-3 shadow border-0">
+          <div class="row align-items-center">
+            <div class="col">
+              <div class="card-body text-center">
+                <h3 class="card-title text-body-emphasis">R$ 1.897,45</h3>
+                <p class="card-text"><small class="text-body-tertiary fw-bold">Faturamento bruto</small></p>
+              </div>
+            </div>
+            <div class="col m-2">
+              <canvas id="grossRevenue"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
         <div class="card text-center rounded-4 mb-3 shadow border-0">
           <div class="card-body">
-            <p class="card-text"><small class="text-body-secondary fw-bold">Quantidade produtos cadastrados</small></p>
+            <p class="card-text"><small class="text-body-secondary fw-bold">Quantidade de produtos cadastrados</small></p>
             <h3 class="card-title text-body-emphasis">{{ count($products) }}</h3>
-          </div>
-        </div>
-      </div>
-      <div class="col-auto">
-        <div class="card text-center rounded-4 mb-3 shadow border-0">
-          <div class="card-body">
-            <p class="card-text"><small class="text-body-secondary fw-bold">Quantidade de vendas esse mês</small></p>
-            <h3 class="card-title text-body-emphasis">16</h3>
-            <h5 class="card-text"><span class="badge rounded-pill text-bg-danger">-3.3%</span></h5>
-          </div>
-        </div>
-      </div>
-      <div class="col-auto">
-        <div class="card text-center rounded-4 mb-3 shadow border-0">
-          <div class="card-body">
-            <p class="card-text"><small class="text-body-secondary fw-bold">Faturamento bruto</small></p>
-            <h3 class="card-title text-body-emphasis">R$ 1.897,45</h3>
-            <h5 class="card-text"><span class="badge rounded-pill text-bg-success">+6.3%</span></h5>
           </div>
         </div>
       </div>
@@ -141,9 +151,108 @@
   <script src="{{ asset('js/chart.js') }}"></script>
 
   <script>
+    const profit = document.getElementById('profit');
+    const salesQuantity = document.getElementById('salesQuantity');
+    const grossRevenue = document.getElementById('grossRevenue');
     const ctx = document.getElementById('myChart');
     const topProducts = document.getElementById('topProducts');
     const NumberSalesPerPaymentMethod = document.getElementById('NumberSalesPerPaymentMethod');
+
+    new Chart(grossRevenue, {
+      type: 'line',
+      data: {
+        labels: ['jun', 'fev', 'mar', 'abr', 'mai', 'jun'],
+        datasets: [{
+          label: 'Faturamento',
+          data: [12, 19, 3, 5, 2, 3],
+          borderWidth: 2,
+          backgroundColor: '#ed3237',
+        }]
+      },
+      options: {
+        devicePixelRatio: 4,
+        scales: {
+          y: {
+            beginAtZero: true,
+            grid: {
+              display: false
+            },
+            display: false,
+          },
+          x: {
+            grid: {
+              display: false
+            },
+            display: false,
+          },
+        },
+        animation: false
+      }
+    });
+
+    new Chart(salesQuantity, {
+      type: 'line',
+      data: {
+        labels: ['jun', 'fev', 'mar', 'abr', 'mai', 'jun'],
+        datasets: [{
+          label: 'Vendas',
+          data: [12, 19, 3, 5, 2, 3],
+          borderWidth: 2,
+          backgroundColor: '#ed3237',
+        }]
+      },
+      options: {
+        devicePixelRatio: 4,
+        scales: {
+          y: {
+            beginAtZero: true,
+            grid: {
+              display: false
+            },
+            display: false,
+          },
+          x: {
+            grid: {
+              display: false
+            },
+            display: false,
+          },
+        },
+        animation: false
+      }
+    });
+
+    new Chart(profit, {
+      type: 'line',
+      data: {
+        labels: ['jun', 'fev', 'mar', 'abr', 'mai', 'jun'],
+        datasets: [{
+          label: 'Lucro',
+          data: [12, 19, 8, 10, 11, 20],
+          borderWidth: 2,
+          backgroundColor: '#ed3237',
+        }]
+      },
+      options: {
+        devicePixelRatio: 4,
+        scales: {
+          y: {
+            beginAtZero: true,
+            grid: {
+              display: false
+            },
+            display: false,
+          },
+          x: {
+            grid: {
+              display: false
+            },
+            display: false,
+          },
+        },
+        animation: false
+      }
+    });
 
     new Chart(ctx, {
       type: 'bar',
@@ -157,6 +266,7 @@
         }]
       },
       options: {
+        devicePixelRatio: 4,
         scales: {
           y: {
             beginAtZero: true
@@ -181,6 +291,7 @@
         }]
       },
       options: {
+        devicePixelRatio: 4,
         scales: {
           y: {
             beginAtZero: true
@@ -205,6 +316,7 @@
         }]
       },
       options: {
+        devicePixelRatio: 4,
         indexAxis: 'y',
         scales: {
           y: {

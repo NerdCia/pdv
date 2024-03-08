@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ConfigurationController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SaleController;
@@ -39,6 +40,8 @@ Route::middleware(['auth', 'authorization'])->group(function () {
       ->name('sales');
     Route::get('create_sale', [CreateSaleController::class, 'index'])
       ->name('create_sale');
+    Route::get('confugurations', [ConfigurationController::class, 'index'])
+      ->name('configurations');
   });
 });
 

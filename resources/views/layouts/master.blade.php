@@ -57,34 +57,34 @@
     </div>
   </header>
   <div class="row container-fluid m-0 w-100">
-    <div class="col-sm-2 mx-auto" style="max-width: 250px">
+    <div class="col-sm-2 mx-auto">
       <ul
         class="nav justify-content-around flex-sm-column text-center bg-white mx-auto my-3 col-12 col-lg-10 rounded-5 py-sm-4 shadow"
-        id="sidebar">
+        id="sidebar" style="max-width: 250px">
         <li class="nav-item my-2">
-          <a class="nav-link text-secondary px-0 py-3 rounded-4 text-uppercase"
+          <a class="nav-link text-secondary mx-1 mx-sm-3 px-sm-0 p-3 rounded-4 text-uppercase {{ Route::currentRouteName() == 'components.dashboard' ? 'shadow' : '' }}"
             href="{{ route('components.dashboard') }}">
             <i class="bi bi-speedometer d-block fs-5"></i>
-            <small class="d-none d-lg-block">Painel</small>
+            <small class="d-none d-xl-block">Painel</small>
           </a>
         </li>
         <li class="nav-item my-2">
-          <a class="nav-link text-secondary px-0 py-3 rounded-4 text-uppercase" href="{{ route('components.sales') }}">
+          <a class="nav-link text-secondary mx-1 mx-sm-3 px-sm-0 p-3 rounded-4 text-uppercase {{ Route::currentRouteName() == 'components.sales' ? 'shadow' : '' }}" href="{{ route('components.sales') }}">
             <i class="bi bi-cart d-block fs-5"></i>
-            <small class="d-none d-lg-block">Vendas</small>
+            <small class="d-none d-xl-block">Vendas</small>
           </a>
         </li>
         <li class="nav-item my-2">
-          <a class="nav-link text-secondary px-0 py-3 rounded-4 text-uppercase"
+          <a class="nav-link text-secondary mx-1 mx-sm-3 px-sm-0 p-3 rounded-4 text-uppercase {{ Route::currentRouteName() == 'components.products' ? 'shadow' : '' }}"
             href="{{ route('components.products') }}">
             <i class="bi bi-bag d-block fs-5"></i>
-            <small class="d-none d-lg-block">Produtos</small>
+            <small class="d-none d-xl-block">Produtos</small>
           </a>
         </li>
         <li class="nav-item my-2">
-          <a class="nav-link text-secondary px-0 py-3 rounded-4 text-uppercase" href="#">
+          <a class="nav-link text-secondary mx-1 mx-sm-3 px-sm-0 p-3 rounded-4 text-uppercase {{ Route::currentRouteName() == 'components.configurations' ? 'shadow' : '' }}" href="{{ route('components.configurations') }}">
             <i class="bi bi-gear d-block fs-5"></i>
-            <small class="d-none d-lg-block">Configurações</small>
+            <small class="d-none d-xl-block">Configurações</small>
           </a>
         </li>
       </ul>

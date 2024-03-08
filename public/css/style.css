@@ -34,6 +34,8 @@ body {
   transition: all 350ms;
 }
 
+
+
 .form-control:focus::placeholder {
   font-size: 0.8rem;
 }
@@ -110,4 +112,7 @@ a.btn-close {
     border-bottom-left-radius: 50rem;
   }
   
+  #sidebar {
+    max-width: 100% !important;
+  }
 }
