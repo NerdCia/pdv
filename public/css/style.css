@@ -1,17 +1,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
 :root {
+  --font-family-default: "Roboto", sans-serif;
+  --font-weight-default: 400;
+  --font-style-default: normal;
   --primary-color: #ed3237;
   --primary-color-rgb: 237, 50, 55;
   --ghostwhite-color: #f8f8ff;
   --color-text-bg-success: #04945d;
   --bg-color-rgb-text-bg-success: 144, 238, 144;
+  --graphics-bg-color: #ed3238ee;
+  --graphics-border-color: #ed3237;
+  --graphics-border-width: 2;
+  --graphics-color: #666;
 }
 
 * {
-  font-family: "Roboto", sans-serif;
-  font-weight: 400;
-  font-style: normal;
+  font-family: var(--font-family-default);
+  font-weight: var(--font-weight-default);
+  font-style: var(--font-style-default);
 }
 
 body {
@@ -19,12 +26,12 @@ body {
   background-attachment: fixed;
 }
 
-.form-control {
+.form-control, .form-select {
   background-color: var(--ghostwhite-color);
   border-color: var(--primary-color);
 }
 
-.form-control:focus {
+.form-control:focus, .form-select:focus {
   box-shadow: none;
   border-color: var(--primary-color);
 }
@@ -33,8 +40,6 @@ body {
   font-size: 0.9rem;
   transition: all 350ms;
 }
-
-
 
 .form-control:focus::placeholder {
   font-size: 0.8rem;
@@ -98,7 +103,7 @@ a.btn-close {
 
 .text-bg-success {
   background-color: rgba(var(--bg-color-rgb-text-bg-success), 0.2) !important;
-  color: var(--color-text-bg-success)!important;
+  color: var(--color-text-bg-success) !important;
 }
 
 .text-bg-danger {
@@ -111,7 +116,7 @@ a.btn-close {
     border-top-left-radius: 50rem;
     border-bottom-left-radius: 50rem;
   }
-  
+
   #sidebar {
     max-width: 100% !important;
   }

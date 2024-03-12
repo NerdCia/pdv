@@ -65,6 +65,18 @@ Route::group([
     ->name('remove.product');
 });
 
+Route::group([
+  'prefix' => '/',
+  'as' => 'category.'
+], function () {
+  Route::post('store_category', [CategoryController::class, 'store'])
+    ->name('store');
+  Route::post('update_category', [CategoryController::class, 'update'])
+    ->name('update');
+  Route::delete('destroy_category/{id}', [CategoryController::class, 'destroy'])
+    ->name('destroy');
+});
+
 Route::resource('users', UserController::class);
 
 Route::view('/login', 'form.login')->name('form.login');

@@ -4,7 +4,7 @@
 
 @section('content')
 
-  <nav class="my-3 py-2 px-4 bg-white rounded-pill shadow">
+  <nav class="mb-3 py-2 px-4 bg-white rounded-pill shadow">
     <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-xl-start">
       <a href="{{ route('components.products') }}"
         class="d-flex align-items-center mb-3 mb-xl-0 me-xl-auto text-body-emphasis text-decoration-none">
@@ -32,7 +32,7 @@
                   categorias</a>
               </li>
               @foreach ($categories as $category)
-                @if ($category->name != $categorySelected)
+                @if ($category->name != $categorySelected && $category->name != 'raiz')
                   <li>
                     <a class="dropdown-item"
                       href="{{ route('components.products', $category->name) }}">{{ $category->name }}</a>
@@ -49,11 +49,11 @@
       </form>
 
       <div class="text-center">
-        <a type="button" class="btn btn-danger rounded-pill me-lg-2 mb-2 mb-sm-0" href="{{ route('components.create_product') }}"><i
-            class="bi bi-plus-lg me-1"></i>Novo
+        <a type="button" class="btn btn-danger rounded-pill me-lg-2 mb-2 mb-sm-0"
+          href="{{ route('components.create_product') }}"><i class="bi bi-plus-lg me-1"></i>Novo
           produto</a>
-        <a type="button" class="btn btn-danger rounded-pill mb-2 mb-sm-0" href="{{ route('components.create_category') }}"><i
-            class="bi bi-plus-lg me-1"></i>Nova
+        <a type="button" class="btn btn-danger rounded-pill mb-2 mb-sm-0"
+          href="{{ route('components.create_category') }}"><i class="bi bi-plus-lg me-1"></i>Nova
           categoria</a>
       </div>
     </div>

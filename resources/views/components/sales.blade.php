@@ -4,15 +4,15 @@
 
 @section('content')
 
-  <nav class="my-3 py-2 px-4 bg-white rounded-pill shadow">
-    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+  <nav class="mb-3 py-2 px-4 bg-white rounded-pill shadow">
+    <div class="d-flex align-items-center flex-wrap justify-content-lg-start">
       <a href="{{ route('components.sales') }}"
-        class="d-flex align-items-center mb-2 mb-sm-2 mx-2 me-sm-auto text-body-emphasis text-decoration-none">
-        <i class="bi bi-cart d-block fs-2 me-2"></i>
-        <span class="fs-4 fw-bold">Vendas</span>
+        class="me-auto text-body-emphasis text-decoration-none">
+        <i class="bi bi-cart fs-2 me-2"></i>
+        <span class="fs-4 fw-bold d-none d-sm-inline-block">Vendas</span>
       </a>
       <div class="text-center">
-        <a href="{{ route('components.create_sale') }}" class="btn btn-danger rounded-pill mb-2 mb-sm-0 me-lg-2"><i
+        <a href="{{ route('components.create_sale') }}" class="btn btn-danger rounded-pill"><i
             class="bi bi-plus-lg me-1"></i>Nova
           Venda</a>
       </div>

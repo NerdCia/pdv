@@ -27,11 +27,17 @@
                   <input class="form-control shadow" type="file" id="imageFile">
                 </div>
                 <div class="row g-3 mb-3">
-                  <div class="col-sm-7">
+                  <div class="col-sm-8">
                     <label for="productInputName" class="form-label"><small class="fw-bold text-body-emphasis">Nome do
                         produto:</small></label>
                     <input type="text" class="form-control shadow" name="name" id="productInputName"
                       placeholder="Digite o nome do produto" value="{{ $product->name }}" required>
+                  </div>
+                  <div class="col-sm-4">
+                    <label for="productInputQuantity" class="form-label"><small
+                        class="fw-bold text-body-emphasis">Quantidade:</small></label>
+                    <input type="number" class="form-control" placeholder="Quantidade" aria-label="Quantidade"
+                      id="productInputQuantity" value="{{ $product->quantity }}" required>
                   </div>
                   <div class="col-sm">
                     <label for="productInputPrice" class="form-label"><small
@@ -40,10 +46,23 @@
                       id="productInputPrice" value="{{ $product->price }}" required>
                   </div>
                   <div class="col-sm">
-                    <label for="productInputQuantity" class="form-label"><small
-                        class="fw-bold text-body-emphasis">Quantidade:</small></label>
-                    <input type="number" class="form-control" placeholder="Quantidade" aria-label="Quantidade"
-                      id="productInputQuantity" value="{{ $product->quantity }}" required>
+                    <label for="productInputExpense" class="form-label"><small
+                        class="fw-bold text-body-emphasis">Custo:</small></label>
+                    <input type="number" class="form-control" placeholder="Custo" aria-label="Custo"
+                      id="productInputExpense" value="{{ $product->expense }}" required>
+                  </div>
+                  <div class="col-sm-12">
+                    <label for="categorySelect" class="form-label"><small
+                      class="fw-bold text-body-emphasis">Categoria:</small></label>
+                    <select class="form-select" aria-label="Categorias" id="categorySelect">
+                      <option value="{{ $product->category->id }}" selected>{{ $product->category->name }}</option>
+                      @forelse ($categories as $category)
+                        @if ($category->name != $product->category->name)
+                          <option value="{{ $category->id }}">{{ $category->name }}</option>
+                        @endif
+                      @empty
+                      @endforelse
+                    </select>
                   </div>
                   <div class="mb-3">
                     <label for="productInputDescription" class="form-label"><small

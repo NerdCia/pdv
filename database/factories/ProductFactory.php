@@ -17,11 +17,13 @@ class ProductFactory extends Factory
      */
     public function definition(): array
     {
+        $price = $this->faker->randomFloat(2, 1, 999);
         return [
             'name' => $this->faker->name,
             'description' => $this->faker->text,
             'quantity' => $this->faker->randomNumber(2),
-            'price' => $this->faker->randomNumber(3),
+            'price' => $price,
+            'expense' => $this->faker->randomFloat(2, $price / 2, $price),
             'image' => $this->faker->imageUrl(500, 500),
             'id_category' => Category::pluck('id')->random(),
         ];

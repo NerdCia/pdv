@@ -22,6 +22,7 @@ class SaleFactory extends Factory
         return [
             'payment_method' => $this->faker->creditCardType(),
             'id_user' => User::pluck('id')->random(),
+            'created_at' => $this->faker->dateTimeBetween('-6 month'),
         ];
     }
 }

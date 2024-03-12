@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
+use App\Models\Product;
 use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
@@ -63,16 +64,19 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCategoryRequest $request, Category $category)
+    public function update($id)
     {
-        //
+        
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Category $category)
+    public function destroy($id)
     {
-        //
+        Product::where('id_category', '=', $id)->update(['id_category' => 1]);
+        $category = Category::find($id);
+        $category->delete();
+        return redirect()->route('components.create_category');
     }
 }

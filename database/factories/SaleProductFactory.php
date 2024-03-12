@@ -19,15 +19,19 @@ class SaleProductFactory extends Factory
      */
     public function definition(): array
     {
-        $product = DB::table('products')->inRandomOrder()->first();
-        $quantity = $this->faker->randomNumber(1);
+        $id_product = Product::pluck('id')->random();
+        $product = Product::find($id_product);
+        $quantity = $this->faker->randomDigitNotZero();
         $amount = $quantity * $product->price;
+        $id_sale = Sale::pluck('id')->random();
+        $random_sale = Sale::find($id_sale);
 
         return [
             'quantity' => $quantity,
             'amount' => $amount,
-            'id_sale' => Sale::pluck('id')->random(),
-            'id_product' => Product::pluck('id')->random(),
+            'id_sale' => $id_sale,
+            'id_product' => $id_product,
+            'created_at' => $random_sale->created_at,
         ];
     }
 }
