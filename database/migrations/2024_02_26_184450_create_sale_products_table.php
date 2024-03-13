@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('sale_products', function (Blueprint $table) {
             $table->id();
-            $table->double('quantity', 10, 0);
-            $table->double('amount', 10, 2);
+            $table->decimal('quantity');
+            $table->decimal('amount');
             $table->foreignId('id_sale');
             $table->foreign('id_sale')->references('id')->on('sales')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('id_product');

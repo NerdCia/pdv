@@ -35,30 +35,40 @@ class ProductController extends Controller
                 ->where('name', 'like', '%' . $searchProducts . '%')
                 ->orWhere('id', 'like', '%' . $searchProducts . '%')
                 ->paginate(
-                    $perPage = 5, $columns = ['*'], $pageName = 'products'
+                    $perPage = 5,
+                    $columns = ['*'],
+                    $pageName = 'products'
                 )->withQueryString();
         } elseif ($id_category) {
             $products = DB::table('products')
                 ->where('id_category', $id_category)
                 ->paginate(
-                    $perPage = 5, $columns = ['*'], $pageName = 'products'
+                    $perPage = 5,
+                    $columns = ['*'],
+                    $pageName = 'products'
                 );
         } elseif ($searchProducts) {
             $products = DB::table('products')
                 ->where('name', 'like', '%' . $searchProducts . '%')
                 ->orWhere('id', 'like', '%' . $searchProducts . '%')
                 ->paginate(
-                    $perPage = 5, $columns = ['*'], $pageName = 'products'
+                    $perPage = 5,
+                    $columns = ['*'],
+                    $pageName = 'products'
                 )
                 ->withQueryString();
         } else {
             $products = DB::table('products')->paginate(
-                $perPage = 5, $columns = ['*'], $pageName = 'products'
+                $perPage = 5,
+                $columns = ['*'],
+                $pageName = 'products'
             );
         }
 
         $categories = Category::paginate(
-            $perPage = 10, $columns = ['*'], $pageName = 'categories'
+            $perPage = 10,
+            $columns = ['*'],
+            $pageName = 'categories'
         );
 
         return view('components.products', compact('products', 'categories', 'categorySelected', 'nameProductSearch'));
@@ -73,11 +83,15 @@ class ProductController extends Controller
         $nameProductSearch = '';
 
         $categories = Category::paginate(
-            $perPage = 10, $columns = ['*'], $pageName = 'categories'
+            $perPage = 10,
+            $columns = ['*'],
+            $pageName = 'categories'
         );
 
         $products = DB::table('products')->paginate(
-            $perPage = 5, $columns = ['*'], $pageName = 'products'
+            $perPage = 5,
+            $columns = ['*'],
+            $pageName = 'products'
         );
 
         return view('components.create_product', compact('categories', 'products', 'categorySelected', 'nameProductSearch'));
@@ -86,9 +100,15 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreProductRequest $request)
+    public function store(Request $request)
     {
-        //
+        $product = $request->all();
+
+        if ($request->image) {
+            $product['image'] = $request->image->store('products');
+        }
+
+        $product = Product::create($product);
     }
 
     /**
@@ -110,11 +130,15 @@ class ProductController extends Controller
         $product = Product::find($id);
 
         $categories = Category::paginate(
-            $perPage = 10, $columns = ['*'], $pageName = 'categories'
+            $perPage = 10,
+            $columns = ['*'],
+            $pageName = 'categories'
         );
 
         $products = DB::table('products')->paginate(
-            $perPage = 5, $columns = ['*'], $pageName = 'products'
+            $perPage = 5,
+            $columns = ['*'],
+            $pageName = 'products'
         );
 
         return view('components.edit_product', compact('product', 'categories', 'products', 'categorySelected', 'nameProductSearch'));
@@ -123,9 +147,21 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProductRequest $request, Product $product)
+    public function update(Request $request, $id)
     {
-        
+        $request = $request->all();
+        $product = Product::find($id);
+
+        $product->update([
+            'name' => $request['name'],
+            'description' => $request['description'],
+            'quantity' => $request['quantity'],
+            'price' => $request['price'],
+            'expense' => $request['expense'],
+            'id_category' => $request['id_category']
+        ]);
+
+        return redirect()->route('components.products');
     }
 
     /**

@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Product;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
@@ -15,7 +16,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        
+
     }
 
     /**
@@ -27,11 +28,15 @@ class CategoryController extends Controller
         $nameProductSearch = '';
 
         $categories = Category::paginate(
-            $perPage = 5, $columns = ['*'], $pageName = 'categories'
+            $perPage = 5,
+            $columns = ['*'],
+            $pageName = 'categories'
         );
 
         $products = DB::table('products')->paginate(
-            $perPage = 5, $columns = ['*'], $pageName = 'products'
+            $perPage = 5,
+            $columns = ['*'],
+            $pageName = 'products'
         );
 
         return view('components.create_category', compact('categories', 'products', 'categorySelected', 'nameProductSearch'));
@@ -64,9 +69,11 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update($id)
+    public function update(Request $request, $id)
     {
-        
+        $category = Category::find($id);
+        $category->update(['name' => $request->input('name')]);
+        return redirect()->route('components.create_category');
     }
 
     /**

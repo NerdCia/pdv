@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('description')->nullable();
             $table->double('quantity', 10, 0);
-            $table->double('expense', 10, 2);
-            $table->double('price', 10, 2);
+            $table->decimal('expense');
+            $table->decimal('price');
             $table->string('image')->nullable();
             $table->foreignId('id_category');
             $table->foreign('id_category')->references('id')->on('categories');

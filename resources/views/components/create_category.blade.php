@@ -38,15 +38,15 @@
                 @forelse ($categories as $key => $category)
                   @if ($category->name != 'raiz')
                     <tr class="{{ $key == count($categories) - 1 ? '' : 'border-bottom' }}">
-                      <td class="py-2 ps-4"><input class="form-control form-control-sm" placeholder="Nome da categoria"
-                          type="text" value="{{ $category->name }}"></td>
-                      <form action="{{ route('category.update', $category->id) }}" method="post">
-                        @method('UPDATE')
+                      <form action="{{ route('category.update', $category->id) }}" method="POST">
+                        @method('PUT')
                         @csrf
+                        <td class="py-2 ps-4"><input class="form-control form-control-sm" placeholder="Nome da categoria"
+                            type="text" name="name" value="{{ $category->name }}"></td>
                         <td class="text-center py-2"><button class="btn btn-danger btn-sm rounded-circle align-middle"><i
                               class="bi bi-arrow-clockwise"></i></button></td>
                       </form>
-                      <form action="{{ route('category.destroy', $category->id) }}" method="post">
+                      <form action="{{ route('category.destroy', $category->id) }}" method="POST">
                         @method('DELETE')
                         @csrf
                         <td class="py-2 text-center"><button class="btn btn-danger btn-sm rounded-circle align-middle"><i

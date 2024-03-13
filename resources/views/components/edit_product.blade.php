@@ -14,7 +14,8 @@
           <a type="button" class="btn-close" href="{{ route('components.products') }}"></a>
         </div>
         <div class="modal-body">
-          <form action="{{ route('product.update') }}" method="POST" enctype="multipart/form-data">
+          <form action="{{ route('product.update', $product->id) }}" method="POST" enctype="multipart/form-data">
+            @method('PUT')
             @csrf
             <div class="row mb-3 align-items-center shadow p-2 mx-2 rounded-4">
               <div class="col mb-3 mb-xl-0 text-center">
@@ -24,7 +25,7 @@
                 <div class="mb-3">
                   <label for="imageFile" class="form-label"><small class="fw-bold text-body-emphasis">Selecione a
                       imagem:</small></label>
-                  <input class="form-control shadow" type="file" id="imageFile">
+                  <input class="form-control shadow" type="file" name="image" id="imageFile">
                 </div>
                 <div class="row g-3 mb-3">
                   <div class="col-sm-8">
@@ -36,26 +37,28 @@
                   <div class="col-sm-4">
                     <label for="productInputQuantity" class="form-label"><small
                         class="fw-bold text-body-emphasis">Quantidade:</small></label>
-                    <input type="number" class="form-control" placeholder="Quantidade" aria-label="Quantidade"
-                      id="productInputQuantity" value="{{ $product->quantity }}" required>
+                    <input type="number" step="0.01" class="form-control" placeholder="Quantidade"
+                      aria-label="Quantidade" name="quantity" id="productInputQuantity" value="{{ $product->quantity }}"
+                      required>
                   </div>
                   <div class="col-sm">
                     <label for="productInputPrice" class="form-label"><small
                         class="fw-bold text-body-emphasis">Preço:</small></label>
-                    <input type="number" class="form-control" placeholder="Preço" aria-label="Preço"
-                      id="productInputPrice" value="{{ $product->price }}" required>
+                    <input type="number" step="0.01" class="form-control" placeholder="Preço" aria-label="Preço"
+                      name="price" id="productInputPrice" value="{{ $product->price }}">
                   </div>
                   <div class="col-sm">
                     <label for="productInputExpense" class="form-label"><small
                         class="fw-bold text-body-emphasis">Custo:</small></label>
-                    <input type="number" class="form-control" placeholder="Custo" aria-label="Custo"
-                      id="productInputExpense" value="{{ $product->expense }}" required>
+                    <input type="number" class="form-control" placeholder="Custo" aria-label="Custo" name="expense"
+                      id="productInputExpense" value="{{ $product->expense }}">
                   </div>
                   <div class="col-sm-12">
                     <label for="categorySelect" class="form-label"><small
-                      class="fw-bold text-body-emphasis">Categoria:</small></label>
-                    <select class="form-select" aria-label="Categorias" id="categorySelect">
-                      <option value="{{ $product->category->id }}" selected>{{ $product->category->name }}</option>
+                        class="fw-bold text-body-emphasis">Categoria:</small></label>
+                    <select class="form-select" aria-label="Categorias" name="id_category" id="categorySelect">
+                      <option value="{{ $product->category->id }}" selected>
+                        {{ $product->category->name }}</option>
                       @forelse ($categories as $category)
                         @if ($category->name != $product->category->name)
                           <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -69,7 +72,7 @@
                         class="fw-bold text-body-emphasis">Descrição
                         do
                         produto:</small></label>
-                    <textarea type="text" class="form-control shadow" name="name" id="productInputDescription"
+                    <textarea type="text" class="form-control shadow" name="description" id="productInputDescription"
                       placeholder="Digite a descrição do produto">{{ $product->description }}</textarea>
                   </div>
                 </div>
