@@ -47,14 +47,26 @@ Route::middleware(['auth', 'authorization'])->group(function () {
 
 Route::group([
   'prefix' => '/',
-  'as' => 'sale.'
+  'as' => 'sale.product.'
 ], function () {
   Route::post('sale_add_product', [CreateSaleController::class, 'saleAddProduct'])
-    ->name('add.product');
+    ->name('add');
   Route::post('sale_update_product', [CreateSaleController::class, 'saleUpdateProduct'])
-    ->name('update.product');
+    ->name('update');
   Route::post('sale_remove_product', [CreateSaleController::class, 'saleRemoveProduct'])
-    ->name('remove.product');
+    ->name('remove');
+});
+
+Route::group([
+  'prefix' => '/',
+  'as' => 'sale.'
+], function () {
+  Route::post('store_sale', [SaleController::class, 'store'])
+    ->name('store');
+  Route::post('update_sale/{id}', [SaleController::class, 'update'])
+    ->name('update');
+  Route::delete('destroy_sale/{id}', [SaleController::class, 'destroy'])
+    ->name('destroy');
 });
 
 Route::group([

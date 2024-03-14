@@ -50,8 +50,9 @@ class CreateSaleController extends Controller
         \Cart::add([
             'id' => $request->id,
             'name' => $request->name,
-            'price' => $request->price,
             'quantity' => abs($request->quantity),
+            'expense' => $request->expense,
+            'price' => $request->price,
             'attributes' => array(
                 'image' => $request->image
             )

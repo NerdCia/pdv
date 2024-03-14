@@ -36,9 +36,28 @@ class SaleController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreSaleRequest $request)
+    public function store(Request $request)
     {
+        $items = \Cart::getContent();
+        
+        $sale = Sale::create([
+            'payment_method' => $request->payment_method,
+            'id_user' => $request->id_user
+        ]);
 
+        foreach ($items as $item) {
+            $saleProduct = Sale::create([
+                'quantity' => $item['quantity'],
+                'amount' => $item['price'] * $item['quantity'],
+                'name_product' => $item['name'],
+                'expense_product' => $item['expense'],
+                'price_product'=> $item['price'],
+                'id_sale' => $sale->id,
+                'id_product' => $item['id'],
+            ]);
+        }
+
+        return redirect()->route('components.sales');
     }
 
     /**

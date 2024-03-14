@@ -52,7 +52,7 @@
                       <table class="bg-white w-100 align-middle my-2">
                         <tbody>
                           @forelse ($products as $key => $product)
-                            <form action="{{ route('sale.add.product') }}" method="POST" enctype="multipart/form-data">
+                            <form action="{{ route('sale.product.add') }}" method="POST" enctype="multipart/form-data">
                               @csrf
                               <tr class="{{ $key == count($products) - 1 ? '' : ' border-bottom' }}">
                                 <td class="text-center p-2"><img src="{{ $product->image }}" alt="{{ $product->name }}"
@@ -64,6 +64,7 @@
                                   <input type="hidden" name="id" value="{{ $product->id }}">
                                   <input type="hidden" name="name" value="{{ $product->name }}">
                                   <input type="hidden" name="price" value="{{ $product->price }}">
+                                  <input type="hidden" name="expense" value="{{ $product->expense }}">
                                   <input type="hidden" name="quantity" value="1">
                                   <input type="hidden" name="image" value="{{ $product->image }}">
                                   <button class="btn btn-danger btn-sm rounded-circle align-middle"><i
@@ -103,7 +104,7 @@
                             alt="{{ $item->name }}" width="64"></td>
                         <td class="p-2">{{ $item->name }}</td>
                         <td class="p-2">R$ {{ number_format($item->price * $item->quantity, 2, ',', '.') }}</td>
-                        <form action="{{ route('sale.update.product') }}" method="POST"
+                        <form action="{{ route('sale.product.update') }}" method="POST"
                           enctype="multipart/form-data">
                           @csrf
                           <input type="hidden" name="id" value="{{ $item->id }}">
@@ -115,7 +116,7 @@
                                 class="bi bi-arrow-clockwise"></i></button>
                           </td>
                         </form>
-                        <form action="{{ route('sale.remove.product') }}" method="POST"
+                        <form action="{{ route('sale.product.remove') }}" method="POST"
                           enctype="multipart/form-data">
                           @csrf
                           <td class="text-center p-2">
@@ -176,9 +177,12 @@
                   </div>
                 </form>
               </div>
-              <form class="d-flex justify-content-center mt-3" action="" method="POST"
+              <form class="d-flex justify-content-center mt-3" action="{{ route('sale.store') }}" method="POST"
                 enctype="multipart/form-data">
-
+                @method('POST')
+                @csrf
+                <input type="hidden" name="payment_method" value="Cartão">
+                <input type="hidden" name="id_user" value="{{ Auth::id() }}">
                 <button type="submit" class="btn btn-danger btn-lg rounded-pill">Finalizar compra</button>
               </form>
             </div>
