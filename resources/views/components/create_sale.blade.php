@@ -55,7 +55,7 @@
                             <form action="{{ route('sale.product.add') }}" method="POST" enctype="multipart/form-data">
                               @csrf
                               <tr class="{{ $key == count($products) - 1 ? '' : ' border-bottom' }}">
-                                <td class="text-center p-2"><img src="{{ $product->image }}" alt="{{ $product->name }}"
+                                <td class="text-center p-2"><img src="{{ url("storage/{$product->image}") }}" alt="{{ $product->name }}"
                                     width="32"></td>
                                 <td class="p-2"><small>{{ $product->name }}</small></td>
                                 <td class="p-2"><small>R$ {{ number_format($product->price, 2, ',', '.') }}</small>
@@ -100,8 +100,8 @@
                   <tbody>
                     @forelse ($items as $key => $item)
                       <tr class="{{ $key == count($items) - 1 && count($items) == 0 ? '' : 'border-bottom' }}">
-                        <td class="text-center p-2 d-none d-lg-table-cell"><img src="{{ $item->attributes->image }}"
-                            alt="{{ $item->name }}" width="64"></td>
+                        <td class="text-center p-2 d-none d-lg-table-cell"><img src="{{ url("storage/{$item->attributes->image}") }}"
+                            alt="{{ $item->name }}" width="32"></td>
                         <td class="p-2">{{ $item->name }}</td>
                         <td class="p-2">R$ {{ number_format($item->price * $item->quantity, 2, ',', '.') }}</td>
                         <form action="{{ route('sale.product.update') }}" method="POST"

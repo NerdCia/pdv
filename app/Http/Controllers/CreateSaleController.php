@@ -51,10 +51,10 @@ class CreateSaleController extends Controller
             'id' => $request->id,
             'name' => $request->name,
             'quantity' => abs($request->quantity),
-            'expense' => $request->expense,
             'price' => $request->price,
             'attributes' => array(
-                'image' => $request->image
+                'image' => $request->image,
+                'expense' => $request->expense,
             )
         ]);
         return redirect()->route('components.create_sale')->with('success', 'Produto adicionado com sucesso.');

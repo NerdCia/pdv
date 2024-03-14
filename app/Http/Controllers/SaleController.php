@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\Sale;
+use App\Models\SaleProduct;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreSaleRequest;
 use App\Http\Requests\UpdateSaleRequest;
@@ -46,11 +47,11 @@ class SaleController extends Controller
         ]);
 
         foreach ($items as $item) {
-            $saleProduct = Sale::create([
+            $saleProduct = SaleProduct::create([
                 'quantity' => $item['quantity'],
                 'amount' => $item['price'] * $item['quantity'],
                 'name_product' => $item['name'],
-                'expense_product' => $item['expense'],
+                'expense_product' => $item['attributes']['expense'],
                 'price_product'=> $item['price'],
                 'id_sale' => $sale->id,
                 'id_product' => $item['id'],

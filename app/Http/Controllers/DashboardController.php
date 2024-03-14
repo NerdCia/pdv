@@ -32,7 +32,7 @@ class DashboardController extends Controller
         $saleProductsData = SaleProduct::select([
             DB::raw('DATE_FORMAT(sale_products.created_at, "%Y/%m") as saleDate'),
             DB::raw('SUM(sale_products.amount) as grossRevenue'),
-            DB::raw('COUNT(sale_products.id_sale) as saleQuantity'),
+            DB::raw('COUNT(DISTINCT sale_products.id_sale) as saleQuantity'),
             DB::raw('SUM(sale_products.amount) - SUM(sale_products.expense_product * sale_products.quantity) as profit'),
         ])
             ->groupBy('saleDate')

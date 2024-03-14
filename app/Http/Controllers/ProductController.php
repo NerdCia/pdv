@@ -104,6 +104,16 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'quantity' => 'required|integer|min:1',
+            'price' => 'required|numeric|between:0,999999.99',
+            'expense' => 'required|numeric|between:0,999999.99',
+            'id_category' => 'required|exists:categories,id',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        ]);
+
         $product = $request->all();
 
         if ($request->image) {
@@ -153,6 +163,16 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'quantity' => 'required|integer|min:1',
+            'price' => 'required|numeric|between:0,999999.99',
+            'expense' => 'required|numeric|between:0,999999.99',
+            'id_category' => 'required|exists:categories,id',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        ]);
+
         $product = Product::find($id);
 
         if ($request->image) {
