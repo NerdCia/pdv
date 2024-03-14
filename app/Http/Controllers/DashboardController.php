@@ -33,15 +33,14 @@ class DashboardController extends Controller
             DB::raw('DATE_FORMAT(sale_products.created_at, "%Y/%m") as saleDate'),
             DB::raw('SUM(sale_products.amount) as grossRevenue'),
             DB::raw('COUNT(sale_products.id_sale) as saleQuantity'),
-            DB::raw('SUM(sale_products.amount) - SUM(products.expense * sale_products.quantity) as profit'),
+            DB::raw('SUM(sale_products.amount) - SUM(sale_products.expense_product * sale_products.quantity) as profit'),
         ])
-            ->join('products', 'sale_products.id_product', '=', 'products.id')
             ->groupBy('saleDate')
             ->orderBy('saleDate', 'asc')
             ->get();
 
         foreach ($saleProductsData as $saleProducts) {
-            $saleDates[] = "'" . $saleProducts->saleDate . "'";
+            $saleDates[] = '"' . $saleProducts->saleDate . '"';
             $grossRevenues[] = $saleProducts->grossRevenue;
             $salesQuantity[] = $saleProducts->saleQuantity;
             $profits[] = $saleProducts->profit;
@@ -79,7 +78,7 @@ class DashboardController extends Controller
         $salesData = User::with('sales')->get();
 
         foreach ($salesData as $saleData) {
-            $usersNames[] = "'" . $saleData->name . "'";
+            $usersNames[] = '"' . $saleData->name . '"';
             $numberSalesPerEmployee[] = $saleData->sales->count();
         }
 
@@ -101,7 +100,7 @@ class DashboardController extends Controller
             ->get();
 
         foreach ($productsData as $productData) {
-            $productsNames[] = "'" . $productData->productName . "'";
+            $productsNames[] = '"' . $productData->productName . '"';
             $topSellingProducts[] = $productData->topSellingProduct;
         }
 

@@ -63,7 +63,7 @@ Route::group([
 ], function () {
   Route::post('store_category', [CategoryController::class, 'store'])
     ->name('store');
-  Route::put('update_category/{id}', [CategoryController::class, 'update'])
+  Route::post('update_category/{id}', [CategoryController::class, 'update'])
     ->name('update');
   Route::delete('destroy_category/{id}', [CategoryController::class, 'destroy'])
     ->name('destroy');
@@ -75,7 +75,7 @@ Route::group([
 ], function () {
   Route::post('store_product', [ProductController::class, 'store'])
     ->name('store');
-  Route::put('update_product/{id}', [ProductController::class, 'update'])
+  Route::post('update_product/{id}', [ProductController::class, 'update'])
     ->name('update');
   Route::delete('destroy_product/{id}', [ProductController::class, 'destroy'])
     ->name('destroy');

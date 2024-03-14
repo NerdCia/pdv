@@ -15,9 +15,12 @@ return new class extends Migration
             $table->id();
             $table->decimal('quantity');
             $table->decimal('amount');
+            $table->string('name_product');
+            $table->decimal('expense_product');
+            $table->decimal('price_product');
             $table->foreignId('id_sale');
             $table->foreign('id_sale')->references('id')->on('sales')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('id_product');
+            $table->foreignId('id_product')->nullable();
             $table->foreign('id_product')->references('id')->on('products');
             $table->timestamps();
         });

@@ -23,12 +23,18 @@ class SaleProductFactory extends Factory
         $product = Product::find($id_product);
         $quantity = $this->faker->randomDigitNotZero();
         $amount = $quantity * $product->price;
+        $name_product = $product->name;
+        $expense_product = $product->expense;
+        $price_product = $product->price;
         $id_sale = Sale::pluck('id')->random();
         $random_sale = Sale::find($id_sale);
 
         return [
             'quantity' => $quantity,
             'amount' => $amount,
+            'name_product' => $name_product,
+            'expense_product' => $expense_product,
+            'price_product' => $price_product,
             'id_sale' => $id_sale,
             'id_product' => $id_product,
             'created_at' => $random_sale->created_at,

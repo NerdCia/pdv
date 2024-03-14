@@ -69,6 +69,7 @@
           <th class="fw-bold py-3 px-2" scope="col">Quantidade</th>
           <th class="fw-bold py-3 px-2" scope="col">Preço</th>
           <th class="fw-bold py-3 px-2" scope="col"></th>
+          <th class="fw-bold py-3 px-2" scope="col"></th>
         </tr>
       </thead>
       <tbody>
@@ -76,7 +77,7 @@
           <tr class="{{ $key == count($products) - 1 && count($products) == 0 ? '' : 'border-bottom' }}">
             <td class="text-end p-2 fs-5"><input class="form-check-input" type="checkbox" value="{{ $product->id }}">
             </td>
-            <td class="text-center p-2 d-none d-lg-table-cell"><img src="{{ $product->image }}"
+            <td class="text-center p-2 d-none d-lg-table-cell"><img src="{{ url("storage/{$product->image}") }}"
                 alt="{{ $product->name }}" width="64"></td>
             <td class="p-2">{{ $product->name }}</td>
             <td class="p-2">{{ $product->quantity }}</td>
@@ -84,6 +85,12 @@
             <form action="{{ route('components.product', $product->id) }}" method="GET" enctype="multipart/form-data">
               <td class="p-2"><button class="btn btn-danger btn-sm rounded-circle align-middle"><i
                     class="bi bi-pencil"></i></button></td>
+            </form>
+            <form action="{{ route('product.destroy', $product->id) }}" method="POST" enctype="multipart/form-data">
+              @method('DELETE')
+              @csrf
+              <td class="p-2"><button class="btn btn-danger btn-sm rounded-circle align-middle"><i
+                    class="bi bi-x-lg"></i></button></td>
             </form>
           </tr>
         @empty

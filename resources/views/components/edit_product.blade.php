@@ -15,11 +15,11 @@
         </div>
         <div class="modal-body">
           <form action="{{ route('product.update', $product->id) }}" method="POST" enctype="multipart/form-data">
-            @method('PUT')
+            @method('POST')
             @csrf
             <div class="row mb-3 align-items-center shadow p-2 mx-2 rounded-4">
               <div class="col mb-3 mb-xl-0 text-center">
-                <img src="{{ $product->image }}" class="img-fluid shadow" alt="{{ $product->name }}">
+                <img src="{{ url("storage/{$product->image}") }}" class="img-fluid shadow" alt="{{ $product->name }}">
               </div>
               <div class="col-12 col-xl-8">
                 <div class="mb-3">

@@ -15,7 +15,7 @@
         </div>
         <div class="modal-body">
           <form action="{{ route('product.store') }}" method="POST" enctype="multipart/form-data">
-            @method('PUT')
+            @method('POST')
             @csrf
             <div class="row mb-3 align-items-center shadow p-2 mx-2 rounded-4">
               <div class="col mb-3 mb-xl-0 text-center">
@@ -25,7 +25,7 @@
                 <div class="mb-3">
                   <label for="imageFile" class="form-label"><small class="fw-bold text-body-emphasis">Selecione a
                       imagem:</small></label>
-                  <input class="form-control shadow" type="file" id="imageFile">
+                  <input class="form-control shadow" type="file" name="image" id="imageFile">
                 </div>
                 <div class="row g-3 mb-3">
                   <div class="col-sm-8">

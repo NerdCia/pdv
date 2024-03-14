@@ -6,8 +6,10 @@ use App\Models\Product;
 use App\Models\Category;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use App\Models\SaleProduct;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Mockery\Undefined;
 
 class ProductController extends Controller
 {
@@ -109,6 +111,8 @@ class ProductController extends Controller
         }
 
         $product = Product::create($product);
+
+        return redirect()->route('components.products');
     }
 
     /**
@@ -149,16 +153,19 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request = $request->all();
         $product = Product::find($id);
 
+        if ($request->image) {
+            $product['image'] = $request->image->store('products');
+        }
+
         $product->update([
-            'name' => $request['name'],
-            'description' => $request['description'],
-            'quantity' => $request['quantity'],
-            'price' => $request['price'],
-            'expense' => $request['expense'],
-            'id_category' => $request['id_category']
+            'name' => $request->name,
+            'description' => $request->description,
+            'quantity' => $request->quantity,
+            'price' => $request->price,
+            'expense' => $request->expense,
+            'id_category' => $request->id_category
         ]);
 
         return redirect()->route('components.products');
@@ -167,8 +174,11 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Product $product)
+    public function destroy($id)
     {
-        //
+        $product = Product::find($id);
+        SaleProduct::where('id_product', '=', $id)->update(['id_product' => null]);
+        $product->delete();
+        return redirect()->route('components.products');
     }
 }
