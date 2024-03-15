@@ -6,8 +6,7 @@
 
   <nav class="mb-3 py-2 px-4 bg-white rounded-pill shadow">
     <div class="d-flex align-items-center flex-wrap justify-content-lg-start">
-      <a href="{{ route('components.sales') }}"
-        class="me-auto text-body-emphasis text-decoration-none">
+      <a href="{{ route('components.sales') }}" class="me-auto text-body-emphasis text-decoration-none">
         <i class="bi bi-cart fs-2 me-2"></i>
         <span class="fs-4 fw-bold d-none d-sm-inline-block">Vendas</span>
       </a>
@@ -38,8 +37,10 @@
             <td class="p-2">{{ $sale->user->name }}</td>
             <td class="p-2">{{ $sale->payment_method }}</td>
             <td class="p-2">{{ date_format($sale->created_at, 'd/m/Y H:i:s') }}</td>
-            <td class="p-2"><button class="btn btn-danger btn-sm rounded-circle align-middle"><i
-                  class="bi bi-pencil"></i></button></td>
+            <form action="{{ route('components.edit_sale', $sale->id) }}" method="GET" enctype="multipart/form-data">
+              <td class="p-2"><button class="btn btn-danger btn-sm rounded-circle align-middle"><i
+                    class="bi bi-pencil"></i></button></td>
+            </form>
           </tr>
         @endforeach
       </tbody>

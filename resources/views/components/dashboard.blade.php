@@ -101,7 +101,7 @@
                 class="{{ $key == count($productsWithLessThan10InStock) - 1 && count($productsWithLessThan10InStock) == 0 ? '' : 'border-bottom' }}">
                 <td class="py-2 px-4">{{ $product->name }}</td>
                 <td class="py-2 px-4 text-center">{{ $product->quantity }}</td>
-                <form action="{{ route('components.product', $product->id) }}" method="GET"
+                <form action="{{ route('components.edit_product', $product->id) }}" method="GET"
                   enctype="multipart/form-data">
                   <td class="py-2 px-4"><button class="btn btn-danger btn-sm rounded-circle align-middle"><i
                         class="bi bi-pencil"></i></button></td>

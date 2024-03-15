@@ -30,14 +30,16 @@ Route::middleware(['auth', 'authorization'])->group(function () {
       ->name('dashboard');
     Route::get('products/{category?}', [ProductController::class, 'index'])
       ->name('products');
-    Route::get('product/{id}', [ProductController::class, 'edit'])
-      ->name('product');
+    Route::get('edit_product/{id}', [ProductController::class, 'edit'])
+      ->name('edit_product');
     Route::get('create_product', [ProductController::class, 'create'])
       ->name('create_product');
     Route::get('create_category', [CategoryController::class, 'create'])
       ->name('create_category');
     Route::get('sales', [SaleController::class, 'index'])
       ->name('sales');
+      Route::get('edit_sale/{id}', [SaleController::class, 'edit'])
+      ->name('edit_sale');
     Route::get('create_sale', [CreateSaleController::class, 'index'])
       ->name('create_sale');
     Route::get('confugurations', [ConfigurationController::class, 'index'])

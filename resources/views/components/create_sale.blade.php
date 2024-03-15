@@ -177,11 +177,11 @@
                   </div>
                 </form>
               </div>
-              <form class="d-flex justify-content-center mt-3" action="{{ route('sale.store') }}" method="POST"
+              <form class="mt-3 text-center" action="{{ route('sale.store') }}" method="POST"
                 enctype="multipart/form-data">
                 @method('POST')
                 @csrf
-                <input type="hidden" name="payment_method" value="Cartão">
+                <input type="text" class="form-control rounded-pill my-2" name="payment_method" placeholder="Método de pagamento">
                 <input type="hidden" name="id_user" value="{{ Auth::id() }}">
                 <button type="submit" class="btn btn-danger btn-lg rounded-pill">Finalizar compra</button>
               </form>

@@ -10,6 +10,7 @@ use App\Models\SaleProduct;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Mockery\Undefined;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -198,6 +199,7 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
         SaleProduct::where('id_product', '=', $id)->update(['id_product' => null]);
+        Storage::delete($product->image);
         $product->delete();
         return redirect()->route('components.products');
     }

@@ -9,6 +9,10 @@ class SaleProduct extends Model
 {
     use HasFactory;
 
+    public function products() {
+        return $this->belongsTo(Product::class, 'id_product');
+    }
+
     protected $fillable = [
         'quantity',
         'amount',

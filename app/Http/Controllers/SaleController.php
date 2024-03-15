@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\Sale;
 use App\Models\SaleProduct;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreSaleRequest;
 use App\Http\Requests\UpdateSaleRequest;
@@ -72,9 +73,29 @@ class SaleController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Sale $sale)
+    public function edit($id)
     {
-        //
+        $sale = Sale::find($id);
+
+        $user = User::find($sale->id_user);
+
+        $saleProducts = SaleProduct::where('id_sale', '=', $id)->get();
+
+        $totalPaid = 0;
+        $totalAmount = 0;
+
+        foreach ($saleProducts as $product) {
+            $totalPaid += $product->amount;
+            $totalAmount += $product->quantity;
+        }
+
+        $sales = Sale::paginate(
+            $perPage = 10,
+            $columns = ['*'],
+            $pageName = 'sales'
+        );
+
+        return view('components.edit_sale', compact('sales', 'sale', 'user', 'saleProducts', 'totalPaid', 'totalAmount'));
     }
 
     /**
