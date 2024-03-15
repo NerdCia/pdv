@@ -83,13 +83,13 @@
             <td class="p-2">{{ $product->quantity }}</td>
             <td class="p-2">R$ {{ number_format($product->price, 2, ',', '.') }}</td>
             <form action="{{ route('components.edit_product', $product->id) }}" method="GET" enctype="multipart/form-data">
-              <td class="p-2"><button class="btn btn-danger btn-sm rounded-circle align-middle"><i
+              <td class="py-2"><button class="btn btn-danger btn-sm rounded-circle align-middle"><i
                     class="bi bi-pencil"></i></button></td>
             </form>
             <form action="{{ route('product.destroy', $product->id) }}" method="POST" enctype="multipart/form-data">
               @method('DELETE')
               @csrf
-              <td class="p-2"><button class="btn btn-danger btn-sm rounded-circle align-middle"><i
+              <td class="py-2"><button class="btn btn-danger btn-sm rounded-circle align-middle"><i
                     class="bi bi-x-lg"></i></button></td>
             </form>
           </tr>

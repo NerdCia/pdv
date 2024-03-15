@@ -38,8 +38,14 @@
             <td class="p-2">{{ $sale->payment_method }}</td>
             <td class="p-2">{{ date_format($sale->created_at, 'd/m/Y H:i:s') }}</td>
             <form action="{{ route('components.edit_sale', $sale->id) }}" method="GET" enctype="multipart/form-data">
-              <td class="p-2"><button class="btn btn-danger btn-sm rounded-circle align-middle"><i
-                    class="bi bi-pencil"></i></button></td>
+              <td class="py-2"><button class="btn btn-danger btn-sm rounded-circle align-middle"><i
+                    class="bi bi-eye"></i></button></td>
+            </form>
+            <form action="{{ route('sale.destroy', $sale->id) }}" method="POST" enctype="multipart/form-data">
+              @method('DELETE')
+              @csrf
+              <td class="py-2"><button class="btn btn-danger btn-sm rounded-circle align-middle"><i
+                    class="bi bi-x-lg"></i></button></td>
             </form>
           </tr>
         @endforeach

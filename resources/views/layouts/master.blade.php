@@ -23,12 +23,13 @@
         </a>
       </div>
       <div class="d-flex align-items-center">
-        <form class="w-100 me-3" role="search">
+        <form class="w-100 me-3" role="search" action="{{ route('components.products') }}"
+          method="GET" enctype="multipart/form-data">
           @csrf
           <div class="input-group">
-            <input type="search" class="form-control rounded-start-pill shadow" placeholder="Pesquisar..."
+            <input type="search" class="form-control rounded-start-pill shadow" name="searchProducts" id="searchProducts" placeholder="Pesquisar..."
               aria-label="Search">
-            <button class="btn btn-danger rounded-end-pill"><i class="bi bi-search"></i></button>
+            <button type="submit" class="btn btn-danger rounded-end-pill"><i class="bi bi-search"></i></button>
           </div>
         </form>
 
