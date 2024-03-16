@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Gate;
 
-class Authorization
+class AuthorizationSales
 {
     /**
      * Handle an incoming request.
@@ -16,7 +16,7 @@ class Authorization
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Gate::denies('admin')) {
+        if (Gate::denies('sales')) {
             abort(403, 'Você não está autorizado.');
         }
 

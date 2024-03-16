@@ -7,8 +7,8 @@
   <nav class="mb-3 py-2 px-4 bg-white rounded-pill shadow">
     <div class="d-flex align-items-center flex-wrap justify-content-lg-start">
       <a href="{{ route('components.sales') }}" class="me-auto text-body-emphasis text-decoration-none">
-        <i class="bi bi-cart fs-2 me-2"></i>
-        <span class="fs-4 fw-bold d-none d-sm-inline-block">Vendas</span>
+        <i class="bi bi-cart fs-2 me-2 align-middle"></i>
+        <span class="fs-4 fw-bold d-none d-sm-inline-block align-middle">Vendas</span>
       </a>
       <div class="text-center">
         <a href="{{ route('components.create_sale') }}" class="btn btn-danger rounded-pill"><i

@@ -19,7 +19,7 @@
             @csrf
             <div class="row mb-3 align-items-center shadow p-2 mx-2 rounded-4">
               <div class="col mb-3 mb-xl-0 text-center">
-                <img src="/img/image_missing.jpg" class="img-fluid shadow" alt="">
+                <img src="{{ asset('img/image_missing.jpg') }}" class="img-fluid shadow" alt="">
               </div>
               <div class="col-12 col-xl-8">
                 <div class="mb-3">
@@ -54,7 +54,7 @@
                   </div>
                   <div class="col-sm-12">
                     <label for="categorySelect" class="form-label"><small
-                      class="fw-bold text-body-emphasis">Categoria:</small></label>
+                        class="fw-bold text-body-emphasis">Categoria:</small></label>
                     <select class="form-select" aria-label="Categorias" name="id_category" id="categorySelect">
                       <option value="1" selected>raiz</option>
                       @forelse ($categories as $category)
