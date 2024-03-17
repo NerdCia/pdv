@@ -5,6 +5,8 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Pagination\CursorPaginator;
+use App\Models\Configuration;
+use Illuminate\Support\Facades\Storage;
 
 
 class AppServiceProvider extends ServiceProvider
@@ -22,6 +24,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        $logo = Configuration::where('key', '=', 'logo')->first()->value;
+        $company_name = Configuration::where('key', '=', 'company_name')->first()->value;
+
+        view()->share([
+            'company_name' => $company_name,
+            'logo' => $logo
+        ]);
+
         Paginator::useBootstrapFive();
     }
 }

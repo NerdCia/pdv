@@ -47,4 +47,9 @@ class User extends Authenticatable
     public function sales() {
         return $this->hasMany(Sale::class, 'id_user', 'id');
     }
+
+    public function roles(): BelongsToMany
+    {
+        return $this->belongsToMany(Role::class);
+    }
 }

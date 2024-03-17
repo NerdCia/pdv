@@ -21,70 +21,78 @@
     <div class="row row-cols-1 row-cols-md-2 mb-3">
       <div class="col">
         <div class="shadow rounded-4 p-4">
-          <h5 class="fs-5 fw-bold text-body-emphasis border-bottom pb-2 text-center">Informações da empresa</h5>
-          <div class="mb-3">
-            <div class="row">
-              <div class="col-md-4">
-                <img src="{{ asset('img/logo.png') }}" class="img-fluid shadow my-2 rounded-4" alt="Logo">
-              </div>
-              <div class="col align-self-center">
-                <label for="imageFile" class="form-label"><small class="fw-bold text-body-emphasis">Selecione a
-                    logo:</small></label>
-                <input class="form-control form-control-sm shadow" type="file" name="image" id="imageFile">
+          <form action="{{ route('configurations.update') }}" method="post" enctype="multipart/form-data">
+            @method('POST')
+            @csrf
+            <h5 class="fs-5 fw-bold text-body-emphasis border-bottom pb-2 text-center">Informações da empresa</h5>
+            <div class="mb-3">
+              <div class="row">
+                <div class="col-md-4">
+                  <img src="{{ url("storage/{$logo}") }}" class="img-fluid shadow my-2 rounded-4" alt="Logo">
+                </div>
+                <div class="col align-self-center">
+                  <label for="imageFile" class="form-label"><small class="fw-bold text-body-emphasis">Selecione a
+                      logo:</small></label>
+                  <input class="form-control form-control-sm shadow" type="file" name="image" id="imageFile">
+                </div>
               </div>
             </div>
-          </div>
-          {{-- <div class="mb-3">
-            <label for="colorInput" class="form-label"><small class="fw-bold text-body-emphasis">Paleta de cores do
-                site:</small></label>
-            <div class="input-group">
-              <input type="color" class="form-control form-control-color" id="colorInput" value="#ed3237"
-                title="Choose your color">
-              <input type="color" class="form-control form-control-color" id="colorInput" value="#ffffff"
-                title="Choose your color">
+            {{-- <div class="mb-3">
+              <label for="colorInput" class="form-label"><small class="fw-bold text-body-emphasis">Paleta de cores do
+                  site:</small></label>
+              <div class="input-group">
+                <input type="color" class="form-control form-control-color" id="colorInput" value="#ed3237"
+                  title="Choose your color">
+                <input type="color" class="form-control form-control-color" id="colorInput" value="#ffffff"
+                  title="Choose your color">
+              </div>
+            </div> --}}
+            <div class="mb-3">
+              <label for="companyInputName" class="form-label"><small class="fw-bold text-body-emphasis">Nome da
+                  empresa:</small></label>
+              <input type="text" class="form-control shadow" name="company_name" id="companyInputName"
+                placeholder="Digite o nome da empresa" value="{{ $company_name }}">
             </div>
-          </div> --}}
-          <div class="mb-3">
-            <label for="companyInputName" class="form-label"><small class="fw-bold text-body-emphasis">Nome da
-                empresa:</small></label>
-            <input type="text" class="form-control shadow" name="company_name" id="companyInputName"
-              placeholder="Digite o nome da empresa">
-          </div>
-          <div class="d-grid gap-2 col-6 mx-auto">
-            <button class="btn btn-danger rounded-pill" type="submit">Salvar</button>
-          </div>
+            <div class="d-grid gap-2 col-6 mx-auto">
+              <button class="btn btn-danger rounded-pill" type="submit">Salvar</button>
+            </div>
+          </form>
         </div>
       </div>
       <div class="col">
         <div class="shadow rounded-4 p-4">
-          <h5 class="fs-5 fw-bold text-body-emphasis border-bottom pb-2 text-center">Informações do usuário</h5>
-          <div class="mb-3">
-            <div class="row">
-              <div class="col-md-4">
-                <img src="{{ asset('img/logo.png') }}" class="img-fluid shadow my-2 rounded-4" alt="Logo">
+          <form action="{{ route('user.update', Auth::id()) }}" method="post" enctype="multipart/form-data">
+            @method('POST')
+            @csrf
+            <h5 class="fs-5 fw-bold text-body-emphasis border-bottom pb-2 text-center">Informações do usuário</h5>
+            {{-- <div class="mb-3">
+              <div class="row">
+                <div class="col-md-4">
+                  <img src="{{ asset('img/logo.png') }}" class="img-fluid shadow my-2 rounded-4" alt="Logo">
+                </div>
+                <div class="col align-self-center">
+                  <label for="imageFile" class="form-label"><small class="fw-bold text-body-emphasis">Selecione a foto de
+                      perfil:</small></label>
+                  <input class="form-control form-control-sm shadow" type="file" name="image" id="imageFile">
+                </div>
               </div>
-              <div class="col align-self-center">
-                <label for="imageFile" class="form-label"><small class="fw-bold text-body-emphasis">Selecione a foto de
-                    perfil:</small></label>
-                <input class="form-control form-control-sm shadow" type="file" name="image" id="imageFile">
-              </div>
+            </div> --}}
+            <div class="mb-3">
+              <label for="userInputName" class="form-label"><small class="fw-bold text-body-emphasis">Nome do
+                  usuário:</small></label>
+              <input type="text" class="form-control shadow" name="name" id="userInputName"
+                placeholder="Digite o nome de usuário" value="{{ Auth::user()->name }}">
             </div>
-          </div>
-          <div class="mb-3">
-            <label for="userInputName" class="form-label"><small class="fw-bold text-body-emphasis">Nome do
-                usuário:</small></label>
-            <input type="text" class="form-control shadow" name="name" id="userInputName"
-              placeholder="Digite o nome de usuário" value="{{ Auth::user()->name }}">
-          </div>
-          <div class="mb-3">
-            <label for="userInputPassword" class="form-label"><small class="fw-bold text-body-emphasis">Redefinir
-                senha:</small></label>
-            <input type="password" class="form-control shadow" name="password" id="userInputPassword"
-              placeholder="Digite uma senha">
-          </div>
-          <div class="d-grid gap-2 col-6 mx-auto">
-            <button class="btn btn-danger rounded-pill" type="submit">Salvar</button>
-          </div>
+            <div class="mb-3">
+              <label for="userInputPassword" class="form-label"><small class="fw-bold text-body-emphasis">Redefinir
+                  senha:</small></label>
+              <input type="password" class="form-control shadow" name="password" id="userInputPassword"
+                placeholder="Digite uma senha">
+            </div>
+            <div class="d-grid gap-2 col-6 mx-auto">
+              <button class="btn btn-danger rounded-pill" type="submit">Salvar</button>
+            </div>
+          </form>
         </div>
       </div>
     </div>

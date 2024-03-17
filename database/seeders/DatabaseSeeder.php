@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder
             SaleProductSeeder::class,
             RoleSeeder::class,
             RoleUserSeeder::class,
+            ConfigurationSeeder::class,
         ]);
     }
 }

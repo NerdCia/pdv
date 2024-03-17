@@ -13,6 +13,14 @@ class ConfigurationSeeder extends Seeder
      */
     public function run(): void
     {
-    
+        DB::table('configurations')->insert([
+            'key' => 'company_name',
+            'value'=> 'Nerd&Cia',
+        ]);
+
+        DB::table('configurations')->insert([
+            'key' => 'logo',
+            'value'=> 'logos/logo.png',
+        ]);
     }
 }

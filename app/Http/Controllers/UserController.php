@@ -59,7 +59,22 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'string|max:255',
+        ]);
+
+        $user = User::find($id);
+
+        if ($request->password) {
+            $user['password'] = bcrypt($request->password);
+            $user->update(['password' => $user['password']]);
+        }
+
+        $user = $user->update([
+            'name' => $request->name,
+        ]);
+
+        return redirect()->route('components.configurations');
     }
 
     /**

@@ -5,6 +5,7 @@ namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
 use App\Models\RoleUser;
+use App\Models\Role;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 use App\Models\User;
@@ -27,16 +28,37 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Gate::define('all', function(User $user) {
-            return $user->id == RoleUser::find(1)->user_id;
+        Gate::define('all', function (User $user) {
+            $user = User::find($user->id);
+            foreach ($user->roles as $role) {
+                if ($role->name == 'todos') {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
         });
 
-        Gate::define('products', function(User $user) {
-            return $user->id == RoleUser::find(2)->user_id;
+        Gate::define('products', function (User $user) {
+            $user = User::find($user->id);
+            foreach ($user->roles as $role) {
+                if ($role->name == 'produtos' || $role->name == 'todos') {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
         });
 
-        Gate::define('sales', function(User $user) {
-            return $user->id == RoleUser::find(3)->user_id;
+        Gate::define('sales', function (User $user) {
+            $user = User::find($user->id);
+            foreach ($user->roles as $role) {
+                if ($role->name == 'vendas' || $role->name == 'todos') {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
         });
     }
 }
