@@ -10,11 +10,6 @@
         <i class="bi bi-gear fs-2 me-2 align-middle"></i>
         <span class="fs-4 fw-bold d-none d-md-inline-block align-middle">Configurações</span>
       </a>
-      <div class="text-center">
-        <a href="{{ route('components.create_sale') }}" class="btn btn-danger rounded-pill"><i
-            class="bi bi-plus-lg me-1"></i>Novo
-          Usuário</a>
-      </div>
     </div>
   </nav>
   <div class="bg-white shadow-lg rounded-5 p-4 mb-3">
@@ -101,45 +96,46 @@
         <thead>
           <tr class="border-bottom">
             <th class="fw-bold p-3" scope="col">Usuário</th>
+            <th class="fw-bold p-3" scope="col">Email</th>
             <th class="fw-bold p-3" scope="col">Permissões</th>
+            <th class="fw-bold p-3" scope="col"></th>
           </tr>
         </thead>
         <tbody>
           @foreach ($users as $key => $user)
-            <tr class="{{ $key == count($users) - 1 ? '' : 'border-bottom' }}">
-              <td class="py-2 px-3">{{ $user->name }}</td>
-              <td class="py-2 px-3">
-                <div class="dropdown">
-                  <button class="btn btn-danger btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                    aria-expanded="false">
-                    Permissões
-                  </button>
-                  <ul class="dropdown-menu">
-                    <li class="px-2 py-1">
-                      <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckRole">
-                        <label class="form-check-label" for="flexSwitchCheckRole">Default switch checkbox
-                          input</label>
-                      </div>
-                    </li>
-                    <li class="px-2 py-1">
-                      <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckRole">
-                        <label class="form-check-label" for="flexSwitchCheckRole">Default switch checkbox
-                          input</label>
-                      </div>
-                    </li>
-                    <li class="px-2 py-1">
-                      <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckRole">
-                        <label class="form-check-label" for="flexSwitchCheckRole">Default switch checkbox
-                          input</label>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-              </td>
-            </tr>
+            <form action="{{ route('user.role.update', $user->id) }}" method="POST" enctype="multipart/form-data">
+              @method('POST')
+              @csrf
+              <tr class="{{ $key == count($users) - 1 ? '' : 'border-bottom' }}">
+                <td class="py-2 px-3">{{ $user->name }}</td>
+                <td class="py-2 px-3">{{ $user->email }}</td>
+                <td class="py-2 px-3">
+                  <div class="dropdown">
+                    <button class="btn btn-danger btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                      aria-expanded="false">
+                      Permissões
+                    </button>
+                    <ul class="dropdown-menu">
+                      @foreach ($roles as $role)
+                        <li class="px-2 py-1">
+                          <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckRole"
+                              name="{{ $role->name }}" value="{{ $role->id }}"
+                              {{ $user->roles->contains('name', $role->name) ? 'checked' : '' }}>
+                            <label class="form-check-label text-capitalize"
+                              for="flexSwitchCheckRole">{{ $role->name }}</label>
+                          </div>
+                        </li>
+                      @endforeach
+                    </ul>
+                  </div>
+                </td>
+                <td class="py-2 px-3 col-2 text-center">
+                  <button type="submit" class="btn btn-danger btn-sm rounded-pill"><i
+                      class="bi bi-arrow-clockwise"></i></button>
+                </td>
+              </tr>
+            </form>
           @endforeach
         </tbody>
       </table>

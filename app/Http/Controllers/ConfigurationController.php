@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Configuration;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -11,8 +12,9 @@ class ConfigurationController extends Controller
     public function index()
     {
         $users = User::all();
+        $roles = Role::all();
 
-        return view('components.configurations', compact('users'));
+        return view('components.configurations', compact('users', 'roles'));
     }
 
     public function store(Request $request)

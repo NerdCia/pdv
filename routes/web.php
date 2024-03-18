@@ -4,9 +4,11 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ConfigurationController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\RoleUserController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\CreateSaleController;
 use App\Http\Controllers\UserController;
+use App\Models\RoleUser;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 
@@ -71,6 +73,8 @@ Route::middleware(['auth'])->group(function () {
     ], function () {
       Route::post('update_user/{id}', [UserController::class, 'update'])
         ->name('update');
+      Route::post('update_role_user/{id}', [RoleUserController::class, 'update'])
+        ->name('role.update');
     });
   });
 
