@@ -23,7 +23,11 @@
             <div class="mb-3">
               <div class="row">
                 <div class="col-md-4">
-                  <img src="{{ url("storage/{$logo}") }}" class="img-fluid shadow my-2 rounded-4" alt="Logo">
+                  @if (isset($logo) && Storage::get($logo))
+                    <img src="{{ url("storage/{$logo}") }}" class="img-fluid shadow my-2 rounded-4" alt="Logo">
+                  @else
+                  <img src="{{ asset('img/logo.png') }}" class="img-fluid shadow my-2 rounded-4" alt="Logo">
+                  @endif
                 </div>
                 <div class="col align-self-center">
                   <label for="imageFile" class="form-label"><small class="fw-bold text-body-emphasis">Selecione a

@@ -39,76 +39,101 @@ class DashboardController extends Controller
             ->orderBy('saleDate', 'asc')
             ->get();
 
-        foreach ($saleProductsData as $saleProducts) {
-            $saleDates[] = '"' . $saleProducts->saleDate . '"';
-            $grossRevenues[] = $saleProducts->grossRevenue;
-            $salesQuantity[] = $saleProducts->saleQuantity;
-            $profits[] = $saleProducts->profit;
-            $profitMargins[] = number_format(($saleProducts->profit / $saleProducts->grossRevenue) * 100, 2);
+        if (!$saleProductsData->isEmpty()) {
+            foreach ($saleProductsData as $saleProducts) {
+                $saleDates[] = '"' . $saleProducts->saleDate . '"';
+                $grossRevenues[] = $saleProducts->grossRevenue;
+                $salesQuantity[] = $saleProducts->saleQuantity;
+                $profits[] = $saleProducts->profit;
+                $profitMargins[] = number_format(($saleProducts->profit / $saleProducts->grossRevenue) * 100, 2);
+            }
+
+            // Faturamento bruto total de todos os períodos
+            $grossRevenueTotal = array_sum($grossRevenues);
+
+            // Quantidade de vendas total de todos os períodos 
+            $salesQuantityTotal = array_sum($salesQuantity);
+
+            // Lucro total em todos os períodos
+            $profitsTotal = array_sum($profits);
+
+            // Margem de lucro em todos os perídos
+            $profitMarginEverage = $profitsTotal / $grossRevenueTotal * 100;
+
+            // Meses das vendas
+            $saleDates = implode(',', $saleDates);
+
+            // Faturamento bruto total com base nos meses
+            $grossRevenues = implode(',', $grossRevenues);
+
+            // Quantidade de vendas total com base nos meses
+            $salesQuantity = implode(',', $salesQuantity);
+
+            // Lucro total com base nos meses
+            $profits = implode(',', $profits);
+
+            // Margem de lucro com base nos meses
+            $profitMargins = implode(',', $profitMargins);
+        } else {
+            $saleDates = '';
+            $grossRevenues = '';
+            $salesQuantity = '';
+            $profits = '';
+            $profitMargins = '';
+            $grossRevenueTotal = 0;
+            $salesQuantityTotal = 0;
+            $profitsTotal = 0;
+            $profitMarginEverage = 0;
         }
 
-        // Faturamento bruto total de todos os períodos
-        $grossRevenueTotal = array_sum($grossRevenues); 
-
-        // Quantidade de vendas total de todos os períodos 
-        $salesQuantityTotal = array_sum($salesQuantity);
-
-        // Lucro total em todos os períodos
-        $profitsTotal = array_sum($profits);
-
-        // Margem de lucro em todos os perídos
-        $profitMarginEverage = $profitsTotal / $grossRevenueTotal * 100;
-
-        // Meses das vendas
-        $saleDates = implode(',', $saleDates);
-
-        // Faturamento bruto total com base nos meses
-        $grossRevenues = implode(',', $grossRevenues);
-
-        // Quantidade de vendas total com base nos meses
-        $salesQuantity = implode(',', $salesQuantity);
-
-        // Lucro total com base nos meses
-        $profits = implode(',', $profits);
-
-        // Margem de lucro com base nos meses
-        $profitMargins = implode(',', $profitMargins);
 
         // Dados do gráfico de barra vertical (Quantidade vendas por funcionário)
         $salesData = User::with('sales')->get();
 
-        foreach ($salesData as $saleData) {
-            $usersNames[] = '"' . $saleData->name . '"';
-            $numberSalesPerEmployee[] = $saleData->sales->count();
+        if (!$salesData->isEmpty()) {
+            foreach ($salesData as $saleData) {
+                $usersNames[] = '"' . $saleData->name . '"';
+                $numberSalesPerEmployee[] = $saleData->sales->count();
+            }
+    
+            // Nomes dos funcionários
+            $usersNames = implode(',', $usersNames);
+    
+            // Quantidade de vendas por funcionário
+            $numberSalesPerEmployee = implode(',', $numberSalesPerEmployee);
+        } else {
+            $usersNames = '';
+            $numberSalesPerEmployee = '';
         }
 
-        // Nomes dos funcionários
-        $usersNames = implode(',', $usersNames);
-
-        // Quantidade de vendas por funcionário
-        $numberSalesPerEmployee = implode(',', $numberSalesPerEmployee);
 
         // Dados do gráfico de rosca (Produtos mais vendidos)
         $productsData = SaleProduct::select([
             DB::raw('products.name as productName'),
             DB::raw('SUM(sale_products.quantity) as topSellingProduct'),
-            ])
-            ->join('products','sale_products.id_product','=','products.id')
+        ])
+            ->join('products', 'sale_products.id_product', '=', 'products.id')
             ->groupBy('productName')
-            ->orderBy('topSellingProduct','desc')
+            ->orderBy('topSellingProduct', 'desc')
             ->take(7)
             ->get();
 
-        foreach ($productsData as $productData) {
-            $productsNames[] = '"' . $productData->productName . '"';
-            $topSellingProducts[] = $productData->topSellingProduct;
+        if (!$productsData->isEmpty()) {
+            foreach ($productsData as $productData) {
+                $productsNames[] = '"' . $productData->productName . '"';
+                $topSellingProducts[] = $productData->topSellingProduct;
+            }
+    
+            // Nomes dos produtos
+            $productsNames = implode(',', $productsNames);
+    
+            // Quantidade de vendas por produto
+            $topSellingProducts = implode(',', $topSellingProducts);
+        } else {
+            $productsNames = '';
+            $topSellingProducts = '';
         }
 
-        // Nomes dos produtos
-        $productsNames = implode(',', $productsNames);
-
-        // Quantidade de vendas por produto
-        $topSellingProducts = implode(',', $topSellingProducts);
 
         // Dados do gráfico de barra horizontal (Quantidade de vendas por método de pagamento)
         $paymentMethodsData = Sale::select([
@@ -116,19 +141,24 @@ class DashboardController extends Controller
             DB::raw('COUNT(sales.id) as NumberSalesPerPaymentMethod'),
         ])
             ->groupBy('paymentMethodName')
-            ->orderBy('NumberSalesPerPaymentMethod','desc')
+            ->orderBy('NumberSalesPerPaymentMethod', 'desc')
             ->get();
 
-        foreach ($paymentMethodsData as $paymentMethodData) {
-            $paymentMethodsNames[] = "'" . $paymentMethodData->paymentMethodName . "'";
-            $NumberSalesPerPaymentMethods[] = $paymentMethodData->NumberSalesPerPaymentMethod;
+        if (!$paymentMethodsData->isEmpty()) {
+            foreach ($paymentMethodsData as $paymentMethodData) {
+                $paymentMethodsNames[] = "'" . $paymentMethodData->paymentMethodName . "'";
+                $NumberSalesPerPaymentMethods[] = $paymentMethodData->NumberSalesPerPaymentMethod;
+            }
+    
+            // Nomes dos métodos de pagamentos
+            $paymentMethodsNames = implode(',', $paymentMethodsNames);
+    
+            // Quantidade vendas por método de pagamento
+            $NumberSalesPerPaymentMethods = implode(',', $NumberSalesPerPaymentMethods);
+        } else {
+            $paymentMethodsNames = '';
+            $NumberSalesPerPaymentMethods = '';
         }
-
-        // Nomes dos métodos de pagamentos
-        $paymentMethodsNames = implode(',', $paymentMethodsNames);
-
-        // Quantidade vendas por método de pagamento
-        $NumberSalesPerPaymentMethods = implode(',', $NumberSalesPerPaymentMethods);
 
         return view('components.dashboard', compact('products', 'lastSales', 'productsWithLessThan10InStock', 'saleDates', 'grossRevenueTotal', 'grossRevenues', 'salesQuantity', 'salesQuantityTotal', 'profits', 'profitsTotal', 'profitMargins', 'profitMarginEverage', 'usersNames', 'numberSalesPerEmployee', 'productsNames', 'topSellingProducts', 'paymentMethodsNames', 'NumberSalesPerPaymentMethods'));
     }

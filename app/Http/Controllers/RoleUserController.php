@@ -56,9 +56,27 @@ class RoleUserController extends Controller
     public function update(Request $request, string $id)
     {
         $user = User::find($id);
-        $roleUser = RoleUser::where('user_id', '=', $user->id)->get();
+        $rolesUser = RoleUser::where('user_id', '=', $user->id)->get();
         $roles = Role::all();
 
+        $rolesRequest = array_intersect($request->all(), $roles->pluck('id')->toArray());
+
+        foreach ($rolesRequest as $roleRequest) {
+            if (!$rolesUser->contains('role_id', $roleRequest)) {
+                RoleUser::create([
+                    'user_id' => $user->id,
+                    'role_id' => $roleRequest,
+                ]);
+            }
+        }
+
+        $rolesToDelete = $rolesUser->reject(function ($roleUser) use ($rolesRequest) {
+            return in_array($roleUser->role_id, $rolesRequest);
+        });
+
+        foreach ($rolesToDelete as $roleUser) {
+            $roleUser->delete();
+        }
 
         return redirect()->route('components.configurations');
     }

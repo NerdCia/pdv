@@ -16,7 +16,11 @@
   <form action="{{ route('form.auth') }}" method="POST">
     @csrf
     <div class="text-center">
-      <img src="{{ url("storage/{$logo}") }}" class="img-fluid rounded-circle w-25 shadow" alt="Logo">
+      @if (isset($logo) && Storage::get($logo))
+        <img src="{{ url("storage/{$logo}") }}" class="img-fluid rounded-circle w-25 shadow" alt="Logo">
+      @else
+        <img src="{{ asset('img/logo.png') }}" class="img-fluid rounded-circle w-25 shadow" alt="Logo">
+      @endif
       <h3 class="mt-2 text-body-emphasis fw-bold">Conecte-se</h3>
     </div>
     <div class="mb-3">

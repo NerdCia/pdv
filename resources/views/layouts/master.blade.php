@@ -18,7 +18,11 @@
       <div class="d-flex align-items-center">
         <a href="{{ route('components.dashboard') }}"
           class="text-body-emphasis text-decoration-none d-inline-flex align-items-center">
-          <img src="{{ url("storage/{$logo}") }}" class="rounded-circle me-2" alt="Logo" width="40">
+          @if (isset($logo) && Storage::get($logo))
+            <img src="{{ url("storage/{$logo}") }}" class="rounded-circle me-2" alt="Logo" width="40">
+          @else
+            <img src="{{ asset('img/logo.png') }}" class="rounded-circle me-2" alt="Logo" width="40">
+          @endif
           @if ($company_name)
             <span class="d-none d-sm-inline fw-bold fs-5">{{ $company_name }}</span>
           @else
