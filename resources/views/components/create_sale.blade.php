@@ -55,8 +55,8 @@
                             <form action="{{ route('sale.product.add') }}" method="POST" enctype="multipart/form-data">
                               @csrf
                               <tr class="{{ $key == count($products) - 1 ? '' : ' border-bottom' }}">
-                                <td class="text-center p-2"><img src="{{ url("storage/{$product->image}") }}" alt="{{ $product->name }}"
-                                    width="32"></td>
+                                <td class="text-center p-2"><img src="{{ url("storage/{$product->image}") }}"
+                                    alt="{{ $product->name }}" width="32"></td>
                                 <td class="p-2"><small>{{ $product->name }}</small></td>
                                 <td class="p-2"><small>R$ {{ number_format($product->price, 2, ',', '.') }}</small>
                                 </td>
@@ -86,22 +86,29 @@
               </nav>
               <div class="table-responsive shadow rounded-4 my-3">
                 <table class="bg-white w-100 align-middle">
-                  <thead>
-                    <tr class="border-bottom">
-                      <th class="d-none d-lg-table-cell" scope="col"></th>
-                      <th class="fw-bold py-3 px-2" scope="col">Nome</th>
-                      <th class="fw-bold py-3 px-2" scope="col">Preço</th>
-                      <th class="fw-bold py-3 px-2" scope="col">Quantidade</th>
-                      <th class="fw-bold py-3 px-2" scope="col"></th>
-                      <th class="fw-bold py-3 px-2" scope="col"></th>
-                      <th class="fw-bold py-3 px-2" scope="col"></th>
+                  @if (count($items) != 0)
+                    <thead>
+                      <tr class="border-bottom">
+                        <th class="d-none d-lg-table-cell" scope="col"></th>
+                        <th class="fw-bold py-3 px-2" scope="col">Nome</th>
+                        <th class="fw-bold py-3 px-2" scope="col">Preço</th>
+                        <th class="fw-bold py-3 px-2" scope="col">Quantidade</th>
+                        <th class="fw-bold py-3 px-2" scope="col"></th>
+                        <th class="fw-bold py-3 px-2" scope="col"></th>
+                        <th class="fw-bold py-3 px-2" scope="col"></th>
+                      </tr>
+                    </thead>
+                  @else
+                    <tr>
+                      <td colspan="7" class="text-center py-3 fw-bold">Nenhum produto adicionado</td>
                     </tr>
-                  </thead>
+                  @endif
                   <tbody>
-                    @forelse ($items as $key => $item)
+                    @foreach ($items as $key => $item)
                       <tr class="{{ $key == count($items) - 1 && count($items) == 0 ? '' : 'border-bottom' }}">
-                        <td class="text-center p-2 d-none d-lg-table-cell"><img src="{{ url("storage/{$item->attributes->image}") }}"
-                            alt="{{ $item->name }}" width="32"></td>
+                        <td class="text-center p-2 d-none d-lg-table-cell"><img
+                            src="{{ url("storage/{$item->attributes->image}") }}" alt="{{ $item->name }}"
+                            width="32"></td>
                         <td class="p-2">{{ $item->name }}</td>
                         <td class="p-2">R$ {{ number_format($item->price * $item->quantity, 2, ',', '.') }}</td>
                         <form action="{{ route('sale.product.update') }}" method="POST"
@@ -126,11 +133,7 @@
                           </td>
                         </form>
                       </tr>
-                    @empty
-                      <tr>
-                        <td colspan="7" class="text-center py-3 fw-bold">Nenhum produto adicionado</td>
-                      </tr>
-                    @endforelse
+                    @endforeach
                   </tbody>
                 </table>
               </div>
@@ -181,7 +184,8 @@
                 enctype="multipart/form-data">
                 @method('POST')
                 @csrf
-                <input type="text" class="form-control rounded-pill my-2" name="payment_method" placeholder="Método de pagamento">
+                <input type="text" class="form-control rounded-pill my-2" name="payment_method"
+                  placeholder="Método de pagamento">
                 <input type="hidden" name="id_user" value="{{ Auth::id() }}">
                 <button type="submit" class="btn btn-danger btn-lg rounded-pill">Finalizar compra</button>
               </form>

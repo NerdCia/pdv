@@ -68,17 +68,35 @@
     </div>
     <div class="col">
       <div class="bg-white rounded-4 shadow-lg mb-3" style="height: 60vh; max-height: 400px;">
-        <canvas id="numberSalesPerEmployee"></canvas>
+        @if ($numberSalesPerEmployee)
+          <canvas id="numberSalesPerEmployee"></canvas>
+        @else
+          <div class="d-flex align-items-center justify-content-center h-100">
+            <h5 class="text-body-tertiary text-center">Não existe dados suficientes para exibir os gráficos</h5>
+          </div>
+        @endif
       </div>
     </div>
     <div class="col">
       <div class="bg-white rounded-4 shadow-lg mb-3" style="height: 60vh; max-height: 400px;">
-        <canvas id="topSellingProducts"></canvas>
+        @if ($topSellingProducts)
+          <canvas id="topSellingProducts"></canvas>
+        @else
+          <div class="d-flex align-items-center justify-content-center h-100">
+            <h5 class="text-body-tertiary text-center">Não existe dados suficientes para exibir os gráficos</h5>
+          </div>
+        @endif
       </div>
     </div>
     <div class="col">
       <div class="bg-white rounded-4 shadow-lg mb-3" style="height: 60vh; max-height: 400px;">
-        <canvas id="NumberSalesPerPaymentMethod"></canvas>
+        @if ($numberSalesPerPaymentMethods)
+          <canvas id="numberSalesPerPaymentMethods"></canvas>
+        @else
+          <div class="d-flex align-items-center justify-content-center h-100">
+            <h5 class="text-body-tertiary text-center">Não existe dados suficientes para exibir os gráficos</h5>
+          </div>
+        @endif
       </div>
     </div>
     <div class="col">
@@ -94,9 +112,13 @@
                 <th class="fw-bold py-3 px-4" scope="col"></th>
               </tr>
             </thead>
+          @else
+            <tr>
+              <td colspan="6" class="text-center py-3 fw-bold">Nenhum produto encontrado</td>
+            </tr>
           @endif
           <tbody>
-            @forelse ($productsWithLessThan10InStock as $key => $product)
+            @foreach ($productsWithLessThan10InStock as $key => $product)
               <tr
                 class="{{ $key == count($productsWithLessThan10InStock) - 1 && count($productsWithLessThan10InStock) == 0 ? '' : 'border-bottom' }}">
                 <td class="py-2 px-4">{{ $product->name }}</td>
@@ -107,11 +129,7 @@
                         class="bi bi-pencil"></i></button></td>
                 </form>
               </tr>
-            @empty
-              <tr>
-                <td colspan="6" class="text-center py-3 fw-bold">Nenhum produto encontrado</td>
-              </tr>
-            @endforelse
+            @endforeach
           </tbody>
         </table>
       </div>
@@ -121,16 +139,22 @@
       <div class="table-responsive bg-white shadow-lg mb-3 rounded-4">
         <p class="text-center mb-0 my-3"><small class="text-body-tertiary fw-bold">Últimas vendas</small></p>
         <table class="w-100 align-middle">
-          <thead>
-            <tr class="border-bottom">
-              <th class="fw-bold py-3 px-4" scope="col">Usuário</th>
-              <th class="fw-bold py-3 px-4" scope="col">Método de pagamento</th>
-              <th class="fw-bold py-3 px-4" scope="col">Data</th>
+          @if (count($lastSales) != 0)
+            <thead>
+              <tr class="border-bottom">
+                <th class="fw-bold py-3 px-4" scope="col">Usuário</th>
+                <th class="fw-bold py-3 px-4" scope="col">Método de pagamento</th>
+                <th class="fw-bold py-3 px-4" scope="col">Data</th>
+              </tr>
+            </thead>
+          @else
+            <tr>
+              <td colspan="3" class="text-center py-3 fw-bold">Nenhum venda encontrada</td>
             </tr>
-          </thead>
+          @endif
           <tbody>
             @foreach ($lastSales as $key => $sale)
-              <tr class="{{ $key == count($lastSales) - 1 ? '' : 'border-bottom' }}">
+              <tr class="{{ $key == count($lastSales) - 1 && count($lastSales) == 0 ? '' : 'border-bottom' }}">
                 <td class="py-2 px-4">{{ $sale->user->name }}</td>
                 <td class="py-2 px-4">{{ $sale->payment_method }}</td>
                 <td class="py-2 px-4">{{ date_format($sale->created_at, 'd/m/Y H:i:s') }}</td>
@@ -154,13 +178,13 @@
     const profitMargin = document.getElementById('profitMargin');
     const numberSalesPerEmployee = document.getElementById('numberSalesPerEmployee');
     const topSellingProducts = document.getElementById('topSellingProducts');
-    const NumberSalesPerPaymentMethod = document.getElementById('NumberSalesPerPaymentMethod');
+    const numberSalesPerPaymentMethods = document.getElementById('NumberSalesPerPaymentMethod');
 
     const style = getComputedStyle(document.body);
 
     Chart.defaults.font.family = style.getPropertyValue('--font-family-default');
     Chart.defaults.font.weight = 500;
-    
+
 
     const optionsChartTypeLine = {
       locale: 'pt-br',
@@ -325,13 +349,13 @@
       }
     });
 
-    new Chart(NumberSalesPerPaymentMethod, {
+    new Chart(numberSalesPerPaymentMethods, {
       type: 'bar',
       data: {
         labels: [{!! $paymentMethodsNames !!}],
         datasets: [{
           label: 'Quantidade de vendas por forma de pagamento',
-          data: [{{ $NumberSalesPerPaymentMethods }}],
+          data: [{{ $numberSalesPerPaymentMethods }}],
           borderWidth: style.getPropertyValue('--graphics-border-width'),
           backgroundColor: style.getPropertyValue('--graphics-bg-color'),
           color: style.getPropertyValue('--color-graphics'),

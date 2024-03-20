@@ -20,15 +20,21 @@
 
   <div class="table-responsive shadow-lg mb-3 rounded-5">
     <table class="bg-white w-100 align-middle">
-      <thead>
-        <tr class="border-bottom">
-          <th scope="col"></th>
-          <th class="fw-bold py-3 px-2" scope="col">Usuário</th>
-          <th class="fw-bold py-3 px-2" scope="col">Método de pagamento</th>
-          <th class="fw-bold py-3 px-2" scope="col">Data</th>
-          <th class="fw-bold py-3 px-2" scope="col"></th>
+      @if (count($sales) != 0)
+        <thead>
+          <tr class="border-bottom">
+            <th scope="col"></th>
+            <th class="fw-bold py-3 px-2" scope="col">Usuário</th>
+            <th class="fw-bold py-3 px-2" scope="col">Método de pagamento</th>
+            <th class="fw-bold py-3 px-2" scope="col">Data</th>
+            <th class="fw-bold py-3 px-2" scope="col"></th>
+          </tr>
+        </thead>
+      @else
+        <tr>
+          <td colspan="5" class="text-center py-3 fw-bold">Nenhum venda encontrada</td>
         </tr>
-      </thead>
+      @endif
       <tbody>
         @foreach ($sales as $key => $sale)
           <tr class="{{ $key == count($sales) - 1 ? '' : 'border-bottom' }}">

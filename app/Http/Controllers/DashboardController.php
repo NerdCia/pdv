@@ -138,28 +138,28 @@ class DashboardController extends Controller
         // Dados do gráfico de barra horizontal (Quantidade de vendas por método de pagamento)
         $paymentMethodsData = Sale::select([
             DB::raw('sales.payment_method as paymentMethodName'),
-            DB::raw('COUNT(sales.id) as NumberSalesPerPaymentMethod'),
+            DB::raw('COUNT(sales.id) as numberSalesPerPaymentMethod'),
         ])
             ->groupBy('paymentMethodName')
-            ->orderBy('NumberSalesPerPaymentMethod', 'desc')
+            ->orderBy('numberSalesPerPaymentMethod', 'desc')
             ->get();
 
         if (!$paymentMethodsData->isEmpty()) {
             foreach ($paymentMethodsData as $paymentMethodData) {
                 $paymentMethodsNames[] = "'" . $paymentMethodData->paymentMethodName . "'";
-                $NumberSalesPerPaymentMethods[] = $paymentMethodData->NumberSalesPerPaymentMethod;
+                $numberSalesPerPaymentMethods[] = $paymentMethodData->numberSalesPerPaymentMethod;
             }
     
             // Nomes dos métodos de pagamentos
             $paymentMethodsNames = implode(',', $paymentMethodsNames);
     
             // Quantidade vendas por método de pagamento
-            $NumberSalesPerPaymentMethods = implode(',', $NumberSalesPerPaymentMethods);
+            $numberSalesPerPaymentMethods = implode(',', $numberSalesPerPaymentMethods);
         } else {
             $paymentMethodsNames = '';
-            $NumberSalesPerPaymentMethods = '';
+            $numberSalesPerPaymentMethods = '';
         }
 
-        return view('components.dashboard', compact('products', 'lastSales', 'productsWithLessThan10InStock', 'saleDates', 'grossRevenueTotal', 'grossRevenues', 'salesQuantity', 'salesQuantityTotal', 'profits', 'profitsTotal', 'profitMargins', 'profitMarginEverage', 'usersNames', 'numberSalesPerEmployee', 'productsNames', 'topSellingProducts', 'paymentMethodsNames', 'NumberSalesPerPaymentMethods'));
+        return view('components.dashboard', compact('products', 'lastSales', 'productsWithLessThan10InStock', 'saleDates', 'grossRevenueTotal', 'grossRevenues', 'salesQuantity', 'salesQuantityTotal', 'profits', 'profitsTotal', 'profitMargins', 'profitMarginEverage', 'usersNames', 'numberSalesPerEmployee', 'productsNames', 'topSellingProducts', 'paymentMethodsNames', 'numberSalesPerPaymentMethods'));
     }
 }

@@ -30,34 +30,28 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('all', function (User $user) {
             $user = User::find($user->id);
-            foreach ($user->roles as $role) {
-                if ($role->name == 'todos') {
-                    return true;
-                } else {
-                    return false;
-                }
+            if ($user->roles->contains('name', 'todos')) {
+                return true;
+            } else {
+                return false;
             }
         });
 
         Gate::define('products', function (User $user) {
             $user = User::find($user->id);
-            foreach ($user->roles as $role) {
-                if ($role->name == 'produtos' || $role->name == 'todos') {
-                    return true;
-                } else {
-                    return false;
-                }
+            if ($user->roles->contains('name', 'produtos') || $user->roles->contains('name', 'todos')) {
+                return true;
+            } else {
+                return false;
             }
         });
 
         Gate::define('sales', function (User $user) {
             $user = User::find($user->id);
-            foreach ($user->roles as $role) {
-                if ($role->name == 'vendas' || $role->name == 'todos') {
-                    return true;
-                } else {
-                    return false;
-                }
+            if ($user->roles->contains('name', 'vendas') || $user->roles->contains('name', 'todos')) {
+                return true;
+            } else {
+                return false;
             }
         });
     }

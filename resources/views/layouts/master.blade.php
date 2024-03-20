@@ -48,10 +48,12 @@
               <i class="bi bi-person-circle fs-4 align-middle text-secondary"></i>
             </a>
             <ul class="dropdown-menu text-small" style="">
-              <li><a class="dropdown-item" href="{{ route('components.configurations') }}">Configurações</a></li>
-              <li>
-                <hr class="dropdown-divider">
-              </li>
+              @can('all')
+                <li><a class="dropdown-item" href="{{ route('components.configurations') }}">Configurações</a></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+              @endcan
               <li><a class="dropdown-item" href="{{ route('form.logout') }}">Sair</a></li>
             </ul>
           </div>
@@ -69,34 +71,42 @@
       <ul
         class="nav justify-content-around flex-sm-column text-center bg-white mb-3 mb-sm-0 mx-auto rounded-5 py-sm-4 shadow"
         id="sidebar" style="max-width: 250px">
-        <li class="nav-item my-2">
-          <a class="nav-link text-secondary mx-1 mx-sm-3 p-3 px-sm-0 rounded-4 text-uppercase {{ Route::currentRouteName() == 'components.dashboard' ? 'shadow' : '' }}"
-            href="{{ route('components.dashboard') }}">
-            <i class="bi bi-speedometer d-block fs-5"></i>
-            <small class="d-none d-xxl-block">Painel</small>
-          </a>
-        </li>
-        <li class="nav-item my-2">
-          <a class="nav-link text-secondary mx-1 mx-sm-3 p-3 px-sm-0 rounded-4 text-uppercase {{ Route::currentRouteName() == 'components.sales' ? 'shadow' : '' }}"
-            href="{{ route('components.sales') }}">
-            <i class="bi bi-cart d-block fs-5"></i>
-            <small class="d-none d-xxl-block">Vendas</small>
-          </a>
-        </li>
-        <li class="nav-item my-2">
-          <a class="nav-link text-secondary mx-1 mx-sm-3 p-3 px-sm-0 rounded-4 text-uppercase {{ Route::currentRouteName() == 'components.products' ? 'shadow' : '' }}"
-            href="{{ route('components.products') }}">
-            <i class="bi bi-bag d-block fs-5"></i>
-            <small class="d-none d-xxl-block">Produtos</small>
-          </a>
-        </li>
-        <li class="nav-item my-2">
-          <a class="nav-link text-secondary mx-1 mx-sm-3 p-3 px-sm-0 rounded-4 text-uppercase {{ Route::currentRouteName() == 'components.configurations' ? 'shadow' : '' }}"
-            href="{{ route('components.configurations') }}">
-            <i class="bi bi-gear d-block fs-5"></i>
-            <small class="d-none d-xxl-block">Configurações</small>
-          </a>
-        </li>
+        @can('all')
+          <li class="nav-item my-2">
+            <a class="nav-link text-secondary mx-1 mx-sm-3 p-3 px-sm-0 rounded-4 text-uppercase {{ Route::currentRouteName() == 'components.dashboard' ? 'shadow' : '' }}"
+              href="{{ route('components.dashboard') }}">
+              <i class="bi bi-speedometer d-block fs-5"></i>
+              <small class="d-none d-xxl-block">Painel</small>
+            </a>
+          </li>
+        @endcan
+        @can('sales')
+          <li class="nav-item my-2">
+            <a class="nav-link text-secondary mx-1 mx-sm-3 p-3 px-sm-0 rounded-4 text-uppercase {{ Route::currentRouteName() == 'components.sales' ? 'shadow' : '' }}"
+              href="{{ route('components.sales') }}">
+              <i class="bi bi-cart d-block fs-5"></i>
+              <small class="d-none d-xxl-block">Vendas</small>
+            </a>
+          </li>
+        @endcan
+        @can('products')
+          <li class="nav-item my-2">
+            <a class="nav-link text-secondary mx-1 mx-sm-3 p-3 px-sm-0 rounded-4 text-uppercase {{ Route::currentRouteName() == 'components.products' ? 'shadow' : '' }}"
+              href="{{ route('components.products') }}">
+              <i class="bi bi-bag d-block fs-5"></i>
+              <small class="d-none d-xxl-block">Produtos</small>
+            </a>
+          </li>
+        @endcan
+        @can('all')
+          <li class="nav-item my-2">
+            <a class="nav-link text-secondary mx-1 mx-sm-3 p-3 px-sm-0 rounded-4 text-uppercase {{ Route::currentRouteName() == 'components.configurations' ? 'shadow' : '' }}"
+              href="{{ route('components.configurations') }}">
+              <i class="bi bi-gear d-block fs-5"></i>
+              <small class="d-none d-xxl-block">Configurações</small>
+            </a>
+          </li>
+        @endcan
       </ul>
     </div>
     <div class="col-sm-9 col-md-10">

@@ -18,6 +18,6 @@ class CategorySeeder extends Seeder
             'name' => 'raiz',
         ]);
 
-        Category::factory(5)->create();
+        // Category::factory(5)->create();  
     }
 }

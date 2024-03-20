@@ -61,19 +61,25 @@
 
   <div class="table-responsive shadow-lg rounded-5 mb-3">
     <table class="bg-white w-100 align-middle">
-      <thead>
-        <tr class="border-bottom">
-          <th class="px-2" scope="col"></th>
-          <th class="d-none d-lg-table-cell px-2" scope="col"></th>
-          <th class="fw-bold py-3 px-2" scope="col">Nome</th>
-          <th class="fw-bold py-3 px-2" scope="col">Quantidade</th>
-          <th class="fw-bold py-3 px-2" scope="col">Preço</th>
-          <th class="fw-bold py-3 px-2" scope="col"></th>
-          <th class="fw-bold py-3 px-2" scope="col"></th>
+      @if (count($products) != 0)
+        <thead>
+          <tr class="border-bottom">
+            <th class="px-2" scope="col"></th>
+            <th class="d-none d-lg-table-cell px-2" scope="col"></th>
+            <th class="fw-bold py-3 px-2" scope="col">Nome</th>
+            <th class="fw-bold py-3 px-2" scope="col">Quantidade</th>
+            <th class="fw-bold py-3 px-2" scope="col">Preço</th>
+            <th class="fw-bold py-3 px-2" scope="col"></th>
+            <th class="fw-bold py-3 px-2" scope="col"></th>
+          </tr>
+        </thead>
+      @else
+        <tr>
+          <td class="text-center py-3 fw-bold">Nenhum produto encontrado</td>
         </tr>
-      </thead>
+      @endif
       <tbody>
-        @forelse ($products as $key => $product)
+        @foreach ($products as $key => $product)
           <tr class="{{ $key == count($products) - 1 && count($products) == 0 ? '' : 'border-bottom' }}">
             <td class="text-end p-2 fs-5"><input class="form-check-input" type="checkbox" value="{{ $product->id }}">
             </td>
@@ -82,7 +88,8 @@
             <td class="p-2">{{ $product->name }}</td>
             <td class="p-2">{{ $product->quantity }}</td>
             <td class="p-2">R$ {{ number_format($product->price, 2, ',', '.') }}</td>
-            <form action="{{ route('components.edit_product', $product->id) }}" method="GET" enctype="multipart/form-data">
+            <form action="{{ route('components.edit_product', $product->id) }}" method="GET"
+              enctype="multipart/form-data">
               <td class="py-2"><button class="btn btn-danger btn-sm rounded-circle align-middle"><i
                     class="bi bi-pencil"></i></button></td>
             </form>
@@ -93,11 +100,7 @@
                     class="bi bi-x-lg"></i></button></td>
             </form>
           </tr>
-        @empty
-          <tr>
-            <td colspan="6" class="text-center py-3 fw-bold">Nenhum produto encontrado</td>
-          </tr>
-        @endforelse
+        @endforeach
       </tbody>
     </table>
   </div>

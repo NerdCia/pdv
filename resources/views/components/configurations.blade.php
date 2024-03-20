@@ -95,7 +95,7 @@
         </div>
       </div>
     </div>
-    <div class="table-responsive shadow-lg mb-3 rounded-4">
+    <div class="table-responsive-lg shadow-lg mb-3 rounded-4">
       <table class="bg-white w-100 align-middle">
         <thead>
           <tr class="border-bottom">
@@ -119,11 +119,11 @@
                       aria-expanded="false">
                       Permissões
                     </button>
-                    <ul class="dropdown-menu">
+                    <ul class="dropdown-menu border-0 shadow mt-2">
                       @foreach ($roles as $role)
                         <li class="px-2 py-1">
                           <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckRole"
+                            <input class="form-check-input" type="checkbox" role="switch" id="{{ $role->id }}"
                               name="{{ $role->name }}" value="{{ $role->id }}"
                               {{ $user->roles->contains('name', $role->name) ? 'checked' : '' }}>
                             <label class="form-check-label text-capitalize"

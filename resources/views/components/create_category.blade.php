@@ -29,15 +29,21 @@
           </form>
           <div class="modal-footer border-0">
             <table class="bg-white w-100 shadow align-middle rounded-4 mb-3 ">
-              <thead>
-                <tr class="border-bottom">
-                  <th class="fw-bold py-3 px-4 text-body-emphasis" scope="col">Categorias</th>
-                  <th class="py-3 ps-4" scope="col"></th>
-                  <th class="py-3 ps-4" scope="col"></th>
-                </tr>
-              </thead>
+              @if (count($categories) > 1)
+                <thead>
+                  <tr class="border-bottom">
+                    <th class="fw-bold py-3 px-4 text-body-emphasis" scope="col">Categorias</th>
+                    <th class="py-3 ps-4" scope="col"></th>
+                    <th class="py-3 ps-4" scope="col"></th>
+                  </tr>
+                </thead>
+              @else
+              <tr>
+                <td colspan="3" class="py-3 text-center fw-bold">Nenhuma categoria encontrada</td>
+              </tr>
+              @endif
               <tbody class="overflow-y-auto">
-                @forelse ($categories as $key => $category)
+                @foreach ($categories as $key => $category)
                   @if ($category->name != 'raiz')
                     <tr class="{{ $key == count($categories) - 1 ? '' : 'border-bottom' }}">
                       <form action="{{ route('category.update', $category->id) }}" method="POST">
@@ -56,11 +62,7 @@
                       </form>
                     </tr>
                   @endif
-                @empty
-                  <tr>
-                    <td colspan="3" class="py-3 text-center fw-bold"></td>
-                  </tr>
-                @endforelse
+                @endforeach
               </tbody>
             </table>
           </div>

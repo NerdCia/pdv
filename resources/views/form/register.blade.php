@@ -7,13 +7,7 @@
   @if ($message = Session::get('error'))
     {{ $message }}
   @endif
-
-  @if ($errors)
-    @foreach ($errors->all() as $error)
-      {{ $error }}
-    @endforeach
-  @endif
-  <form action="{{ route('users.store') }}" method="POST">
+  <form action="{{ route('users.store') }}" method="POST" novalidate>
     @csrf
     <div class="text-center">
       @if (isset($logo) && Storage::get($logo))
@@ -25,15 +19,45 @@
     </div>
     <div class="mb-3">
       <label for="inputName" class="form-label"><small class="fw-bold text-body-emphasis">Nome:</small></label>
-      <input type="text" class="form-control shadow" name="name" id="inputName" aria-describedby="emailHelp" placeholder="Digite seu nome">
+      <input type="text" class="form-control shadow {{ count($errors->get('name')) > 0 ? 'is-invalid' : '' }}"
+        name="name" id="inputName" aria-describedby="validationServerNameFeedback" placeholder="Digite seu nome"
+        required>
+      @if ($errors)
+        @foreach ($errors->get('name') as $message)
+          @include('includes.invalid-feedback', [
+              'id' => 'validationServerNameFeedback',
+              'message' => $message,
+          ])
+        @endforeach
+      @endif
     </div>
     <div class="mb-3">
       <label for="inputEmail" class="form-label"><small class="fw-bold text-body-emphasis">Email:</small></label>
-      <input type="email" class="form-control shadow" name="email" id="inputEmail" aria-describedby="emailHelp" placeholder="Digite seu email">
+      <input type="email" class="form-control shadow {{ count($errors->get('email')) > 0 ? 'is-invalid' : '' }}"
+        name="email" id="inputEmail" aria-describedby="validationServerEmailFeedback" placeholder="Digite seu email"
+        required>
+      @if ($errors)
+        @foreach ($errors->get('email') as $message)
+          @include('includes.invalid-feedback', [
+              'id' => 'validationServerEmailFeedback',
+              'message' => $message,
+          ])
+        @endforeach
+      @endif
     </div>
     <div class="mb-3">
       <label for="inputPassword" class="form-label"><small class="fw-bold text-body-emphasis">Senha:</small></label>
-      <input type="password" class="form-control shadow" name="password" id="inputPassword" placeholder="Digite sua senha">
+      <input type="password" class="form-control shadow {{ count($errors->get('password')) > 0 ? 'is-invalid' : '' }}"
+        name="password" id="inputPassword" aria-describedby="validationServerPasswordFeedback"
+        placeholder="Digite sua senha" required>
+      @if ($errors)
+        @foreach ($errors->get('password') as $message)
+          @include('includes.invalid-feedback', [
+              'id' => 'validationServerPasswordFeedback',
+              'message' => $message,
+          ])
+        @endforeach
+      @endif
     </div>
     <div class="d-grid gap-2">
       <button type="submit" class="btn btn-danger rounded-pill">Cadastrar</button>
