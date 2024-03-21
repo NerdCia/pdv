@@ -105,15 +105,35 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'quantity' => 'required|integer|min:1',
-            'price' => 'required|numeric|between:0,999999.99',
-            'expense' => 'required|numeric|between:0,999999.99',
-            'id_category' => 'required|exists:categories,id',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-        ]);
+        $validated = $request->validate(
+            [
+                'name' => 'required|string|max:255',
+                'description' => 'nullable|string',
+                'quantity' => 'required|integer|min:1',
+                'price' => 'required|numeric|between:0,999999.99',
+                'expense' => 'required|numeric|between:0,999999.99',
+                'id_category' => 'required|exists:categories,id',
+                'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            ],
+            [
+                'image.image' => 'O arquivo deve ser uma imagem.',
+                'image.mimes' => 'O campo da imagem deve ser um arquivo do tipo: jpeg, png, jpg.',
+                'name.required' => 'O campo nome é obrigatório.',
+                'name.string' => 'O campo nome deve ser uma string.',
+                'name.max' => 'O campo nome não deve exceder 255 caracteres.',
+                'quantity.required' => 'O campo quantidade é obrigatório.',
+                'quantity.integer' => 'O campo quantidade deve ser um número inteiro.',
+                'quantity.min' => 'O campo quantidade deve ser no mínimo 1.',
+                'price.required' => 'O campo preço é obrigatório.',
+                'price.numeric' => 'O campo preço deve ser um número.',
+                'price.between' => 'O campo preço deve estar entre :min e :max.',
+                'expense.required' => 'O campo despesa é obrigatório.',
+                'expense.numeric' => 'O campo despesa deve ser um número.',
+                'expense.between' => 'O campo despesa deve estar entre :min e :max.',
+                'id_category.required' => 'O campo categoria é obrigatório.',
+                'id_category.exists' => 'A categoria selecionada é inválida.',
+            ]
+        );
 
         $product = $request->all();
 
@@ -164,15 +184,35 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'quantity' => 'required|integer|min:1',
-            'price' => 'required|numeric|between:0,999999.99',
-            'expense' => 'required|numeric|between:0,999999.99',
-            'id_category' => 'required|exists:categories,id',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-        ]);
+        $validated = $request->validate(
+            [
+                'name' => 'required|string|max:255',
+                'description' => 'nullable|string',
+                'quantity' => 'required|integer|min:1',
+                'price' => 'required|numeric|between:0,999999.99',
+                'expense' => 'required|numeric|between:0,999999.99',
+                'id_category' => 'required|exists:categories,id',
+                'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            ],
+            [
+                'image.image' => 'O arquivo deve ser uma imagem.',
+                'image.mimes' => 'O campo da imagem deve ser um arquivo do tipo: jpeg, png, jpg.',
+                'name.required' => 'O campo nome é obrigatório.',
+                'name.string' => 'O campo nome deve ser uma string.',
+                'name.max' => 'O campo nome não deve exceder 255 caracteres.',
+                'quantity.required' => 'O campo quantidade é obrigatório.',
+                'quantity.integer' => 'O campo quantidade deve ser um número inteiro.',
+                'quantity.min' => 'O campo quantidade deve ser no mínimo 1.',
+                'price.required' => 'O campo preço é obrigatório.',
+                'price.numeric' => 'O campo preço deve ser um número.',
+                'price.between' => 'O campo preço deve estar entre :min e :max.',
+                'expense.required' => 'O campo despesa é obrigatório.',
+                'expense.numeric' => 'O campo despesa deve ser um número.',
+                'expense.between' => 'O campo despesa deve estar entre :min e :max.',
+                'id_category.required' => 'O campo categoria é obrigatório.',
+                'id_category.exists' => 'A categoria selecionada é inválida.',
+            ]
+        );
 
         $product = Product::find($id);
 
@@ -199,7 +239,9 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
         SaleProduct::where('id_product', '=', $id)->update(['id_product' => null]);
-        Storage::delete($product->image);
+        if ($product->image) {
+            Storage::delete($product->image);
+        }
         $product->delete();
         return redirect()->route('components.products');
     }

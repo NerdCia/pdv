@@ -14,9 +14,9 @@ class LoginController extends Controller
             'email' => ['required', 'email'],
             'password' => ['required'],
         ], [
-            'email.required' => 'O email é obrigatório',
-            'email.email' => 'O email não é válido',
-            'password.required' => 'A senha é obrigatória',
+            'email.required' => 'O campo email é obrigatório',
+            'email.email' => 'O campo email não é válido',
+            'password.required' => 'O campo senha é obrigatório',
         ]);
 
         if (Auth::attempt($credentials, $request->remember)) {

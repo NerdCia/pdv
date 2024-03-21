@@ -22,7 +22,7 @@
       <input type="text" class="form-control shadow {{ count($errors->get('name')) > 0 ? 'is-invalid' : '' }}"
         name="name" id="inputName" aria-describedby="validationServerNameFeedback" placeholder="Digite seu nome"
         required>
-      @if ($errors)
+      @if ($errors->has('name'))
         @foreach ($errors->get('name') as $message)
           @include('includes.invalid-feedback', [
               'id' => 'validationServerNameFeedback',
@@ -36,7 +36,7 @@
       <input type="email" class="form-control shadow {{ count($errors->get('email')) > 0 ? 'is-invalid' : '' }}"
         name="email" id="inputEmail" aria-describedby="validationServerEmailFeedback" placeholder="Digite seu email"
         required>
-      @if ($errors)
+      @if ($errors->has('email'))
         @foreach ($errors->get('email') as $message)
           @include('includes.invalid-feedback', [
               'id' => 'validationServerEmailFeedback',
@@ -50,7 +50,7 @@
       <input type="password" class="form-control shadow {{ count($errors->get('password')) > 0 ? 'is-invalid' : '' }}"
         name="password" id="inputPassword" aria-describedby="validationServerPasswordFeedback"
         placeholder="Digite sua senha" required>
-      @if ($errors)
+      @if ($errors->has('password'))
         @foreach ($errors->get('password') as $message)
           @include('includes.invalid-feedback', [
               'id' => 'validationServerPasswordFeedback',

@@ -42,6 +42,13 @@ class SaleController extends Controller
     {
         $items = \Cart::getContent();
         
+        $validated = $request->validate([
+            'payment_method' => 'required|string',
+            'id_user' => 'required|exists:users,id',
+        ], [
+            'payment_method.required' => 'O método de pagamento é obrigatório.',
+        ]);        
+
         $sale = Sale::create([
             'payment_method' => $request->payment_method,
             'id_user' => $request->id_user

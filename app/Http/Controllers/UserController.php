@@ -34,10 +34,10 @@ class UserController extends Controller
             'email' => ['required', 'email'],
             'password' => ['required'],
         ], [
-            'name.required' => 'O nome é obrigatório',
-            'email.required' => 'O email é obrigatório',
-            'email.email' => 'O email não é válido',
-            'password.required' => 'A senha é obrigatória',
+            'name.required' => 'O campo nome é obrigatório',
+            'email.required' => 'O campo email é obrigatório',
+            'email.email' => 'O campo email não é válido',
+            'password.required' => 'O campo senha é obrigatório',
         ]);
 
         $user = $request->all();
@@ -70,9 +70,14 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $validated = $request->validate([
-            'name' => 'string|max:255',
-        ]);
+        $validated = $request->validate(
+            [
+                'name' => ['required'],
+            ],
+            [
+                'name.required' => 'O campo nome é obrigatório.',
+            ]
+        );
 
         $user = User::find($id);
 

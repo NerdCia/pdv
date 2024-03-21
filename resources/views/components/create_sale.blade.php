@@ -173,19 +173,29 @@
                     </strong>
                   </li>
                 </ul>
-                <form class="p-2">
+                {{-- <form class="p-2">
                   <div class="input-group">
                     <input type="text" class="form-control rounded-start-pill" placeholder="Código promocional">
                     <button type="submit" class="btn btn-danger rounded-end-pill">Resgatar</button>
                   </div>
-                </form>
+                </form> --}}
               </div>
               <form class="mt-3 text-center" action="{{ route('sale.store') }}" method="POST"
                 enctype="multipart/form-data">
                 @method('POST')
                 @csrf
-                <input type="text" class="form-control rounded-pill my-2" name="payment_method"
-                  placeholder="Método de pagamento">
+                <input type="text"
+                  class="form-control rounded-pill my-2 {{ $errors->has('payment_method') ? 'is-invalid' : '' }}"
+                  name="payment_method" placeholder="Método de pagamento"
+                  aria-describedby="validationServerPaymentMethodFeedback">
+                @if ($errors->has('payment_method'))
+                  @foreach ($errors->get('payment_method') as $message)
+                    @include('includes.invalid-feedback', [
+                        'id' => 'validationServerPaymentMethodFeedback',
+                        'message' => $message,
+                    ])
+                  @endforeach
+                @endif
                 <input type="hidden" name="id_user" value="{{ Auth::id() }}">
                 <button type="submit" class="btn btn-danger btn-lg rounded-pill">Finalizar compra</button>
               </form>

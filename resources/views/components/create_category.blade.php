@@ -14,14 +14,23 @@
           <a type="button" class="btn-close" href="{{ route('components.products') }}"></a>
         </div>
         <div class="modal-body">
-          <form action="{{ route('category.store') }}" method="POST" enctype="multipart/form-data">
+          <form action="{{ route('category.store') }}" method="POST" enctype="multipart/form-data" novalidate>
             @method('POST')
             @csrf
             <div class="mb-3">
               <label for="categoryInputName" class="form-label"><small class="fw-bold text-body-emphasis">Nome da
                   categoria:</small></label>
-              <input type="text" class="form-control shadow" name="name" id="categoryInputName"
+              <input type="text" class="form-control shadow {{ count($errors->get('name')) > 0 ? 'is-invalid' : '' }}"
+                name="name" aria-describedby="validationServerCompanyNameFeedback" id="categoryInputName"
                 placeholder="Digite o nome da categoria" required>
+              @if ($errors->has('name'))
+                @foreach ($errors->get('name') as $message)
+                  @include('includes.invalid-feedback', [
+                      'id' => 'validationServerCompanyNameFeedback',
+                      'message' => $message,
+                  ])
+                @endforeach
+              @endif
             </div>
             <div class="d-grid gap-2 col-6 mx-auto mb-3">
               <button type="submit" class="btn btn-danger rounded-pill">Adicionar</button>
@@ -38,19 +47,29 @@
                   </tr>
                 </thead>
               @else
-              <tr>
-                <td colspan="3" class="py-3 text-center fw-bold">Nenhuma categoria encontrada</td>
-              </tr>
+                <tr>
+                  <td colspan="3" class="py-3 text-center fw-bold">Nenhuma categoria encontrada</td>
+                </tr>
               @endif
               <tbody class="overflow-y-auto">
                 @foreach ($categories as $key => $category)
                   @if ($category->name != 'raiz')
                     <tr class="{{ $key == count($categories) - 1 ? '' : 'border-bottom' }}">
-                      <form action="{{ route('category.update', $category->id) }}" method="POST">
+                      <form action="{{ route('category.update', $category->id) }}" method="POST" novalidate>
                         @method('POST')
                         @csrf
-                        <td class="py-2 ps-4"><input class="form-control form-control-sm" placeholder="Nome da categoria"
-                            type="text" name="name" value="{{ $category->name }}"></td>
+                        <td class="py-2 ps-4">
+                          <input class="form-control form-control-sm {{ count($errors->get('nameUpdate')) > 0 ? 'is-invalid' : '' }}" placeholder="Nome da categoria" type="text"
+                            name="nameUpdate" aria-describedby="validationServerCompanyNameFeedback" value="{{ $category->name }}">
+                          @if ($errors->has('nameUpdate'))
+                            @foreach ($errors->get('nameUpdate') as $message)
+                              @include('includes.invalid-feedback', [
+                                  'id' => 'validationServerCompanyNameFeedback',
+                                  'message' => $message,
+                              ])
+                            @endforeach
+                          @endif
+                        </td>
                         <td class="text-center py-2"><button class="btn btn-danger btn-sm rounded-circle align-middle"><i
                               class="bi bi-arrow-clockwise"></i></button></td>
                       </form>

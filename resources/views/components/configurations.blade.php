@@ -16,7 +16,7 @@
     <div class="row row-cols-1 row-cols-md-2 mb-3">
       <div class="col">
         <div class="shadow rounded-4 p-4">
-          <form action="{{ route('configurations.update') }}" method="post" enctype="multipart/form-data">
+          <form action="{{ route('configurations.update') }}" method="post" enctype="multipart/form-data" novalidate>
             @method('POST')
             @csrf
             <h5 class="fs-5 fw-bold text-body-emphasis border-bottom pb-2 text-center">Informações da empresa</h5>
@@ -26,13 +26,23 @@
                   @if (isset($logo) && Storage::get($logo))
                     <img src="{{ url("storage/{$logo}") }}" class="img-fluid shadow my-2 rounded-4" alt="Logo">
                   @else
-                  <img src="{{ asset('img/logo.png') }}" class="img-fluid shadow my-2 rounded-4" alt="Logo">
+                    <img src="{{ asset('img/logo.png') }}" class="img-fluid shadow my-2 rounded-4" alt="Logo">
                   @endif
                 </div>
                 <div class="col align-self-center">
                   <label for="imageFile" class="form-label"><small class="fw-bold text-body-emphasis">Selecione a
                       logo:</small></label>
-                  <input class="form-control form-control-sm shadow" type="file" name="image" id="imageFile">
+                  <input
+                    class="form-control form-control-sm shadow {{ count($errors->get('image')) > 0 ? 'is-invalid' : '' }}"
+                    type="file" name="image" id="imageFile" aria-describedby="validationServerImageFeedback">
+                  @if ($errors->has('image'))
+                    @foreach ($errors->get('image') as $message)
+                      @include('includes.invalid-feedback', [
+                          'id' => 'validationServerImageFeedback',
+                          'message' => $message,
+                      ])
+                    @endforeach
+                  @endif
                 </div>
               </div>
             </div>
@@ -49,8 +59,19 @@
             <div class="mb-3">
               <label for="companyInputName" class="form-label"><small class="fw-bold text-body-emphasis">Nome da
                   empresa:</small></label>
-              <input type="text" class="form-control shadow" name="company_name" id="companyInputName"
-                placeholder="Digite o nome da empresa" value="{{ $company_name }}">
+              <input type="text"
+                class="form-control shadow {{ count($errors->get('company_name')) > 0 ? 'is-invalid' : '' }}"
+                name="company_name" id="companyInputName" placeholder="Digite o nome da empresa"
+                aria-describedby="validationServerCompanyNameFeedback" value="{{ $company_name }}" max="20"
+                required>
+              @if ($errors->has('company_name'))
+                @foreach ($errors->get('company_name') as $message)
+                  @include('includes.invalid-feedback', [
+                      'id' => 'validationServerCompanyNameFeedback',
+                      'message' => $message,
+                  ])
+                @endforeach
+              @endif
             </div>
             <div class="d-grid gap-2 col-6 mx-auto">
               <button class="btn btn-danger rounded-pill" type="submit">Salvar</button>
@@ -60,7 +81,7 @@
       </div>
       <div class="col">
         <div class="shadow rounded-4 p-4">
-          <form action="{{ route('user.update', Auth::id()) }}" method="post" enctype="multipart/form-data">
+          <form action="{{ route('user.update', Auth::id()) }}" method="post" enctype="multipart/form-data" novalidate>
             @method('POST')
             @csrf
             <h5 class="fs-5 fw-bold text-body-emphasis border-bottom pb-2 text-center">Informações do usuário</h5>
@@ -79,14 +100,30 @@
             <div class="mb-3">
               <label for="userInputName" class="form-label"><small class="fw-bold text-body-emphasis">Nome do
                   usuário:</small></label>
-              <input type="text" class="form-control shadow" name="name" id="userInputName"
-                placeholder="Digite o nome de usuário" value="{{ Auth::user()->name }}">
+              <input type="text" class="form-control shadow {{ count($errors->get('name')) > 0 ? 'is-invalid' : '' }}" name="name" id="userInputName"
+                placeholder="Digite o nome de usuário" value="{{ Auth::user()->name }}" aria-describedby="validationServerNameFeedback">
+                @if ($errors->has('name'))
+                @foreach ($errors->get('name') as $message)
+                  @include('includes.invalid-feedback', [
+                      'id' => 'validationServerNameFeedback',
+                      'message' => $message,
+                  ])
+                @endforeach
+              @endif
             </div>
             <div class="mb-3">
               <label for="userInputPassword" class="form-label"><small class="fw-bold text-body-emphasis">Redefinir
                   senha:</small></label>
-              <input type="password" class="form-control shadow" name="password" id="userInputPassword"
-                placeholder="Digite uma senha">
+              <input type="password" class="form-control shadow {{ count($errors->get('password')) > 0 ? 'is-invalid' : '' }}" name="password" id="userInputPassword"
+                placeholder="Digite uma senha" aria-describedby="validationServerPasswordFeedback">
+              @if ($errors->has('password'))
+                @foreach ($errors->get('password') as $message)
+                  @include('includes.invalid-feedback', [
+                      'id' => 'validationServerPasswordFeedback',
+                      'message' => $message,
+                  ])
+                @endforeach
+              @endif
             </div>
             <div class="d-grid gap-2 col-6 mx-auto">
               <button class="btn btn-danger rounded-pill" type="submit">Salvar</button>
@@ -123,8 +160,8 @@
                       @foreach ($roles as $role)
                         <li class="px-2 py-1">
                           <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" role="switch" id="{{ $role->id }}"
-                              name="{{ $role->name }}" value="{{ $role->id }}"
+                            <input class="form-check-input" type="checkbox" role="switch" name="{{ $role->name }}"
+                              value="{{ $role->id }}"
                               {{ $user->roles->contains('name', $role->name) ? 'checked' : '' }}>
                             <label class="form-check-label text-capitalize"
                               for="flexSwitchCheckRole">{{ $role->name }}</label>

@@ -47,6 +47,16 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+        $validated = $request->validate(
+            [
+                'name' => 'required|string|max:30'
+            ],
+            [
+                'name.required' => 'O campo nome é obrigatório.',
+                'name.max' => 'O campo nome da categoria não deve ter mais de 30 caracteres.',
+            ]
+        );
+
         $category = $request->all();
 
         $category = Category::create($category);
@@ -75,8 +85,18 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $validated = $request->validate(
+            [
+                'nameUpdate' => 'required|string|max:30'
+            ],
+            [
+                'nameUpdate.required' => 'O campo nome é obrigatório.',
+                'nameUpdate.max' => 'O campo nome da categoria não deve ter mais de 30 caracteres.',
+            ]
+        );
+
         $category = Category::find($id);
-        $category->update(['name' => $request->input('name')]);
+        $category->update(['name' => $request->input('nameUpdate')]);
         return redirect()->route('components.create_category');
     }
 

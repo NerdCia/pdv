@@ -18,7 +18,7 @@
       <input type="email" class="form-control shadow {{ count($errors->get('email')) > 0 ? 'is-invalid' : '' }}"
         name="email" id="inputEmail" aria-describedby="validationServerEmailFeedback" placeholder="Digite seu email"
         required>
-      @if ($errors)
+      @if ($errors->has('email'))
         @foreach ($errors->get('email') as $message)
           @include('includes.invalid-feedback', [
               'id' => 'validationServerEmailFeedback',
@@ -31,7 +31,7 @@
       <label for="inputPassword" class="form-label"><small class="fw-bold text-body-emphasis">Senha:</small></label>
       <input type="password" class="form-control shadow {{ count($errors->get('password')) > 0 ? 'is-invalid' : '' }}"
         name="password" id="inputPassword" aria-describedby="validationServerPasswordFeedback" placeholder="Digite sua senha" required>
-      @if ($errors)
+      @if ($errors->has('password'))
         @foreach ($errors->get('password') as $message)
           @include('includes.invalid-feedback', [
               'id' => 'validationServerPasswordFeedback',

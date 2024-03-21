@@ -24,10 +24,20 @@ class ConfigurationController extends Controller
 
     public function update(Request $request)
     {
-        $validated = $request->validate([
-            'company_name' => 'required|string|max:255',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-        ]);
+        $validated = $request->validate(
+            [
+                'company_name' => 'required|string|max:20',
+                'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            ],
+            [
+                'company_name.required' => 'O campo nome da empresa não pode está vazio.',
+                'company_name.max' => 'O campo nome da empresa não deve ter mais de 20 caracteres.',
+                'image.image' => 'O arquivo deve ser uma imagem.',
+                'image.mimes' => 'O campo da imagem deve ser um arquivo do tipo: jpeg, png, jpg.',
+            ]
+        );
+
+
 
         $configurations = $request->all();
 
