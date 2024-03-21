@@ -54,5 +54,14 @@ class AuthServiceProvider extends ServiceProvider
                 return false;
             }
         });
+
+        Gate::define('demo', function (User $user) {
+            $user = User::find($user->id);
+            if ($user->roles->contains('name', 'demo')) {
+                return true;
+            } else {
+                return false;
+            }
+        });
     }
 }

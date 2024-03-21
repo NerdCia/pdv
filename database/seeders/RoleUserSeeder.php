@@ -18,5 +18,10 @@ class RoleUserSeeder extends Seeder
             'user_id' => User::where('name', '=', 'nerdcia')->first()->id,
             'role_id' => '1',
         ]);
+
+        DB::table('role_user')->insert([
+            'user_id' => User::where('name', '=', 'demo')->first()->id,
+            'role_id' => '4',
+        ]);
     }
 }
