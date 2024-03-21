@@ -48,7 +48,7 @@
               <i class="bi bi-person-circle fs-4 align-middle text-secondary"></i>
             </a>
             <ul class="dropdown-menu text-small" style="">
-              @can('all')
+              @can('demo')
                 <li><a class="dropdown-item" href="{{ route('components.configurations') }}">Configurações</a></li>
                 <li>
                   <hr class="dropdown-divider">
@@ -71,7 +71,7 @@
       <ul
         class="nav justify-content-around flex-sm-column text-center bg-white mb-3 mb-sm-0 mx-auto rounded-5 py-sm-4 shadow"
         id="sidebar" style="max-width: 250px">
-        @can('all')
+        @can('demo')
           <li class="nav-item my-2">
             <a class="nav-link text-secondary mx-1 mx-sm-3 p-3 px-sm-0 rounded-4 text-uppercase {{ Route::currentRouteName() == 'components.dashboard' ? 'shadow' : '' }}"
               href="{{ route('components.dashboard') }}">
@@ -80,7 +80,7 @@
             </a>
           </li>
         @endcan
-        @can('sales')
+        @can('demo')
           <li class="nav-item my-2">
             <a class="nav-link text-secondary mx-1 mx-sm-3 p-3 px-sm-0 rounded-4 text-uppercase {{ Route::currentRouteName() == 'components.sales' ? 'shadow' : '' }}"
               href="{{ route('components.sales') }}">
@@ -89,7 +89,7 @@
             </a>
           </li>
         @endcan
-        @can('products')
+        @can('demo')
           <li class="nav-item my-2">
             <a class="nav-link text-secondary mx-1 mx-sm-3 p-3 px-sm-0 rounded-4 text-uppercase {{ Route::currentRouteName() == 'components.products' ? 'shadow' : '' }}"
               href="{{ route('components.products') }}">
@@ -98,7 +98,7 @@
             </a>
           </li>
         @endcan
-        @can('all')
+        @can('demo')
           <li class="nav-item my-2">
             <a class="nav-link text-secondary mx-1 mx-sm-3 p-3 px-sm-0 rounded-4 text-uppercase {{ Route::currentRouteName() == 'components.configurations' ? 'shadow' : '' }}"
               href="{{ route('components.configurations') }}">

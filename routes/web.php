@@ -31,31 +31,31 @@ Route::middleware(['auth'])->group(function () {
   ], function () {
     Route::get('', [DashboardController::class, 'index'])
       ->name('dashboard')
-      ->middleware(['authorization.all', 'authorization.demo']);
+      ->middleware(['authorization.demo']);
     Route::get('products/{category?}', [ProductController::class, 'index'])
       ->name('products')
-      ->middleware(['authorization.products', 'authorization.demo']);
+      ->middleware(['authorization.demo']);
     Route::get('edit_product/{id}', [ProductController::class, 'edit'])
       ->name('edit_product')
-      ->middleware(['authorization.products', 'authorization.demo']);
+      ->middleware(['authorization.demo']);
     Route::get('create_product', [ProductController::class, 'create'])
       ->name('create_product')
-      ->middleware(['authorization.products', 'authorization.demo']);
+      ->middleware(['authorization.demo']);
     Route::get('create_category', [CategoryController::class, 'create'])
       ->name('create_category')
-      ->middleware(['authorization.products', 'authorization.demo']);
+      ->middleware(['authorization.demo']);
     Route::get('sales', [SaleController::class, 'index'])
       ->name('sales')
-      ->middleware(['authorization.sales', 'authorization.demo']);
+      ->middleware(['authorization.demo']);
     Route::get('edit_sale/{id}', [SaleController::class, 'edit'])
       ->name('edit_sale')
-      ->middleware(['authorization.sales', 'authorization.demo']);
+      ->middleware(['authorization.demo']);
     Route::get('create_sale', [CreateSaleController::class, 'index'])
       ->name('create_sale')
-      ->middleware(['authorization.sales', 'authorization.demo']);
+      ->middleware(['authorization.demo']);
     Route::get('configurations', [ConfigurationController::class, 'index'])
       ->name('configurations')
-      ->middleware(['authorization.all', 'authorization.demo']);
+      ->middleware(['authorization.demo']);
   });
 
   Route::middleware(['authorization.all'])->group(function () {
@@ -78,7 +78,7 @@ Route::middleware(['auth'])->group(function () {
     });
   });
 
-  Route::middleware(['authorization.sales', 'authorization.demo'])->group(function () {
+  Route::middleware(['authorization.demo'])->group(function () {
     Route::group([
       'prefix' => '/',
       'as' => 'sale.product.'
@@ -90,7 +90,9 @@ Route::middleware(['auth'])->group(function () {
       Route::post('sale_remove_product', [CreateSaleController::class, 'saleRemoveProduct'])
         ->name('remove');
     });
-
+  });
+  
+  Route::middleware(['authorization.sales'])->group(function () {
     Route::group([
       'prefix' => '/',
       'as' => 'sale.'

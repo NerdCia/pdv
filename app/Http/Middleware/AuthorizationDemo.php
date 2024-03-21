@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Gate;
 
-class AuthorizationAll
+class AuthorizationDemo
 {
     /**
      * Handle an incoming request.
